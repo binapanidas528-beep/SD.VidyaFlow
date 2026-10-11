@@ -15,19 +15,29 @@
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
 
     <!-- Header / Brand Banner -->
-    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-lg">
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-lg flex-wrap gap-3">
         <div class="flex items-center space-x-3">
             <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl font-bold shadow-md shadow-indigo-500/30">
                 ⚡
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wide text-white">SD.VidyaFlow</h1>
-                <p class="text-xs text-slate-400">Class 5 to PhD • Zero Panic Companion</p>
+                <p class="text-xs text-slate-400">Class 5 to PhD • Multilingual AI Companion</p>
             </div>
         </div>
-        <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs px-3 py-1 rounded-full font-medium">
-            AI Active
-        </span>
+
+        <div class="flex items-center space-x-3">
+            <!-- Language Selector Dropdown -->
+            <select id="language-select" class="bg-slate-700 border border-slate-600 text-xs text-indigo-300 rounded-lg px-3 py-1.5 focus:outline-none focus:border-indigo-500">
+                <option value="English">🌐 English</option>
+                <option value="Hindi" selected>🌐 हिंदी (Hindi)</option>
+                <option value="Odia">🌐 ଓଡ଼ିଆ (Odia)</option>
+                <option value="Bengali">🌐 বাংলা (Bengali)</option>
+            </select>
+            <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs px-3 py-1 rounded-full font-medium hidden sm:inline-block">
+                AI Active
+            </span>
+        </div>
     </header>
 
     <!-- Main Container -->
@@ -35,7 +45,7 @@
 
         <!-- Module 1: 25-Minute Focus Timer -->
         <section class="bg-slate-800/80 rounded-2xl border border-slate-700 p-6 text-center shadow-md">
-            <h2 class="text-xs uppercase tracking-wider text-indigo-400 font-semibold mb-2">Focus Sprint Timer</h2>
+            <h2 class="text-xs uppercase tracking-wider text-indigo-400 font-semibold mb-2" id="timer-label">Focus Sprint Timer</h2>
             <div class="text-5xl md:text-6xl font-bold my-3 tracking-tight font-mono text-indigo-300" id="timer-display">
                 25:00
             </div>
@@ -46,13 +56,13 @@
             </div>
         </section>
 
-        <!-- Module 2: Instant AI Doubt Resolver -->
+        <!-- Module 2: Instant Multilingual AI Doubt Resolver -->
         <section class="bg-slate-800/80 rounded-2xl border border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold mb-1 text-white">💡 Instant AI Doubt Resolver</h2>
-            <p class="text-xs text-slate-400 mb-4">Class 5 का बेसिक सवाल हो या PhD का जटिल टॉपिक — सिर्फ टाइप करें:</p>
+            <h2 class="text-lg font-semibold mb-1 text-white">💡 Instant Multilingual AI Doubt Resolver</h2>
+            <p class="text-xs text-slate-400 mb-4">आपकी चुनी हुई भाषा (Language) में 30-सेकंड समाधान:</p>
             
             <div class="space-y-3">
-                <textarea id="ai-query" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition placeholder-slate-500" placeholder="यहाँ अपना सवाल या टॉपिक लिखें... (उदा: Photosynthesis क्या है आसान शब्दों में समझाओ)"></textarea>
+                <textarea id="ai-query" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition placeholder-slate-500" placeholder="Type your doubt in English, हिंदी, ଓଡ଼ିଆ or বাংলা..."></textarea>
                 <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/20">
                     30 सेकंड में उत्तर पाएँ ✨
                 </button>
@@ -75,7 +85,7 @@
             <div id="notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <!-- Notes cards will be generated here -->
                 <div class="bg-slate-900 border border-slate-700 p-3 rounded-xl">
-                    <p class="text-xs text-slate-400 font-mono mb-1">उदाहरण नोट</p>
+                    <p class="text-xs text-slate-400 font-mono mb-1">Quick Note</p>
                     <p class="text-sm text-slate-200">25 मिनट पढ़ाई के बाद 5 मिनट का ब्रेक अनिवार्य है।</p>
                 </div>
             </div>
@@ -85,12 +95,12 @@
 
     <!-- Footer -->
     <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-800">
-        SD.VidyaFlow • Engineered for Student Productivity
+        SD.VidyaFlow • Multi-language AI Study Companion
     </footer>
 
-    <!-- Minimal JS Logic -->
+    <!-- JS Logic -->
     <script>
-        // Basic Timer Implementation
+        // Timer Logic
         let timeLeft = 25 * 60;
         let timerId = null;
 
@@ -109,7 +119,7 @@
                 } else {
                     clearInterval(timerId);
                     timerId = null;
-                    alert('फोकस स्प्रिंट पूरा हुआ! अब 5 मिनट का ब्रेक लें।');
+                    alert('Focus Sprint Complete! Take a 5-minute break.');
                 }
             }, 1000);
         }
@@ -125,30 +135,36 @@
             updateDisplay();
         }
 
-        // Mock AI Resolver Call
+        // Mock Multilingual AI Response
         function askAI() {
             const query = document.getElementById('ai-query').value;
+            const lang = document.getElementById('language-select').value;
             const respBox = document.getElementById('ai-response');
+            
             if(!query.trim()) return;
 
             respBox.classList.remove('hidden');
-            respBox.innerHTML = '<span class="text-indigo-400">SD.VidyaFlow AI उत्तर तैयार कर रहा है...</span>';
+            respBox.innerHTML = `<span class="text-indigo-400">SD.VidyaFlow AI (${lang}) उत्तर तैयार कर रहा है...</span>`;
 
             setTimeout(() => {
-                respBox.innerHTML = `
-                    <div class="font-semibold text-indigo-300 mb-2">मुख्य बिंदु (3 Step Resolution):</div>
-                    <ul class="list-disc list-inside space-y-1">
-                        <li><b>स्टेप 1:</b> सवाल को सबसे सरल भागों में विभाजित करें।</li>
-                        <li><b>स्टेप 2:</b> मूल फ़ॉर्मूला/सिद्धांत लागू करें।</li>
-                        <li><b>स्टेप 3:</b> निष्कर्ष: यही सही उत्तर है।</li>
-                    </ul>
-                `;
+                let sampleOutput = "";
+                if(lang === "Odia") {
+                    sampleOutput = `<b>ଓଡ଼ିଆ ସମାଧାନ:</b><br>୧. ପ୍ରଶ୍ନଟିକୁ ସରଳ ଭାବରେ ବୁଝନ୍ତୁ।<br>୨. ମୂଳ ସୂତ୍ର ପ୍ରୟୋଗ କରନ୍ତୁ।<br>୩. ଏହା ହେଉଛି ସଠିକ୍ ଉତ୍ତର।`;
+                } else if(lang === "Bengali") {
+                    sampleOutput = `<b>বাংলা সমাধান:</b><br>১. প্রশ্নটি সহজভাবে বুঝুন।<br>২. মূল সূত্র প্রয়োগ করুন।<br>৩. এটিই সঠিক উত্তর।`;
+                } else if(lang === "English") {
+                    sampleOutput = `<b>English Resolution:</b><br>1. Break down the doubt.<br>2. Apply the core formula/concept.<br>3. Final 30-sec resolution.`;
+                } else {
+                    sampleOutput = `<b>हिंदी समाधान:</b><br>1. प्रश्न को सरल भागों में समझें।<br>2. मूल सूत्र लागू करें।<br>3. निष्कर्ष: यही सही उत्तर है।`;
+                }
+                
+                respBox.innerHTML = sampleOutput;
             }, 1000);
         }
 
         // Quick Note Add
         function addNote() {
-            const noteText = prompt("अपना क्विक नोट लिखें:");
+            const noteText = prompt("अपना क्विक नोट लिखें / Enter your quick note:");
             if (noteText) {
                 const list = document.getElementById('notes-list');
                 const card = document.createElement('div');
