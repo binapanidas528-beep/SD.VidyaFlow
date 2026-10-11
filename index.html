@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SD.VidyaFlow - Instant AI & Focus Companion</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header / Brand Banner -->
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl font-bold shadow-md shadow-indigo-500/30">
+                ⚡
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-wide text-white">SD.VidyaFlow</h1>
+                <p class="text-xs text-slate-400">Class 5 to PhD • Zero Panic Companion</p>
+            </div>
+        </div>
+        <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs px-3 py-1 rounded-full font-medium">
+            AI Active
+        </span>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- Module 1: 25-Minute Focus Timer -->
+        <section class="bg-slate-800/80 rounded-2xl border border-slate-700 p-6 text-center shadow-md">
+            <h2 class="text-xs uppercase tracking-wider text-indigo-400 font-semibold mb-2">Focus Sprint Timer</h2>
+            <div class="text-5xl md:text-6xl font-bold my-3 tracking-tight font-mono text-indigo-300" id="timer-display">
+                25:00
+            </div>
+            <div class="flex justify-center space-x-3 mt-4">
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-medium shadow-md transition">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-5 py-2 rounded-lg font-medium transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-5 py-2 rounded-lg font-medium transition">Reset</button>
+            </div>
+        </section>
+
+        <!-- Module 2: Instant AI Doubt Resolver -->
+        <section class="bg-slate-800/80 rounded-2xl border border-slate-700 p-6 shadow-md">
+            <h2 class="text-lg font-semibold mb-1 text-white">💡 Instant AI Doubt Resolver</h2>
+            <p class="text-xs text-slate-400 mb-4">Class 5 का बेसिक सवाल हो या PhD का जटिल टॉपिक — सिर्फ टाइप करें:</p>
+            
+            <div class="space-y-3">
+                <textarea id="ai-query" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition placeholder-slate-500" placeholder="यहाँ अपना सवाल या टॉपिक लिखें... (उदा: Photosynthesis क्या है आसान शब्दों में समझाओ)"></textarea>
+                <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl transition shadow-lg shadow-indigo-600/20">
+                    30 सेकंड में उत्तर पाएँ ✨
+                </button>
+            </div>
+
+            <!-- AI Response Box -->
+            <div id="ai-response" class="hidden mt-4 p-4 bg-slate-900/90 border border-indigo-500/30 rounded-xl text-sm leading-relaxed text-slate-300">
+                <!-- Response content will be injected here -->
+            </div>
+        </section>
+
+        <!-- Module 3: Pocket Notes (Offline-First) -->
+        <section class="bg-slate-800/80 rounded-2xl border border-slate-700 p-6 shadow-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-white">📝 Pocket Quick Notes</h2>
+                <button onclick="addNote()" class="text-xs bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 px-3 py-1.5 rounded-lg transition">
+                    + नया नोट जोड़ें
+                </button>
+            </div>
+            <div id="notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- Notes cards will be generated here -->
+                <div class="bg-slate-900 border border-slate-700 p-3 rounded-xl">
+                    <p class="text-xs text-slate-400 font-mono mb-1">उदाहरण नोट</p>
+                    <p class="text-sm text-slate-200">25 मिनट पढ़ाई के बाद 5 मिनट का ब्रेक अनिवार्य है।</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-800">
+        SD.VidyaFlow • Engineered for Student Productivity
+    </footer>
+
+    <!-- Minimal JS Logic -->
+    <script>
+        // Basic Timer Implementation
+        let timeLeft = 25 * 60;
+        let timerId = null;
+
+        function updateDisplay() {
+            const min = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const sec = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${min}:${sec}`;
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerId);
+                    timerId = null;
+                    alert('फोकस स्प्रिंट पूरा हुआ! अब 5 मिनट का ब्रेक लें।');
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = 25 * 60;
+            updateDisplay();
+        }
+
+        // Mock AI Resolver Call
+        function askAI() {
+            const query = document.getElementById('ai-query').value;
+            const respBox = document.getElementById('ai-response');
+            if(!query.trim()) return;
+
+            respBox.classList.remove('hidden');
+            respBox.innerHTML = '<span class="text-indigo-400">SD.VidyaFlow AI उत्तर तैयार कर रहा है...</span>';
+
+            setTimeout(() => {
+                respBox.innerHTML = `
+                    <div class="font-semibold text-indigo-300 mb-2">मुख्य बिंदु (3 Step Resolution):</div>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><b>स्टेप 1:</b> सवाल को सबसे सरल भागों में विभाजित करें।</li>
+                        <li><b>स्टेप 2:</b> मूल फ़ॉर्मूला/सिद्धांत लागू करें।</li>
+                        <li><b>स्टेप 3:</b> निष्कर्ष: यही सही उत्तर है।</li>
+                    </ul>
+                `;
+            }, 1000);
+        }
+
+        // Quick Note Add
+        function addNote() {
+            const noteText = prompt("अपना क्विक नोट लिखें:");
+            if (noteText) {
+                const list = document.getElementById('notes-list');
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-700 p-3 rounded-xl";
+                card.innerHTML = `<p class="text-xs text-slate-400 font-mono mb-1">Quick Note</p><p class="text-sm text-slate-200">${noteText}</p>`;
+                list.appendChild(card);
+            }
+        }
+    </script>
+</body>
+</html>
