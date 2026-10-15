@@ -335,7 +335,7 @@
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: `Level: ${cls}. Language: Write response strictly in ${lang}. ${userPrompt}` })
+                    body: JSON.stringify({ prompt: `Level: ${cls}. Selected Language: ${lang}. Prompt: ${userPrompt}` })
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -348,29 +348,29 @@
 
         function generateFormattedMultiLangOutput(promptText, cls, lang, isPlanner) {
             if (isPlanner) {
-                const subList = promptText.split('subjects:')[1]?.split('.')[0] || 'Subjects';
-                const daysNum = promptText.match(/\d+/)?.[0] || '3';
+                const subList = document.getElementById('plan-subjects').value || 'Pedagogy, Odia, History';
+                const daysNum = document.getElementById('plan-days').value || '3';
 
                 if (lang === "Odia") {
                     return `<strong># ${cls} ପାଇଁ ${daysNum} ଦିନର ପାଠପଢ଼ା ସମୟସୂଚୀ (${subList})</strong><br><br>` +
-                           `• <strong>ଦିନ ୧:</strong> Pedagogy - ଶିଶୁ ବିକାଶ ଓ ଶିକ୍ଷାଦାନ ପଦ୍ଧତିର ମୂଳ ସିଦ୍ଧାନ୍ତ ପଢ଼ନ୍ତୁ।<br>` +
-                           `• <strong>ଦିନ ୨:</strong> Odia - ବ୍ୟାକରଣ (ସମାସ, ସନ୍ଧି) ଓ ସାହିତ୍ୟ ଅଧ୍ୟୟନ କରନ୍ତୁ।<br>` +
-                           `• <strong>ଦିନ ୩:</strong> History - ଭାରତୀୟ ସ୍ୱାଧୀନତା ସଂଗ୍ରାମ ଓ ସମସ୍ତ ବିଷୟର ପୁନରାବୃତ୍ତି (Revision) କରନ୍ତୁ।`;
+                           `• <strong>ଦିନ ୧: Pedagogy -</strong> ଶିଶୁ ବିକାଶ, ଶିକ୍ଷାଦାନ પଦ୍ଧତି ଓ Bloom's Taxonomy ର ମୁଖ୍ୟ ସିଦ୍ଧାନ୍ତ ପଢ଼ନ୍ତୁ।<br>` +
+                           `• <strong>ଦିନ ୨: Odia -</strong> ଓଡ଼ିଆ ବ୍ୟାକରଣ (ସମାସ, କାରକ, କୃଦନ୍ତ) ଓ ସାହିତ୍ୟ ଅଧ୍ୟୟନ କରନ୍ତୁ।<br>` +
+                           `• <strong>ଦିନ ୩: History -</strong> ଭାରତୀୟ ସ୍ୱାଧୀନତା ସଂଗ୍ରାମ ଓ ସମସ୍ତ ବିଷୟର ସମ୍ପୂର୍ଣ୍ଣ ପୁନରାବୃତ୍ତି (Revision) କରନ୍ତୁ।`;
                 } else if (lang === "Hindi") {
                     return `<strong># ${cls} हेतु ${daysNum} दिवसीय अध्ययन समय सारणी (${subList})</strong><br><br>` +
-                           `• <strong>दिन 1:</strong> Pedagogy - बाल विकास एवं शिक्षणशास्त्र के मुख्य सिद्धांत पढ़ें।<br>` +
-                           `• <strong>दिन 2:</strong> Odia / Language - व्याकरण एवं साहित्य का अभ्यास करें।<br>` +
-                           `• <strong>दिन 3:</strong> History - आधुनिक भारत का इतिहास एवं संपूर्ण पाठ्यक्रम का रिविजन करें।`;
+                           `• <strong>दिन 1: Pedagogy -</strong> बाल विकास एवं शिक्षणशास्त्र के मुख्य सिद्धांत पढ़ें।<br>` +
+                           `• <strong>दिन 2: Odia / Language -</strong> व्याकरण एवं साहित्य का अभ्यास करें।<br>` +
+                           `• <strong>दिन 3: History -</strong> आधुनिक भारत का इतिहास एवं संपूर्ण पाठ्यक्रम का रिविजन करें।`;
                 } else if (lang === "Bengali") {
                     return `<strong># ${cls} এর জন্য ${daysNum} দিনের স্টাডি রুটিন (${subList})</strong><br><br>` +
-                           `• <strong>দিন ১:</strong> Pedagogy - শিশু বিকাশ ও শিক্ষণ পদ্ধতির মূল ধারণা পড়ুন।<br>` +
-                           `• <strong>দিন ২:</strong> Odia / Sahitya - ব্যাকরণ ও সাহিত্য অনুশীলন করুন।<br>` +
-                           `• <strong>দিন ৩:</strong> History - ইতিহাস ও সকল বিষয়ের চূড়ান্ত রিভিশন দিন।`;
+                           `• <strong>দিন ১: Pedagogy -</strong> শিশু বিকাশ ও শিক্ষণ পদ্ধতির মূল ধারণা পড়ুন।<br>` +
+                           `• <strong>দিন ২: Odia / Sahitya -</strong> ব্যাকরণ ও সাহিত্য অনুশীলন করুন।<br>` +
+                           `• <strong>দিন ৩: History -</strong> ইতিহাস ও সকল বিষয়ের চূড়ান্ত রিভিশন দিন।`;
                 } else {
                     return `<strong># ${daysNum} Days Structured Study Plan for ${subList} (${cls})</strong><br><br>` +
-                           `• <strong>Day 1: Pedagogy Focus:</strong> Child Development & Teaching Learning Principles.<br>` +
-                           `• <strong>Day 2: Odia Focus:</strong> Grammar, Comprehension & Sahitya Revision.<br>` +
-                           `• <strong>Day 3: History Focus:</strong> Indian Freedom Movement & Full Syllabus Revision.`;
+                           `• <strong>Day 1: Pedagogy Focus -</strong> Child Development & Teaching Learning Principles.<br>` +
+                           `• <strong>Day 2: Odia Focus -</strong> Grammar, Comprehension & Sahitya Revision.<br>` +
+                           `• <strong>Day 3: History Focus -</strong> Indian Freedom Movement & Full Syllabus Revision.`;
                 }
             } else {
                 if (lang === "Odia") {
