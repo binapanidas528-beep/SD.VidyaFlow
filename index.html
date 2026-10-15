@@ -330,18 +330,6 @@
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
 
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: `Level: ${cls}. Selected Language: ${lang}. Prompt: ${userPrompt}` })
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    if(data.reply) return data.reply;
-                }
-            } catch(e) {}
-
             return generateFormattedMultiLangOutput(cls, lang, isPlanner);
         }
 
@@ -350,12 +338,7 @@
             const daysNum = document.getElementById('plan-days').value || '3';
 
             if (isPlanner) {
-                if (lang === "Odia" || lang === "" || !lang) {
-                    return `<strong># ${cls} ପାଇଁ ${daysNum} ଦିନର ପାଠପଢ଼ା ସମୟସୂଚୀ (${subList})</strong><br><br>` +
-                           `• <strong>ଦିନ ୧: Pedagogy -</strong> ଶିଶୁ ବିକାଶ, ଶିକ୍ଷାଦାନ ପଦ୍ଧତି ଓ Bloom's Taxonomy ର ମୁଖ୍ୟ ସିଦ୍ଧାନ୍ତ ପଢ଼ନ୍ତୁ।<br>` +
-                           `• <strong>ଦିନ ୨: Odia -</strong> ଓଡ଼ିଆ ବ୍ୟାକରଣ (ସମାସ, କାରକ, କୃଦନ୍ତ) ଓ ସାହିତ୍ୟ ଅଧ୍ୟୟନ କରନ୍ତୁ।<br>` +
-                           `• <strong>ଦିନ ୩: History -</strong> ଭାରତୀୟ ସ୍ୱାଧୀନତା ସଂଗ୍ରାମ ଓ ସମସ୍ତ ବିଷୟର ସମ୍ପୂର୍ଣ୍ଣ ପୁନରାବୃତ୍ତି (Revision) କରନ୍ତୁ।`;
-                } else if (lang === "Hindi") {
+                if (lang === "Hindi") {
                     return `<strong># ${cls} हेतु ${daysNum} दिवसीय अध्ययन समय सारणी (${subList})</strong><br><br>` +
                            `• <strong>दिन 1: Pedagogy -</strong> बाल विकास एवं शिक्षणशास्त्र के मुख्य सिद्धांत पढ़ें।<br>` +
                            `• <strong>दिन 2: Odia / Language -</strong> व्याकरण एवं साहित्य का अभ्यास करें।<br>` +
@@ -365,19 +348,27 @@
                            `• <strong>দিন ১: Pedagogy -</strong> শিশু বিকাশ ও শিক্ষণ পদ্ধতির মূল ধারণা পড়ুন।<br>` +
                            `• <strong>দিন ২: Odia / Sahitya -</strong> ব্যাকরণ ও সাহিত্য অনুশীলন করুন।<br>` +
                            `• <strong>দিন ৩: History -</strong> ইতিহাস ও সকল বিষয়ের চূড়ান্ত রিভিশন দিন।`;
-                } else {
+                } else if (lang === "English") {
                     return `<strong># ${daysNum} Days Structured Study Plan for ${subList} (${cls})</strong><br><br>` +
                            `• <strong>Day 1: Pedagogy Focus -</strong> Child Development & Teaching Learning Principles.<br>` +
                            `• <strong>Day 2: Odia Focus -</strong> Grammar, Comprehension & Sahitya Revision.<br>` +
                            `• <strong>Day 3: History Focus -</strong> Indian Freedom Movement & Full Syllabus Revision.`;
+                } else {
+                    // Default to Odia
+                    return `<strong># ${cls} ପାଇଁ ${daysNum} ଦିନର ପାଠପଢ଼ା ସମୟସୂଚୀ (${subList})</strong><br><br>` +
+                           `• <strong>ଦିନ ୧: Pedagogy -</strong> ଶିଶୁ ବିକାଶ, ଶିକ୍ଷାଦାନ ପଦ୍ଧତି ଓ Bloom's Taxonomy ର ମୁଖ୍ୟ ସିଦ୍ଧାନ୍ତ ପଢ଼ନ୍ତୁ।<br>` +
+                           `• <strong>ଦିନ ୨: Odia -</strong> ଓଡ଼ିଆ ବ୍ୟାକରଣ (ସମାସ, କାରକ, କୃଦନ୍ତ) ଓ ସାହିତ୍ୟ ଅଧ୍ୟୟନ କରନ୍ତୁ।<br>` +
+                           `• <strong>ଦିନ ୩: History -</strong> ଭାରତୀୟ ସ୍ୱାଧୀନତା ସଂଗ୍ରାମ ଓ ସମସ୍ତ ବିଷୟର ସମ୍ପୂର୍ଣ୍ଣ ପୁନରାବୃତ୍ତି (Revision) କରନ୍ତୁ।`;
                 }
             } else {
-                if (lang === "Odia" || lang === "" || !lang) {
-                    return `<strong># ${cls} ପାଇଁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ନୋଟ୍ସ</strong><br><br>• <strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ମୌଳିକ ସିଦ୍ଧାନ୍ତ ଓ ପରୀକ୍ଷା ଉପଯୋଗୀ ତଥ୍ୟ।<br>• <strong>ଟିପ୍ସ:</strong> ପ୍ରତିଦିନ ଅଭ୍ୟାସ ଓ ପୁନରାବୃତ୍ତି କରନ୍ତୁ।`;
-                } else if (lang === "Hindi") {
+                if (lang === "Hindi") {
                     return `<strong># ${cls} हेतु मुख्य नोट्स</strong><br><br>• <strong>मुख्य बिंदु:</strong> परीक्षा हेतु आवश्यक संकल्पनाएं एवं सूत्र।<br>• <strong>सुझाव:</strong> नियमित अभ्यास करें।`;
-                } else {
+                } else if (lang === "Bengali") {
+                    return `<strong># ${cls} এর জন্য মূল নোটস</strong><br><br>• <strong>মূল বিষয়:</strong> পরীক্ষার জন্য প্রয়োজনীয় তত্ত্ব।`;
+                } else if (lang === "English") {
                     return `<strong># Study Notes (${cls})</strong><br><br>• <strong>Overview:</strong> Key study concepts and exam tips.<br>• <strong>Recommendation:</strong> Revise regularly.`;
+                } else {
+                    return `<strong># ${cls} ପାଇଁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ନୋଟ୍ସ</strong><br><br>• <strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ମୌଳିକ ସିଦ୍ଧାନ୍ତ ଓ ପରୀକ୍ଷା ଉପଯୋଗୀ ତଥ୍ୟ।<br>• <strong>ଟିପ୍ସ:</strong> ପ୍ରତିଦିନ ଅଭ୍ୟାସ ଓ ପୁନରାବୃତ୍ତି କରନ୍ତୁ।`;
                 }
             }
         }
