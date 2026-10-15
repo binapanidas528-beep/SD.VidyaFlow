@@ -11,6 +11,8 @@
     </script>
     <!-- Mermaid.js for Mind Maps -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- html2pdf.js for Saving PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
@@ -76,7 +78,7 @@
                 </div>
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <p class="font-bold text-indigo-400 text-sm mb-1">🎯 Class-Tailored Quiz & Flashcards</p>
-                    <p>Apne kisi bhi subject ya chapter ka naam likhein, AI aapke class level ke hisab se Practice Quiz generate kar dega.</p>
+                    <p>Apne kisi bhi subject ya chapter ka naam likhein, AI aapke class level ke hisab se Practice Quiz generate kar dega aur PDF download ka option dega.</p>
                 </div>
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <p class="font-bold text-indigo-400 text-sm mb-1">📜 1. Text & Chapter Summarizer</p>
@@ -95,8 +97,8 @@
                     <p>Exam ke oral test ki taiyari ke liye AI aap se sawaal puchega aur aap voice se jawab de sakte hain.</p>
                 </div>
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">💡 Instant AI Doubt Resolver & 🎧 Voice Notes Reader</p>
-                    <p>Apna koi bhi doubt likhein ya bolen, AI answer dega. Niche diye gaye <b>"🔊 Listen Audio Notes"</b> button par click karke aap answer ko sun bhi sakte hain!</p>
+                    <p class="font-bold text-indigo-400 text-sm mb-1">💡 Instant AI Doubt Resolver, 🎧 Voice Notes Reader & 📄 Export PDF</p>
+                    <p>Apna koi bhi doubt likhein ya bolen, AI answer dega. Aap answer ko <b>"🔊 Listen Audio Notes"</b> se sun sakte hain aur <b>"📄 Download PDF"</b> button se PDF format mein save kar sakte hain!</p>
                 </div>
             </div>
             <div class="text-right pt-2">
@@ -149,7 +151,12 @@
                     <span>Generate Quiz</span> <span>✨</span>
                 </button>
             </div>
-            <div id="quiz-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs space-y-2 border border-slate-200 dark:border-slate-700"></div>
+            <div id="quiz-box" class="hidden space-y-2">
+                <div id="quiz-output" class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs space-y-2 border border-slate-200 dark:border-slate-700 text-slate-100"></div>
+                <button onclick="downloadAsPDF('quiz-output', 'Quiz_Notes.pdf')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center space-x-1">
+                    <span>📄 Download Quiz as PDF</span>
+                </button>
+            </div>
         </div>
 
         <!-- 3. Text Summarizer -->
@@ -162,7 +169,12 @@
             <button onclick="summarizeText()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Summarize Notes</span> <span>✨</span>
             </button>
-            <div id="summary-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700"></div>
+            <div id="summary-box" class="hidden space-y-2">
+                <div id="summary-output" class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700 text-slate-100"></div>
+                <button onclick="downloadAsPDF('summary-output', 'Chapter_Summary.pdf')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center space-x-1">
+                    <span>📄 Save Summary as PDF</span>
+                </button>
+            </div>
         </div>
 
         <!-- 4. Visual Mind Map -->
@@ -193,7 +205,12 @@
             <button onclick="createPlanner()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Create Timetable</span> <span>📅</span>
             </button>
-            <div id="plan-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700"></div>
+            <div id="plan-box" class="hidden space-y-2">
+                <div id="plan-output" class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700 text-slate-100"></div>
+                <button onclick="downloadAsPDF('plan-output', 'Study_Timetable.pdf')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center space-x-1">
+                    <span>📄 Save Timetable as PDF</span>
+                </button>
+            </div>
         </div>
 
         <!-- 6. Oral Exam / Viva Mode -->
@@ -208,10 +225,10 @@
                     <span>Start Viva</span> <span>🎙️</span>
                 </button>
             </div>
-            <div id="viva-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs border border-slate-200 dark:border-slate-700 space-y-2"></div>
+            <div id="viva-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs border border-slate-200 dark:border-slate-700 space-y-2 text-slate-100"></div>
         </div>
 
-        <!-- 7. Instant AI Doubt Resolver with Voice Notes Reader -->
+        <!-- 7. Instant AI Doubt Resolver with Voice Notes Reader & PDF Export -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
@@ -230,6 +247,9 @@
                 </button>
                 <button onclick="readAnswerAudio()" id="voice-reader-btn" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
                     <span>🔊</span> <span>Listen Audio Notes</span>
+                </button>
+                <button onclick="downloadAsPDF('answer-box', 'SD_VidyaFlow_Notes.pdf')" id="pdf-download-btn" class="hidden bg-indigo-700 hover:bg-indigo-600 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-700/30 flex items-center justify-center space-x-2">
+                    <span>📄</span> <span>Download Notes PDF</span>
                 </button>
             </div>
 
@@ -271,6 +291,19 @@
             document.getElementById('quiz-topic').value = topic;
         }
 
+        // PDF Save Engine
+        function downloadAsPDF(elementId, fileName) {
+            const element = document.getElementById(elementId);
+            const opt = {
+                margin:       0.5,
+                filename:     fileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
         // Timer
         let timer;
         let timeLeft = 1500;
@@ -293,8 +326,9 @@
         function generateQuiz() {
             const t = document.getElementById('quiz-topic').value.trim();
             if(!t) return alert('Topic enter karein!');
+            const box = document.getElementById('quiz-box');
             const out = document.getElementById('quiz-output');
-            out.classList.remove('hidden');
+            box.classList.remove('hidden');
             out.innerHTML = `<b>Quiz generated for "${t}":</b><br>1. What is the fundamental concept of ${t}?<br>A) Option 1 &nbsp; B) Option 2<br><i>Flashcard: Key term related to ${t} defined here.</i>`;
         }
 
@@ -302,8 +336,9 @@
         function summarizeText() {
             const txt = document.getElementById('summary-input').value.trim();
             if(!txt) return alert('Notes paste karein!');
+            const box = document.getElementById('summary-box');
             const out = document.getElementById('summary-output');
-            out.classList.remove('hidden');
+            box.classList.remove('hidden');
             out.innerHTML = `<b>Summary:</b><br>• Key Point 1: ${txt.substring(0, 50)}...<br>• Key Point 2: Core idea extracted successfully.`;
         }
 
@@ -321,8 +356,9 @@
             const subs = document.getElementById('plan-subjects').value;
             const days = document.getElementById('plan-days').value;
             if(!subs || !days) return alert('Details bharein!');
+            const box = document.getElementById('plan-box');
             const out = document.getElementById('plan-output');
-            out.classList.remove('hidden');
+            box.classList.remove('hidden');
             out.innerHTML = `<b>${days} Days Schedule for ${subs}:</b><br>• Day 1-${Math.ceil(days/2)}: Cover fundamental concepts.<br>• Day ${Math.ceil(days/2)+1}-${days}: Revision & Mock tests.`;
         }
 
@@ -335,7 +371,7 @@
             out.innerHTML = `<b>Viva Examiner:</b> Explain the main application of <i>${topic}</i> in real-world scenarios.`;
         }
 
-        // Doubt Resolver & Voice Reader
+        // Doubt Resolver, Voice Reader & PDF
         function startVoiceInput() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if(!SpeechRecognition) return alert('Speech recognition not supported');
@@ -352,9 +388,11 @@
             if(!d) return alert('Doubt enter karein!');
             const box = document.getElementById('answer-box');
             const btn = document.getElementById('voice-reader-btn');
+            const pdfBtn = document.getElementById('pdf-download-btn');
             box.classList.remove('hidden');
-            box.innerHTML = `<strong>AI Solution:</strong><br>${d} par aadharit detailed explanation tayyar hai. Isse padhein ya Listen Audio Notes button par click karke sunen.`;
+            box.innerHTML = `<strong>AI Solution:</strong><br>${d} par aadharit detailed explanation tayyar hai. Isse padhein, Listen Audio Notes se sunen ya PDF Save karein.`;
             btn.classList.remove('hidden');
+            pdfBtn.classList.remove('hidden');
         }
 
         function readAnswerAudio() {
