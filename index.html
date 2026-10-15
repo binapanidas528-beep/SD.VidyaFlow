@@ -74,7 +74,7 @@
                 </div>
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <p class="font-bold text-indigo-400 text-sm mb-1">🎯 Class-Tailored Quiz & Flashcards</p>
-                    <p>Topic daalein aur AI uske real practice questions aur flashcards generate kar ke dega.</p>
+                    <p>Quick Topics par click karke ya topic likhkar instant Quiz aur Flashcards generate karein.</p>
                 </div>
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <p class="font-bold text-indigo-400 text-sm mb-1">💡 Instant AI Doubt Resolver</p>
@@ -92,7 +92,7 @@
 
         <!-- Banner Info -->
         <div class="flex justify-between items-center bg-indigo-950/60 border border-indigo-800/50 rounded-2xl p-3 px-5 text-xs text-indigo-200">
-            <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">Class 9 and 10 Board</strong></div>
+            <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">Class 9 and 10 Board Level</strong></div>
             <div class="flex items-center space-x-1">🔥 <span>0 Days Streak</span></div>
         </div>
 
@@ -120,13 +120,13 @@
         </div>
 
         <!-- 2. Quiz Generator -->
-        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+        <div id="quiz-section" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>🎯</span> <span>Class-Tailored Quiz & Flashcards</span>
             </h2>
             <p class="text-xs text-slate-400">Type topic name, AI will generate questions suited to your grade:</p>
             <div class="flex gap-2">
-                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Algebra, Light Reflection)...">
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Computer Science)...">
                 <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
                     <span>Generate Quiz</span> <span>✨</span>
                 </button>
@@ -265,8 +265,11 @@
             document.getElementById('mode-text').innerText = val;
         }
 
+        // Quick Topic Fix: Auto Fill Quiz & Auto Trigger Generate
         function setQuickTopic(topic) {
-            document.getElementById('doubt-input').value = "What is " + topic + "? Explain in detail with examples.";
+            document.getElementById('quiz-topic').value = topic;
+            generateQuiz();
+            document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
         }
 
         function downloadAsPDF(elementId, fileName) {
@@ -299,8 +302,8 @@
         function pauseTimer() { clearInterval(timer); }
         function resetTimer() { clearInterval(timer); timeLeft = 1500; updateTimerDisplay(); }
 
-        // Smart Knowledge Engine (Instant Client Resolver)
-        function generateAIAnswer(query, type="doubt") {
+        // Smart Knowledge Engine
+        function generateAIAnswer(query) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
             const q = query.toLowerCase().trim();
@@ -362,7 +365,7 @@
                 `;
                 btn.innerText = "Generate Quiz ✨";
                 btn.disabled = false;
-            }, 600);
+            }, 400);
         }
 
         function checkAns(btn, isCorrect) {
@@ -396,7 +399,7 @@
                                 `• <strong>Key Point 2:</strong> Important exam revision bullet points ready.`;
                 btn.innerText = "Summarize Notes ✨";
                 btn.disabled = false;
-            }, 500);
+            }, 400);
         }
 
         // Mind Map
