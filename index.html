@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VidyaFlow - Smart Study & Research Companion (Class 5 - PhD)</title>
+    <title>SD.VidyaFlow - Smart Multi-Language AI Study Companion</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,12 +30,12 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">SD.VidyaFlow</h1>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Class 5 to PhD / TGT AI Study Companion</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Class 5 to PhD / TGT Multi-Language Companion</p>
             </div>
         </div>
 
         <div class="flex items-center space-x-2 flex-wrap gap-2">
-            <!-- Class Dropdown (Class 5 to PhD) -->
+            <!-- Class Dropdown -->
             <select id="class-select" onchange="updateClassMode()" class="bg-indigo-950 border border-indigo-700 text-indigo-200 text-xs rounded-xl px-3 py-2 font-semibold focus:outline-none">
                 <option value="Class 5 - 8 (Middle School)">🎓 Class 5 - 8 (Middle School)</option>
                 <option value="Class 9 - 10 (Board Level)">🎓 Class 9 - 10 (Board Level)</option>
@@ -46,11 +46,11 @@
             </select>
 
             <!-- Language Selector -->
-            <select id="lang-select" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 font-medium focus:outline-none">
-                <option value="English">🌐 English</option>
-                <option value="Hindi">🌐 हिंदी (Hindi)</option>
+            <select id="lang-select" class="bg-slate-800 border border-slate-700 text-amber-300 text-xs rounded-xl px-3 py-2 font-bold focus:outline-none">
                 <option value="Odia">🌐 ଓଡ଼ିଆ (Odia)</option>
+                <option value="Hindi">🌐 हिंदी (Hindi)</option>
                 <option value="Bengali">🌐 বাংলা (Bengali)</option>
+                <option value="English">🌐 English</option>
             </select>
 
             <!-- Help Guide Button -->
@@ -75,20 +75,8 @@
             </div>
             <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">⏱️ Focus Sprint & Goal Tracker</p>
-                    <p>Concentration ke liye 25-minute ka Pomodoro timer.</p>
-                </div>
-                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">🎯 Class-Tailored Quiz & Flashcards</p>
-                    <p>Class 5 se PhD/TGT level tak ke kisi bhi topic ka quiz generate karein.</p>
-                </div>
-                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">📜 Summarizer, Mind Map, Planner & Viva Mode</p>
-                    <p>Heavy text ka summary, visual flowchart, timetable, aur interview oral practice mode.</p>
-                </div>
-                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">💡 Instant AI Doubt Resolver & Clean A4 PDF</p>
-                    <p>Pedagogy, Science, Humanities ka doubt resolver, audio notes, aur printable A4 PDF export.</p>
+                    <p class="font-bold text-indigo-400 text-sm mb-1">🌐 Multi-Language Support</p>
+                    <p>Odia (ଓଡ଼ିଆ), Hindi (हिंदी), Bangla (বাংলা) aur English sabhi bhashaon me instant notes, quiz aur doubts paayein.</p>
                 </div>
             </div>
             <div class="text-right pt-2">
@@ -112,7 +100,7 @@
             <button onclick="setQuickTopic('Computer Science')" class="bg-slate-800 hover:bg-slate-700 text-indigo-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">💻 Computer Science</button>
             <button onclick="setQuickTopic('Physics')" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">❄️ Physics</button>
             <button onclick="setQuickTopic('Math')" class="bg-slate-800 hover:bg-slate-700 text-amber-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">📐 Math</button>
-            <button onclick="setQuickTopic('Child Pedagogy & Teaching')" class="bg-slate-800 hover:bg-slate-700 text-green-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">🧠 Pedagogy</button>
+            <button onclick="setQuickTopic('Child Pedagogy')" class="bg-slate-800 hover:bg-slate-700 text-green-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">🧠 Pedagogy</button>
         </div>
 
         <!-- 1. Focus Sprint Timer -->
@@ -134,9 +122,9 @@
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>🎯</span> <span>Class-Tailored Quiz & Flashcards</span>
             </h2>
-            <p class="text-xs text-slate-400">Type topic name, AI will generate questions suited to your grade:</p>
+            <p class="text-xs text-slate-400">Type topic name, AI will generate questions in your chosen language:</p>
             <div class="flex gap-2">
-                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Computer Science, Pedagogy)...">
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Physics, Pedagogy)...">
                 <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
                     <span>Generate Quiz</span> <span>✨</span>
                 </button>
@@ -230,7 +218,7 @@
                 </button>
             </div>
 
-            <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Type or speak your doubt here (e.g. Explain Bloom's Taxonomy of Educational Objectives)..."></textarea>
+            <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Apna doubt ya sawal type ya bol kar puchein..."></textarea>
 
             <div class="flex flex-wrap gap-3">
                 <button onclick="getAnswer()" id="doubt-btn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
@@ -284,7 +272,6 @@
             document.getElementById('quiz-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Clean A4 PDF Print Engine
         function printCleanPDF(elementId, title) {
             const content = document.getElementById(elementId).innerHTML;
             const printArea = document.getElementById('print-area');
@@ -320,12 +307,12 @@
         function pauseTimer() { clearInterval(timer); }
         function resetTimer() { clearInterval(timer); timeLeft = 1500; updateTimerDisplay(); }
 
-        // AI Resolver & Engine
+        // Multi-Language Native Knowledge Engine
         async function fetchAIResponse(userPrompt) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
             
-            const systemContext = `Target Level: ${cls}. Language: ${lang}. Explain clearly for students and research scholars. Prompt: `;
+            const systemContext = `Target Level: ${cls}. Write strictly in ${lang} script/language. Prompt: `;
 
             try {
                 const response = await fetch('/api/chat', {
@@ -339,29 +326,36 @@
                 }
             } catch(e) {}
 
-            // Fallback smart knowledge builder
-            return generateFallbackNotes(userPrompt, cls, lang);
+            return generateMultiLangNativeNotes(userPrompt, cls, lang);
         }
 
-        function generateFallbackNotes(query, cls, lang) {
+        function generateMultiLangNativeNotes(query, cls, lang) {
             const q = query.toLowerCase();
-            if(q.includes("bloom") || q.includes("taxonom")) {
-                return `<strong># Bloom's Taxonomy of Educational Objectives (${cls})</strong><br><br>` +
-                       `<strong>1. Remember (Gyan):</strong> Recalling facts and basic concepts.<br>` +
-                       `<strong>2. Understand (Samajh):</strong> Explaining ideas or concepts.<br>` +
-                       `<strong>3. Apply (Anuprayog):</strong> Using information in new situations.<br>` +
-                       `<strong>4. Analyze (Vishleshan):</strong> Drawing connections among ideas.<br>` +
-                       `<strong>5. Evaluate (Mulyankan):</strong> Justifying a stand or decision.<br>` +
-                       `<strong>6. Create (Rachna):</strong> Producing new or original work.<br><br>` +
-                       `<em>Note: Crucial for TGT, B.Ed, and Teaching Pedagogy examinations.</em>`;
-            } else if(q.includes("computer") || q.includes("ram")) {
-                return `<strong># Computer Science Core Notes (${cls})</strong><br><br>` +
-                       `• <b>CPU:</b> Central Processing Unit (Brain of Computer).<br>` +
-                       `• <b>RAM:</b> Random Access Memory (Volatile Primary Memory).<br>` +
-                       `• <b>Hard Disk/SSD:</b> Secondary Permanent Storage.`;
+
+            if (lang === "Odia") {
+                return `<strong># ${cls} ପାଇଁ ଅଭ୍ୟାସ ପ୍ରଶ୍ନୋତ୍ତର ଓ ନୋଟ୍ସ (${query})</strong><br><br>` +
+                       `<strong>## ପ୍ରଶ୍ନ ୧: ${query} ର ମୁଖ୍ୟ ଉଦ୍ଦେଶ୍ୟ କ'ଣ?</strong><br>` +
+                       `(କ) ମୌଳିକ ସିଦ୍ଧାନ୍ତ ବୁଝିବା &nbsp;&nbsp;&nbsp;&nbsp; (ଖ) କେବଳ ସଂଜ୍ଞା ଗୋଖିବା<br><br>` +
+                       `<strong>## ଉତ୍ତର ଓ ବ୍ୟାଖ୍ୟା:</strong><br>` +
+                       `<b>ଉତ୍ତର: (କ) ମୌଳିକ ସିଦ୍ଧାନ୍ତ ବୁଝିବା</b><br>` +
+                       `${query} ବିଷୟଟି ${cls} ପରୀକ୍ଷା ପାଇଁ ଅତ୍ୟନ୍ତ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। ଏହାର ନିୟମ ଓ ସୂତ୍ରଗୁଡ଼ିକୁ ଭଲଭାବେ ମନେରଖନ୍ତୁ।`;
+            } else if (lang === "Hindi") {
+                return `<strong># ${cls} हेतु मुख्य नोट्स एवं अभ्यास प्रश्न (${query})</strong><br><br>` +
+                       `<strong>## प्रश्न 1: ${query} का मुख्य सिद्धांत क्या है?</strong><br>` +
+                       `(क) मौलिक संकल्पना एवं व्यावहारिक प्रयोग &nbsp;&nbsp;&nbsp;&nbsp; (ख) केवल काल्पनिक नियम<br><br>` +
+                       `<strong>## उत्तर एवं विस्तृत व्याख्या:</strong><br>` +
+                       `<b>उत्तर: (क) मौलिक संकल्पना एवं व्यावहारिक प्रयोग</b><br>` +
+                       `${query} विषय ${cls} पाठ्यक्रम का एक महत्वपूर्ण अंग है। परीक्षा हेतु इसके मुख्य सूत्रों का निरंतर अभ्यास करें।`;
+            } else if (lang === "Bengali") {
+                return `<strong># ${cls} এর জন্য স্টাডি নোটস ও মূল প্রশ্নাবলী (${query})</strong><br><br>` +
+                       `<strong>## প্রশ্ন ১: ${query} এর প্রধান মূলনীতি কোনটি?</strong><br>` +
+                       `(ক) মৌলিক তত্ত্ব ও ব্যবহারিক প্রয়োগ &nbsp;&nbsp;&nbsp;&nbsp; (খ) অপ্রাসঙ্গিক তথ্য<br><br>` +
+                       `<strong>## উত্তর ও ব্যাখ্যা:</strong><br>` +
+                       `<b>উত্তর: (ক) মৌলিক তত্ত্ব ও ব্যবহারিক প্রয়োগ</b><br>` +
+                       `${query} বিষয়টি ${cls} পরীক্ষার জন্য অত্যন্ত গুরুত্বপূর্ণ। নিয়মিত অনুশীলন ও রিভিশন নিশ্চিত করুন।`;
             } else {
                 return `<strong># Study Notes for "${query}" (${cls})</strong><br><br>` +
-                       `• <b>Overview:</b> Detailed concept analysis for ${cls} curriculum in ${lang}.<br>` +
+                       `• <b>Overview:</b> Detailed concept analysis for ${cls} curriculum in English.<br>` +
                        `• <b>Key Points:</b> Core definitions, formulas, and practical applications.<br>` +
                        `• <b>Exam Tip:</b> Revise regularly and solve previous year practice questions.`;
             }
