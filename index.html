@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VidyaFlow - Smart Multi-Language AI Study Companion</title>
+    <title>SD.VidyaFlow - Multi-Language Class 5 to PhD AI Companion</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -75,8 +75,8 @@
             </div>
             <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">🌐 Multi-Language Support</p>
-                    <p>Odia (ଓଡ଼ିଆ), Hindi (हिंदी), Bangla (বাংলা) aur English sabhi bhashaon me instant notes, quiz aur doubts paayein.</p>
+                    <p class="font-bold text-indigo-400 text-sm mb-1">📅 Dynamic AI Study Planner</p>
+                    <p>Subjects aur Days left enter karke aapki target bhasha me customized study timetable payein.</p>
                 </div>
             </div>
             <div class="text-right pt-2">
@@ -100,7 +100,7 @@
             <button onclick="setQuickTopic('Computer Science')" class="bg-slate-800 hover:bg-slate-700 text-indigo-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">💻 Computer Science</button>
             <button onclick="setQuickTopic('Physics')" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">❄️ Physics</button>
             <button onclick="setQuickTopic('Math')" class="bg-slate-800 hover:bg-slate-700 text-amber-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">📐 Math</button>
-            <button onclick="setQuickTopic('Child Pedagogy')" class="bg-slate-800 hover:bg-slate-700 text-green-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">🧠 Pedagogy</button>
+            <button onclick="setQuickTopic('Pedagogy')" class="bg-slate-800 hover:bg-slate-700 text-green-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">🧠 Pedagogy</button>
         </div>
 
         <!-- 1. Focus Sprint Timer -->
@@ -171,17 +171,17 @@
             <div id="map-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto text-center text-slate-100"></div>
         </div>
 
-        <!-- 5. Study Planner -->
+        <!-- 5. REAL DYNAMIC AI Class Study Planner -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>📅</span> <span>3. Class Study Planner</span>
             </h2>
             <p class="text-xs text-slate-400">Enter subjects and days left to get a structured timetable:</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <input type="text" id="plan-subjects" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Subjects (e.g. Science, Pedagogy)">
-                <input type="number" id="plan-days" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Days left (e.g. 15)">
+                <input type="text" id="plan-subjects" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Subjects (e.g. Pedagogy, Odia, History)">
+                <input type="number" id="plan-days" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Days left (e.g. 3)">
             </div>
-            <button onclick="createPlanner()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
+            <button onclick="createPlanner()" id="plan-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Create Timetable</span> <span>📅</span>
             </button>
             <div id="plan-box" class="hidden space-y-2">
@@ -290,29 +290,48 @@
         }
 
         // Timer
-        let timer;
+        let timer = null;
         let timeLeft = 1500;
+
         function updateTimerDisplay() {
             let m = Math.floor(timeLeft / 60);
             let s = timeLeft % 60;
             document.getElementById('timer-display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
         }
+
         function startTimer() {
-            clearInterval(timer);
+            if (timer !== null) return;
             timer = setInterval(() => {
-                if(timeLeft > 0) { timeLeft--; updateTimerDisplay(); }
-                else { clearInterval(timer); alert('Focus Sprint Complete! Take a break.'); }
+                if(timeLeft > 0) { 
+                    timeLeft--; 
+                    updateTimerDisplay(); 
+                } else { 
+                    clearInterval(timer); 
+                    timer = null;
+                    alert('Focus Sprint Complete! Take a break.'); 
+                }
             }, 1000);
         }
-        function pauseTimer() { clearInterval(timer); }
-        function resetTimer() { clearInterval(timer); timeLeft = 1500; updateTimerDisplay(); }
 
-        // Multi-Language Native Knowledge Engine
+        function pauseTimer() { 
+            if (timer !== null) {
+                clearInterval(timer); 
+                timer = null; 
+            }
+        }
+
+        function resetTimer() { 
+            pauseTimer(); 
+            timeLeft = 1500; 
+            updateTimerDisplay(); 
+        }
+
+        // AI Engine
         async function fetchAIResponse(userPrompt) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
             
-            const systemContext = `Target Level: ${cls}. Write strictly in ${lang} script/language. Prompt: `;
+            const systemContext = `Target Level: ${cls}. Language/Script: Write in ${lang}. Prompt: `;
 
             try {
                 const response = await fetch('/api/chat', {
@@ -326,42 +345,52 @@
                 }
             } catch(e) {}
 
-            return generateMultiLangNativeNotes(userPrompt, cls, lang);
+            return generateFallbackResponse(userPrompt, cls, lang);
         }
 
-        function generateMultiLangNativeNotes(query, cls, lang) {
+        function generateFallbackResponse(query, cls, lang) {
             const q = query.toLowerCase();
-
-            if (lang === "Odia") {
-                return `<strong># ${cls} ପାଇଁ ଅଭ୍ୟାସ ପ୍ରଶ୍ନୋତ୍ତର ଓ ନୋଟ୍ସ (${query})</strong><br><br>` +
-                       `<strong>## ପ୍ରଶ୍ନ ୧: ${query} ର ମୁଖ୍ୟ ଉଦ୍ଦେଶ୍ୟ କ'ଣ?</strong><br>` +
-                       `(କ) ମୌଳିକ ସିଦ୍ଧାନ୍ତ ବୁଝିବା &nbsp;&nbsp;&nbsp;&nbsp; (ଖ) କେବଳ ସଂଜ୍ଞା ଗୋଖିବା<br><br>` +
-                       `<strong>## ଉତ୍ତର ଓ ବ୍ୟାଖ୍ୟା:</strong><br>` +
-                       `<b>ଉତ୍ତର: (କ) ମୌଳିକ ସିଦ୍ଧାନ୍ତ ବୁଝିବା</b><br>` +
-                       `${query} ବିଷୟଟି ${cls} ପରୀକ୍ଷା ପାଇଁ ଅତ୍ୟନ୍ତ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ। ଏହାର ନିୟମ ଓ ସୂତ୍ରଗୁଡ଼ିକୁ ଭଲଭାବେ ମନେରଖନ୍ତୁ।`;
-            } else if (lang === "Hindi") {
-                return `<strong># ${cls} हेतु मुख्य नोट्स एवं अभ्यास प्रश्न (${query})</strong><br><br>` +
-                       `<strong>## प्रश्न 1: ${query} का मुख्य सिद्धांत क्या है?</strong><br>` +
-                       `(क) मौलिक संकल्पना एवं व्यावहारिक प्रयोग &nbsp;&nbsp;&nbsp;&nbsp; (ख) केवल काल्पनिक नियम<br><br>` +
-                       `<strong>## उत्तर एवं विस्तृत व्याख्या:</strong><br>` +
-                       `<b>उत्तर: (क) मौलिक संकल्पना एवं व्यावहारिक प्रयोग</b><br>` +
-                       `${query} विषय ${cls} पाठ्यक्रम का एक महत्वपूर्ण अंग है। परीक्षा हेतु इसके मुख्य सूत्रों का निरंतर अभ्यास करें।`;
-            } else if (lang === "Bengali") {
-                return `<strong># ${cls} এর জন্য স্টাডি নোটস ও মূল প্রশ্নাবলী (${query})</strong><br><br>` +
-                       `<strong>## প্রশ্ন ১: ${query} এর প্রধান মূলনীতি কোনটি?</strong><br>` +
-                       `(ক) মৌলিক তত্ত্ব ও ব্যবহারিক প্রয়োগ &nbsp;&nbsp;&nbsp;&nbsp; (খ) অপ্রাসঙ্গিক তথ্য<br><br>` +
-                       `<strong>## উত্তর ও ব্যাখ্যা:</strong><br>` +
-                       `<b>উত্তর: (ক) মৌলিক তত্ত্ব ও ব্যবহারিক প্রয়োগ</b><br>` +
-                       `${query} বিষয়টি ${cls} পরীক্ষার জন্য অত্যন্ত গুরুত্বপূর্ণ। নিয়মিত অনুশীলন ও রিভিশন নিশ্চিত করুন।`;
+            if(lang === "Odia") {
+                return `<strong># ${cls} ପାଇଁ ଷ୍ଟଡି ନୋଟ୍ସ (${query})</strong><br><br>• <strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ${query} ସମ୍ବନ୍ଧୀୟ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ତଥ୍ୟ।<br>• <strong>ପରୀକ୍ଷା ଟିପ୍ସ:</strong> ପୂର୍ବ ବର୍ଷର ପ୍ରଶ୍ନପତ୍ର ସମାଧାନ କରନ୍ତୁ।`;
+            } else if(lang === "Hindi") {
+                return `<strong># ${cls} हेतु मुख्य स्टडी नोट्स (${query})</strong><br><br>• <strong>मुख्य बिंदु:</strong> ${query} से संबंधित संपूर्ण विवरण।<br>• <strong>परीक्षा सुझाव:</strong> मुख्य नियमों एवं सूत्रों का नियमित अभ्यास करें।`;
             } else {
-                return `<strong># Study Notes for "${query}" (${cls})</strong><br><br>` +
-                       `• <b>Overview:</b> Detailed concept analysis for ${cls} curriculum in English.<br>` +
-                       `• <b>Key Points:</b> Core definitions, formulas, and practical applications.<br>` +
-                       `• <b>Exam Tip:</b> Revise regularly and solve previous year practice questions.`;
+                return `<strong># Study Notes for ${query} (${cls})</strong><br><br>• <strong>Overview:</strong> Key study material for ${query}.<br>• <strong>Exam Tip:</strong> Practice mock tests and revise key formulas regularly.`;
             }
         }
 
-        // Quiz
+        // Real AI Study Planner Generator
+        async function createPlanner() {
+            const subs = document.getElementById('plan-subjects').value.trim();
+            const days = document.getElementById('plan-days').value.trim();
+            if(!subs || !days) return alert('Kripya Subjects aur Days Left dono enter karein!');
+
+            const box = document.getElementById('plan-box');
+            const out = document.getElementById('plan-output');
+            const btn = document.getElementById('plan-btn');
+
+            btn.innerText = "Generating Timetable... ⏳";
+            btn.disabled = true;
+
+            const lang = document.getElementById('lang-select').value;
+            const cls = document.getElementById('class-select').value;
+
+            const prompt = `Create a realistic day-by-day study timetable for ${days} days covering these subjects: ${subs}. Divide each day specifically with exact subject names, topics to cover, and revision slots in ${lang} language for ${cls}.`;
+
+            try {
+                const res = await fetchAIResponse(prompt);
+                box.classList.remove('hidden');
+                out.innerHTML = `<div class="font-bold text-indigo-400 mb-2">📅 ${days} Days Customized Timetable for (${subs}):</div>` + res.replace(/\n/g, '<br>');
+            } catch(e) {
+                box.classList.remove('hidden');
+                out.innerHTML = `<b>${days} Days Timetable for ${subs}:</b><br>• Day 1: Focus on ${subs.split(',')[0] || 'Subject 1'} core concepts.<br>• Day 2: Cover ${subs.split(',')[1] || 'Subject 2'} key topics.<br>• Day ${days}: Mock test & final revision of all subjects.`;
+            } finally {
+                btn.innerText = "Create Timetable 📅";
+                btn.disabled = false;
+            }
+        }
+
+        // Quiz Generator
         async function generateQuiz() {
             const topic = document.getElementById('quiz-topic').value.trim();
             if(!topic) return alert('Kripya topic enter karein!');
@@ -405,17 +434,6 @@
             const out = document.getElementById('map-output');
             out.classList.remove('hidden');
             out.innerHTML = `<div class="p-2 font-bold text-indigo-400">[ ${topic} ]</div><div class="text-xs">├── Core Concept<br>├── Key Formulas & Theories<br>└── Practical Applications</div>`;
-        }
-
-        // Planner
-        function createPlanner() {
-            const subs = document.getElementById('plan-subjects').value;
-            const days = document.getElementById('plan-days').value;
-            if(!subs || !days) return alert('Details bharein!');
-            const box = document.getElementById('plan-box');
-            const out = document.getElementById('plan-output');
-            box.classList.remove('hidden');
-            out.innerHTML = `<b>${days} Days Schedule for ${subs}:</b><br>• Day 1-${Math.ceil(days/2)}: Cover main concepts & theories.<br>• Day ${Math.ceil(days/2)+1}-${days}: Revision, Flashcards & Practice Tests.`;
         }
 
         // Viva Mode
