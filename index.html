@@ -41,21 +41,20 @@
                 <option value="Class 9 - 10 (Board Level)">🎓 Class 9 - 10 (Board Level)</option>
                 <option value="Class 11 - 12 (Higher Secondary)">🎓 Class 11 - 12 (Higher Secondary)</option>
                 <option value="College / UG / PG Level">🎓 College / UG / PG Level</option>
-                <option value="TGT / B.Ed / Teaching Aspirants">🎓 TGT / B.Ed / Teaching Aspirants</option>
+                <option value="TGT / B.Ed / Teaching Aspirants" selected>🎓 TGT / B.Ed / Teaching Aspirants</option>
                 <option value="PhD / Research Scholar Level">🎓 PhD / Research Scholar Level</option>
             </select>
 
             <!-- Language Selector -->
             <select id="lang-select" class="bg-slate-800 border border-slate-700 text-amber-300 text-xs rounded-xl px-3 py-2 font-bold focus:outline-none">
-                <option value="Odia">🌐 ଓଡ଼ିଆ (Odia)</option>
+                <option value="Odia" selected>🌐 ଓଡ଼ିଆ (Odia)</option>
                 <option value="Hindi">🌐 हिंदी (Hindi)</option>
                 <option value="Bengali">🌐 বাংলা (Bengali)</option>
                 <option value="English">🌐 English</option>
             </select>
 
-            <!-- Help Guide Button -->
             <button onclick="toggleHelpModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center space-x-1 shadow-md shadow-indigo-600/30">
-                <span>❓</span> <span>Help & Feature Guide</span>
+                <span>❓</span> <span>Help Guide</span>
             </button>
 
             <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
@@ -75,8 +74,8 @@
             </div>
             <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">📅 Dynamic AI Study Planner</p>
-                    <p>Subjects aur Days enter karke accurate day-by-day study timetable generate karein.</p>
+                    <p class="font-bold text-indigo-400 text-sm mb-1">📅 Dynamic Odia & Multi-Language Study Planner</p>
+                    <p>Accurate day-by-day timetable in pure Odia script.</p>
                 </div>
             </div>
             <div class="text-right pt-2">
@@ -90,7 +89,7 @@
 
         <!-- Banner Info -->
         <div class="flex justify-between items-center bg-indigo-950/60 border border-indigo-800/50 rounded-2xl p-3 px-5 text-xs text-indigo-200">
-            <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">Class 5 - 8 (Middle School)</strong></div>
+            <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">TGT / B.Ed / Teaching Aspirants</strong></div>
             <div class="flex items-center space-x-1">🔥 <span>0 Days Streak</span></div>
         </div>
 
@@ -326,7 +325,7 @@
             updateTimerDisplay(); 
         }
 
-        // AI Engine
+        // Direct Native Script AI Engine
         async function fetchAIResponse(userPrompt, isPlanner = false) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
@@ -343,17 +342,17 @@
                 }
             } catch(e) {}
 
-            return generateFormattedMultiLangOutput(userPrompt, cls, lang, isPlanner);
+            return generateFormattedMultiLangOutput(cls, lang, isPlanner);
         }
 
-        function generateFormattedMultiLangOutput(promptText, cls, lang, isPlanner) {
-            if (isPlanner) {
-                const subList = document.getElementById('plan-subjects').value || 'Pedagogy, Odia, History';
-                const daysNum = document.getElementById('plan-days').value || '3';
+        function generateFormattedMultiLangOutput(cls, lang, isPlanner) {
+            const subList = document.getElementById('plan-subjects').value || 'Pedagogy, Odia, History';
+            const daysNum = document.getElementById('plan-days').value || '3';
 
-                if (lang === "Odia") {
+            if (isPlanner) {
+                if (lang === "Odia" || lang === "" || !lang) {
                     return `<strong># ${cls} ପାଇଁ ${daysNum} ଦିନର ପାଠପଢ଼ା ସମୟସୂଚୀ (${subList})</strong><br><br>` +
-                           `• <strong>ଦିନ ୧: Pedagogy -</strong> ଶିଶୁ ବିକାଶ, ଶିକ୍ଷାଦାନ પଦ୍ଧତି ଓ Bloom's Taxonomy ର ମୁଖ୍ୟ ସିଦ୍ଧାନ୍ତ ପଢ଼ନ୍ତୁ।<br>` +
+                           `• <strong>ଦିନ ୧: Pedagogy -</strong> ଶିଶୁ ବିକାଶ, ଶିକ୍ଷାଦାନ ପଦ୍ଧତି ଓ Bloom's Taxonomy ର ମୁଖ୍ୟ ସିଦ୍ଧାନ୍ତ ପଢ଼ନ୍ତୁ।<br>` +
                            `• <strong>ଦିନ ୨: Odia -</strong> ଓଡ଼ିଆ ବ୍ୟାକରଣ (ସମାସ, କାରକ, କୃଦନ୍ତ) ଓ ସାହିତ୍ୟ ଅଧ୍ୟୟନ କରନ୍ତୁ।<br>` +
                            `• <strong>ଦିନ ୩: History -</strong> ଭାରତୀୟ ସ୍ୱାଧୀନତା ସଂଗ୍ରାମ ଓ ସମସ୍ତ ବିଷୟର ସମ୍ପୂର୍ଣ୍ଣ ପୁନରାବୃତ୍ତି (Revision) କରନ୍ତୁ।`;
                 } else if (lang === "Hindi") {
@@ -373,7 +372,7 @@
                            `• <strong>Day 3: History Focus -</strong> Indian Freedom Movement & Full Syllabus Revision.`;
                 }
             } else {
-                if (lang === "Odia") {
+                if (lang === "Odia" || lang === "" || !lang) {
                     return `<strong># ${cls} ପାଇଁ ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ନୋଟ୍ସ</strong><br><br>• <strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ମୌଳିକ ସିଦ୍ଧାନ୍ତ ଓ ପରୀକ୍ଷା ଉପଯୋଗୀ ତଥ୍ୟ।<br>• <strong>ଟିପ୍ସ:</strong> ପ୍ରତିଦିନ ଅଭ୍ୟାସ ଓ ପୁନରାବୃତ୍ତି କରନ୍ତୁ।`;
                 } else if (lang === "Hindi") {
                     return `<strong># ${cls} हेतु मुख्य नोट्स</strong><br><br>• <strong>मुख्य बिंदु:</strong> परीक्षा हेतु आवश्यक संकल्पनाएं एवं सूत्र।<br>• <strong>सुझाव:</strong> नियमित अभ्यास करें।`;
