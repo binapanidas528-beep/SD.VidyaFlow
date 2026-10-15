@@ -41,10 +41,10 @@
 
             <!-- Language Selector -->
             <select id="lang-select" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 font-medium focus:outline-none">
-                <option value="en">🌐 English</option>
-                <option value="or">🌐 ଓଡ଼ିଆ (Odia)</option>
-                <option value="hi">🌐 हिंदी (Hindi)</option>
-                <option value="bn">🌐 বাংলা (Bengali)</option>
+                <option value="English">🌐 English</option>
+                <option value="Odia">🌐 ଓଡ଼ିଆ (Odia)</option>
+                <option value="Hindi">🌐 हिंदी (Hindi)</option>
+                <option value="Bengali">🌐 বাংলা (Bengali)</option>
             </select>
 
             <!-- Help Guide Button -->
@@ -75,6 +75,10 @@
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
                     <p class="font-bold text-indigo-400 text-sm mb-1">🎯 Real AI Class Quiz & Flashcards</p>
                     <p>Topic daalein aur AI uske real practice questions aur flashcards generate kar ke dega.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">💡 Instant AI Doubt Resolver</p>
+                    <p>Koi bhi sawal type ya bolkar puchein, AI real-time me poora answer aur solution generate karega.</p>
                 </div>
             </div>
             <div class="text-right pt-2">
@@ -136,14 +140,14 @@
             </div>
         </div>
 
-        <!-- 3. Text Summarizer -->
+        <!-- 3. Real AI Text Summarizer -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>📜</span> <span>1. Text & Chapter Summarizer</span>
             </h2>
             <p class="text-xs text-slate-400">Paste your notes or text here, AI will generate a concise summary:</p>
             <textarea id="summary-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Paste text/notes here..."></textarea>
-            <button onclick="summarizeText()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
+            <button onclick="summarizeText()" id="summary-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Summarize Notes</span> <span>✨</span>
             </button>
             <div id="summary-box" class="hidden space-y-2">
@@ -205,7 +209,7 @@
             <div id="viva-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs border border-slate-200 dark:border-slate-700 space-y-2 text-slate-100"></div>
         </div>
 
-        <!-- 7. Instant AI Doubt Resolver -->
+        <!-- 7. REAL Instant AI Doubt Resolver -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
@@ -219,7 +223,7 @@
             <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Type or speak your doubt here..."></textarea>
 
             <div class="flex flex-wrap gap-3">
-                <button onclick="getAnswer()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
+                <button onclick="getAnswer()" id="doubt-btn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
                     <span>✨</span> <span>Get Answer</span>
                 </button>
                 <button onclick="readAnswerAudio()" id="voice-reader-btn" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
@@ -230,7 +234,7 @@
                 </button>
             </div>
 
-            <div id="answer-box" class="hidden p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm leading-relaxed text-slate-800 dark:text-slate-200"></div>
+            <div id="answer-box" class="hidden p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm leading-relaxed text-slate-800 dark:text-slate-200 space-y-2"></div>
         </div>
 
     </main>
@@ -265,7 +269,7 @@
         }
 
         function setQuickTopic(topic) {
-            document.getElementById('quiz-topic').value = topic;
+            document.getElementById('doubt-input').value = "Explain " + topic;
         }
 
         function downloadAsPDF(elementId, fileName) {
@@ -298,6 +302,28 @@
         function pauseTimer() { clearInterval(timer); }
         function resetTimer() { clearInterval(timer); timeLeft = 1500; updateTimerDisplay(); }
 
+        // Helper API Call Function
+        async function fetchAIResponse(userPrompt) {
+            const selectedClass = document.getElementById('class-select').value;
+            const selectedLang = document.getElementById('lang-select').value;
+            
+            const systemContext = `Target Level: ${selectedClass}. Language: ${selectedLang}. Explain clearly for students. `;
+
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    messages: [
+                        { role: 'user', content: systemContext + userPrompt }
+                    ]
+                })
+            });
+
+            if (!response.ok) throw new Error('API Request Failed');
+            const data = await response.json();
+            return data.reply || data.choices?.[0]?.message?.content || data.response || null;
+        }
+
         // Real Interactive Quiz Generator
         async function generateQuiz() {
             const topic = document.getElementById('quiz-topic').value.trim();
@@ -310,79 +336,41 @@
             btn.innerText = "Generating Quiz... ⏳";
             btn.disabled = true;
 
-            const selectedClass = document.getElementById('class-select').value;
-            const selectedLang = document.getElementById('lang-select').value;
-
             try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        prompt: `Generate a 3-question Multiple Choice Quiz (MCQ) with 4 options each and 1 Flashcard for topic '${topic}' suited for ${selectedClass} level in language '${selectedLang}'. Make it clear and structured.`
-                    })
-                });
-
-                const data = await response.json();
+                const aiReply = await fetchAIResponse(`Generate 3 multiple choice questions (MCQ) with 4 choices each and 1 flashcard summary for topic '${topic}'. Format clearly with options A, B, C, D.`);
                 box.classList.remove('hidden');
-
-                if (data.reply) {
-                    out.innerHTML = `<div class="font-bold text-indigo-400 mb-2">🎯 AI Generated Quiz for "${topic}":</div>` + data.reply.replace(/\n/g, '<br>');
-                } else {
-                    out.innerHTML = `
-                        <div class="font-bold text-indigo-400 mb-2">🎯 Quiz for "${topic}" (${selectedClass}):</div>
-                        <div class="p-3 bg-slate-800 rounded-lg space-y-2">
-                            <p class="font-semibold text-slate-200">Q1. What is the main principle of ${topic}?</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-300">
-                                <button onclick="checkAns(this, true)" class="p-2 text-left bg-slate-700 hover:bg-slate-600 rounded-lg">A) Fundamental core concept of ${topic}</button>
-                                <button onclick="checkAns(this, false)" class="p-2 text-left bg-slate-700 hover:bg-slate-600 rounded-lg">B) Unrelated formula</button>
-                                <button onclick="checkAns(this, false)" class="p-2 text-left bg-slate-700 hover:bg-slate-600 rounded-lg">C) Secondary theory</button>
-                                <button onclick="checkAns(this, false)" class="p-2 text-left bg-slate-700 hover:bg-slate-600 rounded-lg">D) None of the above</button>
-                            </div>
-                        </div>
-                        <div class="p-3 bg-indigo-900/40 border border-indigo-700/50 rounded-lg">
-                            <p class="font-bold text-indigo-300">💡 Flashcard Key Note:</p>
-                            <p class="text-slate-300">${topic} is a crucial topic in ${selectedClass} curriculum. Remember to revise core formulas & definitions.</p>
-                        </div>
-                    `;
-                }
+                out.innerHTML = `<div class="font-bold text-indigo-400 mb-2">🎯 AI Generated Quiz for "${topic}":</div>` + aiReply.replace(/\n/g, '<br>');
             } catch (e) {
                 box.classList.remove('hidden');
-                out.innerHTML = `
-                    <div class="font-bold text-indigo-400 mb-2">🎯 Practice Quiz for "${topic}":</div>
-                    <div class="p-3 bg-slate-800 rounded-lg space-y-2">
-                        <p class="font-semibold text-slate-200">Q1. Key objective of studying ${topic}:</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-300">
-                            <button onclick="checkAns(this, true)" class="p-2 text-left bg-slate-700 hover:bg-slate-600 rounded-lg">A) To understand practical applications of ${topic}</button>
-                            <button onclick="checkAns(this, false)" class="p-2 text-left bg-slate-700 hover:bg-slate-600 rounded-lg">B) Theoretical assumption only</button>
-                        </div>
-                    </div>
-                `;
+                out.innerHTML = `<div class="font-bold text-rose-400">Error: Could not connect to backend AI worker. Please ensure your Cloudflare Worker environment has the GEMINI_API_KEY set.</div>`;
             } finally {
                 btn.innerText = "Generate Quiz ✨";
                 btn.disabled = false;
             }
         }
 
-        function checkAns(btn, isCorrect) {
-            if(isCorrect) {
-                btn.classList.remove('bg-slate-700');
-                btn.classList.add('bg-emerald-600', 'text-white');
-                btn.innerText += " ✅ (Correct!)";
-            } else {
-                btn.classList.remove('bg-slate-700');
-                btn.classList.add('bg-rose-600', 'text-white');
-                btn.innerText += " ❌ (Try again)";
-            }
-        }
-
-        // Summarizer
+        // REAL AI Summarizer
         async function summarizeText() {
             const txt = document.getElementById('summary-input').value.trim();
             if(!txt) return alert('Notes paste karein!');
             const box = document.getElementById('summary-box');
             const out = document.getElementById('summary-output');
-            box.classList.remove('hidden');
-            out.innerHTML = `<b>Summary:</b><br>• Key Point 1: ${txt.substring(0, 100)}...<br>• Key Point 2: Core summary extracted successfully.`;
+            const btn = document.getElementById('summary-btn');
+
+            btn.innerText = "Summarizing... ⏳";
+            btn.disabled = true;
+
+            try {
+                const aiReply = await fetchAIResponse(`Provide a concise, point-by-point summary for the following text:\n${txt}`);
+                box.classList.remove('hidden');
+                out.innerHTML = `<div class="font-bold text-indigo-400 mb-2">📜 Chapter Summary:</div>` + aiReply.replace(/\n/g, '<br>');
+            } catch (e) {
+                box.classList.remove('hidden');
+                out.innerHTML = `<div class="text-rose-400">Error fetching AI summary. Check backend API connection.</div>`;
+            } finally {
+                btn.innerText = "Summarize Notes ✨";
+                btn.disabled = false;
+            }
         }
 
         // Mind Map
@@ -391,7 +379,7 @@
             if(!topic) return alert('Topic enter karein!');
             const out = document.getElementById('map-output');
             out.classList.remove('hidden');
-            out.innerHTML = `<div class="p-2 font-bold text-indigo-400">[ ${topic} ]</div><div class="text-xs">├── Core Concept<br>└── Applications</div>`;
+            out.innerHTML = `<div class="p-2 font-bold text-indigo-400">[ ${topic} ]</div><div class="text-xs">├── Core Concept<br>├── Applications<br>└── Key Formulas</div>`;
         }
 
         // Planner
@@ -414,7 +402,7 @@
             out.innerHTML = `<b>Viva Examiner:</b> Explain the main application of <i>${topic}</i> in real-world scenarios.`;
         }
 
-        // Doubt Resolver
+        // REAL AI Doubt Resolver
         function startVoiceInput() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if(!SpeechRecognition) return alert('Speech recognition not supported');
@@ -426,16 +414,32 @@
             };
         }
 
-        function getAnswer() {
-            const d = document.getElementById('doubt-input').value.trim();
-            if(!d) return alert('Doubt enter karein!');
+        async function getAnswer() {
+            const doubt = document.getElementById('doubt-input').value.trim();
+            if(!doubt) return alert('Doubt enter karein!');
+
             const box = document.getElementById('answer-box');
-            const btn = document.getElementById('voice-reader-btn');
+            const btn = document.getElementById('doubt-btn');
+            const voiceBtn = document.getElementById('voice-reader-btn');
             const pdfBtn = document.getElementById('pdf-download-btn');
-            box.classList.remove('hidden');
-            box.innerHTML = `<strong>AI Solution:</strong><br>${d} par aadharit detailed explanation tayyar hai. Isse padhein, Listen Audio Notes se sunen ya PDF Save karein.`;
-            btn.classList.remove('hidden');
-            pdfBtn.classList.remove('hidden');
+
+            btn.innerText = "Finding Solution... ⏳";
+            btn.disabled = true;
+
+            try {
+                const aiReply = await fetchAIResponse(doubt);
+                box.classList.remove('hidden');
+                box.innerHTML = `<strong class="text-indigo-400 text-base">AI Solution:</strong><div class="mt-2 text-slate-100">${aiReply.replace(/\n/g, '<br>')}</div>`;
+                
+                voiceBtn.classList.remove('hidden');
+                pdfBtn.classList.remove('hidden');
+            } catch (e) {
+                box.classList.remove('hidden');
+                box.innerHTML = `<div class="text-rose-400">API connection error. Make sure your worker script handles /api/chat.</div>`;
+            } finally {
+                btn.innerText = "Get Answer ✨";
+                btn.disabled = false;
+            }
         }
 
         function readAnswerAudio() {
