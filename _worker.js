@@ -2,6 +2,18 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // CORS Headers enable kar rahe hain taaki request mein koi blockage na ho
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Content-Type": "application/json"
+    };
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
+
     if (url.pathname === "/api/chat" && request.method === "POST") {
       try {
         const { prompt } = await request.json();
@@ -16,13 +28,16 @@ export default {
         });
 
         const data = await geminiRes.json();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "AI response generate nahi ہو paya.";
+        
+        if (data.error) {
+          return new Response(JSON.stringify({ reply: "Gemini API Error: " + data.error.message }), { headers: corsHeaders });
+        }
 
-        return new Response(JSON.stringify({ reply }), {
-          headers: { "Content-Type": "application/json" }
-        });
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "AI response generate nahi ho paya.";
+
+        return new Response(JSON.stringify({ reply }), { headers: corsHeaders });
       } catch (err) {
-        return new Response(JSON.stringify({ reply: "Backend Error: " + err.message }), { status: 500 });
+        return new Response(JSON.stringify({ reply: "Worker Catch Error: " + err.message }), { headers: corsHeaders });
       }
     }
 
