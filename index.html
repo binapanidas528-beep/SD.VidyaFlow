@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VidyaFlow - Instant AI & Focus Companion</title>
+    <title>SD.VidyaFlow - Class-Smart AI Study Suite</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,25 +35,31 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">SD.VidyaFlow</h1>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Class 5 to PhD • Ultimate AI Study Suite</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400" id="brand-tagline">Class-Smart AI Study Companion</p>
             </div>
         </div>
 
-        <div class="flex items-center space-x-3">
-            <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
-                <span id="theme-icon">☀️ Light</span>
-            </button>
+        <div class="flex items-center space-x-2 flex-wrap gap-2">
+            <!-- Class Selector Dropdown -->
+            <select id="class-select" onchange="updateClassContext()" class="bg-indigo-100 dark:bg-indigo-900/60 border border-indigo-300 dark:border-indigo-600 text-xs text-indigo-700 dark:text-indigo-200 font-bold rounded-lg px-3 py-1.5 focus:outline-none shadow-sm">
+                <option value="Class 5 to 8">🎓 Class 5 - 8 (Middle)</option>
+                <option value="Class 9 and 10 Board" selected>🎓 Class 9 - 10 (Board Level)</option>
+                <option value="Class 11 and 12 Senior Secondary">🎓 Class 11 - 12 (Board / JEE / NEET)</option>
+                <option value="College / Graduation Degree">🎓 College / Graduation</option>
+                <option value="PhD / Master / Advanced Research">🎓 PhD / Post Grad / Research</option>
+            </select>
 
-            <div class="bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-lg text-amber-600 dark:text-amber-300 text-xs font-semibold flex items-center space-x-1">
-                <span>🔥</span> <span id="streak-count">0</span> Days
-            </div>
-
+            <!-- Language Selector -->
             <select id="language-select" class="bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs text-indigo-600 dark:text-indigo-300 rounded-lg px-3 py-1.5 focus:outline-none">
                 <option value="English">🌐 English</option>
                 <option value="Hindi" selected>🌐 हिंदी (Hindi)</option>
                 <option value="Odia">🌐 ଓଡ଼ିଆ (Odia)</option>
                 <option value="Bengali">🌐 বাংলা (Bengali)</option>
             </select>
+
+            <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
+                <span id="theme-icon">☀️ Light</span>
+            </button>
 
             <button onclick="toggleSettings()" class="bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-200 transition">
                 ⚙️ Setup Key
@@ -63,6 +69,16 @@
 
     <!-- Main Container -->
     <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- Active Class Status Banner -->
+        <div class="bg-indigo-600/10 border border-indigo-500/30 rounded-xl px-4 py-2 flex justify-between items-center text-xs">
+            <span class="text-indigo-600 dark:text-indigo-300 font-medium">
+                🎯 वर्तमान मोड: <b id="active-class-display">Class 9 - 10 (Board Level)</b> के अनुसार AI ट्यून किया गया है।
+            </span>
+            <span class="text-amber-500 font-semibold flex items-center gap-1">
+                🔥 <span id="streak-count">0</span> Days Streak
+            </span>
+        </div>
 
         <!-- Subject Shortcuts -->
         <div class="flex flex-wrap gap-2 text-xs">
@@ -79,7 +95,7 @@
                 <h3 class="text-sm font-semibold text-indigo-700 dark:text-indigo-300">🔑 OpenRouter API Setup</h3>
                 <span id="key-status" class="text-xs px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-600 dark:text-red-300 border border-red-500/30 font-medium">Key Not Saved</span>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Apni OpenRouter API Key (sk-or-v1-...) yahan enter karein:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">अपनी OpenRouter API Key (sk-or-v1-...) यहाँ एंटर करें:</p>
             <div class="flex flex-col sm:flex-row gap-2">
                 <input type="password" id="custom-api-key" placeholder="Paste your sk-or-v1-... API key" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <button onclick="saveApiKey()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition">Save Key</button>
@@ -102,13 +118,13 @@
             </div>
         </section>
 
-        <!-- AI Flashcard & Quiz Generator -->
+        <!-- AI Flashcard & Quiz Generator (Class-Tailored) -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🎯 AI Flashcard & Quiz Generator</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Topic ka naam likhein aur practice questions generate karein:</p>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🎯 Class-Tailored Quiz & Flashcards</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">टॉपिक का नाम लिखें, AI चुनी हुई क्लास के लेवल के हिसाब से क्विज़ बनाएगा:</p>
             
             <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="quiz-topic" placeholder="e.g., Computer Science, Photosynthesis, Physics" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+                <input type="text" id="quiz-topic" placeholder="e.g., Computer Science, Photosynthesis, Algebra" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
                 <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition shadow-md">
                     Generate Quiz ✨
                 </button>
@@ -126,8 +142,8 @@
 
         <!-- FEATURE 1: Text & Document Summarizer -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">📄 1. Text & Document Summarizer</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Apne lambe notes yahan paste karein, AI instant summary bana dega:</p>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">📄 1. Text & Chapter Summarizer</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">अपने क्लास नोट्स या चैप्टर यहाँ पेस्ट करें:</p>
             <textarea id="doc-input" rows="4" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500" placeholder="Paste text/notes here..."></textarea>
             <button onclick="summarizeDoc()" class="w-full mt-3 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded-xl text-xs transition">Summarize Notes ✨</button>
             <div id="doc-output" class="hidden mt-3 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm"></div>
@@ -136,7 +152,7 @@
         <!-- FEATURE 2: Mind Map Generator -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🧠 2. Visual Mind Map Generator</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Kisi bhi topic ka visual flowchart/mind-map banayein:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">किसी भी टॉपिक का विजुअल फ़्लोचार्ट बनाएँ:</p>
             <div class="flex gap-2 mb-3">
                 <input type="text" id="mindmap-topic" placeholder="e.g., Photosynthesis, Operating System" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <button onclick="generateMindMap()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition">Create Map 🗺️</button>
@@ -146,10 +162,10 @@
             </div>
         </section>
 
-        <!-- FEATURE 3: AI Study Planner -->
+        <!-- FEATURE 3: Class Study Planner -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">📅 3. AI Study Planner & Syllabus Tracker</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Subject aur bache hue din likhein, AI schedule bana dega:</p>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">📅 3. Class Study Planner</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">विषय और बचे हुए दिन लिखें, आपकी क्लास का टाइमटेबल बन जाएगा:</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
                 <input type="text" id="plan-subject" placeholder="Subjects (e.g. Science, Maths)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <input type="number" id="plan-days" placeholder="Days left (e.g. 7)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
@@ -160,10 +176,10 @@
 
         <!-- FEATURE 4: AI Audio Viva Mode -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🔊 4. AI Interactive Viva Mode</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">AI aap se question poochega, aap bol kar answer dein:</p>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🔊 4. Class Viva / Oral Exam Mode</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">आपकी क्लास के स्तर के आधार पर AI आपसे सवाल पूछेगा:</p>
             <div class="flex gap-2 mb-3">
-                <input type="text" id="viva-topic" placeholder="Viva topic (e.g. Newton Laws)" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
+                <input type="text" id="viva-topic" placeholder="Viva topic (e.g. Newton Laws, C++ Loops)" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition">Start Viva 🎙️</button>
             </div>
             <div id="viva-container" class="hidden space-y-3 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm">
@@ -176,16 +192,16 @@
         <!-- Module: AI Doubt Resolver -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <div class="flex justify-between items-center mb-1">
-                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">💡 Instant AI Doubt Resolver</h2>
-                <button onclick="startVoiceInput()" id="mic-btn" class="bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg transition">🎙️ Bolkar poochein</button>
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">💡 Class-Smart AI Doubt Resolver</h2>
+                <button onclick="startVoiceInput()" id="mic-btn" class="bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg transition">🎙️ बोलकर पूछें</button>
             </div>
             <div class="space-y-3 mt-3">
                 <textarea id="ai-query" rows="3" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500" placeholder="Type your doubt..."></textarea>
-                <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl text-xs transition">Uttaram Paayein ✨</button>
+                <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl text-xs transition">उत्तर पाएँ ✨</button>
             </div>
             <div id="ai-response-container" class="hidden mt-4 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm">
                 <div class="flex justify-between items-center mb-2">
-                    <span id="response-lang-tag" class="font-bold text-indigo-600 dark:text-indigo-400">Samadhan:</span>
+                    <span id="response-lang-tag" class="font-bold text-indigo-600 dark:text-indigo-400">समाधान:</span>
                     <button onclick="printSection('ai-response-text')" class="text-xs bg-emerald-100 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 px-2.5 py-1 rounded-lg">📄 Save as PDF</button>
                 </div>
                 <div id="ai-response-text" class="p-2"></div>
@@ -197,7 +213,7 @@
     <div id="printable-area"></div>
 
     <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
-        SD.VidyaFlow • Multi-language AI Study Companion
+        SD.VidyaFlow • Multi-language Class-Smart AI Study Companion
     </footer>
 
     <!-- JS Logic -->
@@ -210,8 +226,19 @@
                 document.getElementById('custom-api-key').value = savedKey;
                 updateKeyStatus(true);
             }
+            const savedClass = localStorage.getItem('sd_user_class');
+            if(savedClass) {
+                document.getElementById('class-select').value = savedClass;
+            }
+            updateClassContext();
             updateStreakUI();
         };
+
+        function updateClassContext() {
+            const selectedClass = document.getElementById('class-select').value;
+            localStorage.setItem('sd_user_class', selectedClass);
+            document.getElementById('active-class-display').innerText = selectedClass;
+        }
 
         function toggleTheme() {
             const html = document.getElementById('html-root');
@@ -243,10 +270,10 @@
 
         function saveApiKey() {
             const keyVal = document.getElementById('custom-api-key').value.trim();
-            if(!keyVal) return alert('Key dalein');
+            if(!keyVal) return alert('Key डालें');
             localStorage.setItem('sd_openrouter_key', keyVal);
             updateKeyStatus(true);
-            alert('API Key secure save ho gayi!');
+            alert('API Key सुरक्षित सेव हो गई!');
         }
 
         function updateKeyStatus(isSet) {
@@ -332,10 +359,12 @@
         async function fetchAI(promptText, systemInstruction) {
             const userKey = localStorage.getItem('sd_openrouter_key') || document.getElementById('custom-api-key').value.trim();
             if(!userKey) {
-                alert('Kripya API Key enter karein.');
+                alert('कृपया अपनी API Key एंटर करें।');
                 return null;
             }
             const lang = document.getElementById('language-select').value;
+            const currentClass = document.getElementById('class-select').value;
+
             try {
                 const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
@@ -343,7 +372,10 @@
                     body: JSON.stringify({
                         "model": "openrouter/auto",
                         "messages": [
-                            { "role": "system", "content": `${systemInstruction} Reply in ${lang}.` },
+                            { 
+                                "role": "system", 
+                                "content": `${systemInstruction} Keep tone, difficulty, complexity, and examples specifically suited for a student in **${currentClass}**. Reply strictly in ${lang}.` 
+                            },
                             { "role": "user", "content": promptText }
                         ]
                     })
@@ -361,9 +393,9 @@
             if (!topic) return;
 
             container.classList.remove('hidden');
-            quizBox.innerHTML = `<span class="text-indigo-500 font-medium">Quiz tayyar ho raha hai... ⏳</span>`;
+            quizBox.innerHTML = `<span class="text-indigo-500 font-medium">Quiz तैयार हो रहा है... ⏳</span>`;
 
-            const res = await fetchAI(`Topic: ${topic}`, "Create 3 practice MCQs with options and correct answers bolded.");
+            const res = await fetchAI(`Topic: ${topic}`, "Create 3 practice MCQs with options and bold answers matched strictly to the difficulty level of the student's class.");
             quizBox.innerHTML = res ? res.replace(/\n/g, '<br>') : `<span class="text-red-500">Error generating quiz.</span>`;
         }
 
@@ -373,7 +405,7 @@
             if(!text.trim()) return;
             out.classList.remove('hidden');
             out.innerHTML = "Summarizing... ⏳";
-            const res = await fetchAI(text, "Summarize this study text clearly into key bullet points and main conclusions.");
+            const res = await fetchAI(text, "Summarize this study text clearly into key bullet points and main conclusions suited for this student level.");
             out.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error generating summary.";
         }
 
@@ -386,7 +418,7 @@
             target.removeAttribute('data-processed');
             target.innerHTML = "Generating Mind Map... ⏳";
             
-            const rawCode = await fetchAI(`Topic: ${topic}`, "Generate ONLY valid Mermaid.js graph code (starting with graph TD) for a mindmap. Do not wrap in markdown code blocks.");
+            const rawCode = await fetchAI(`Topic: ${topic}`, "Generate ONLY valid Mermaid.js graph code (starting with graph TD) for a mindmap suited to this class level. Do not wrap in markdown code blocks.");
             if(rawCode) {
                 const cleanCode = rawCode.replace(/```mermaid/g, '').replace(/```/g, '').trim();
                 target.innerHTML = cleanCode;
@@ -403,7 +435,7 @@
             if(!sub || !days) return;
             out.classList.remove('hidden');
             out.innerHTML = "Creating Timetable... ⏳";
-            const res = await fetchAI(`Subjects: ${sub}, Days left: ${days}`, "Create a structured day-by-day revision study plan.");
+            const res = await fetchAI(`Subjects: ${sub}, Days left: ${days}`, "Create a structured day-by-day revision study plan suited for this class syllabus.");
             out.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error generating plan.";
         }
 
@@ -416,7 +448,7 @@
             container.classList.remove('hidden');
             qEl.innerText = "Asking Question... ⏳";
             
-            const res = await fetchAI(`Topic: ${topic}`, "Ask 1 short direct oral exam (viva) question on this topic.");
+            const res = await fetchAI(`Topic: ${topic}`, "Ask 1 short direct oral exam (viva) question matching this class standard.");
             if(res) {
                 currentVivaQuestion = res;
                 qEl.innerText = "Q: " + res;
@@ -439,7 +471,7 @@
                 const ans = event.results[0][0].transcript;
                 btn.innerText = "🎙️ Answer Now";
                 feedback.innerText = "Your Answer: " + ans + " | Evaluating... ⏳";
-                const evalRes = await fetchAI(`Question: ${currentVivaQuestion}\nStudent Answer: ${ans}`, "Evaluate if this answer is correct or incorrect, and give 1 line explanation.");
+                const evalRes = await fetchAI(`Question: ${currentVivaQuestion}\nStudent Answer: ${ans}`, "Evaluate if this answer is correct or incorrect, and give 1 line explanation suitable for this grade.");
                 feedback.innerHTML = evalRes ? "<b>Feedback:</b> " + evalRes : "Error evaluating.";
             };
         }
@@ -451,7 +483,7 @@
             if(!query.trim()) return;
             container.classList.remove('hidden');
             respBox.innerHTML = "AI thinking... ⏳";
-            const res = await fetchAI(query, "You are SD.VidyaFlow AI tutor. Answer accurately.");
+            const res = await fetchAI(query, "You are SD.VidyaFlow AI tutor. Answer accurately according to student class level.");
             respBox.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error.";
         }
 
