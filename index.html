@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root" class="dark">
+<html lang="or" id="html-root" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VidyaFlow - Class-Smart AI Study Suite</title>
+    <title>SD.VidyaFlow - Class-Smart AI Study Companion</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -29,13 +29,33 @@
             </div>
         </div>
 
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2 flex-wrap gap-2">
+            <!-- Class Selector -->
+            <select id="class-select" onchange="updateClassMode()" class="bg-indigo-950 border border-indigo-700 text-indigo-200 text-xs rounded-xl px-3 py-2 font-semibold focus:outline-none">
+                <option value="9-10">🎓 Class 9 - 10 (Board Level)</option>
+                <option value="11-12">🎓 Class 11 - 12 (Higher Secondary)</option>
+                <option value="UG-PG">🎓 College / UG / PG Level</option>
+            </select>
+
+            <!-- Language Selector -->
+            <select id="lang-select" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-2 font-medium focus:outline-none">
+                <option value="en">🌐 English</option>
+                <option value="or">🌐 ଓଡ଼ିଆ (Odia)</option>
+                <option value="hi">🌐 हिंदी (Hindi)</option>
+                <option value="bn">🌐 বাংলা (Bengali)</option>
+            </select>
+
             <!-- Help Guide Button -->
             <button onclick="toggleHelpModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center space-x-1 shadow-md shadow-indigo-600/30">
                 <span>❓</span> <span>Help & Feature Guide</span>
             </button>
+
             <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
                 <span id="theme-icon">☀️ Light</span>
+            </button>
+
+            <button onclick="alert('API Key configured in worker backend!')" class="bg-slate-800 text-slate-300 text-xs px-3 py-2 rounded-xl border border-slate-700 hover:bg-slate-700 transition">
+                ⚙️ Setup Key
             </button>
         </div>
     </header>
@@ -88,25 +108,44 @@
     <!-- Main Content -->
     <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
 
+        <!-- Banner Info -->
+        <div class="flex justify-between items-center bg-indigo-950/60 border border-indigo-800/50 rounded-2xl p-3 px-5 text-xs text-indigo-200">
+            <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">Class 9 and 10 Board</strong></div>
+            <div class="flex items-center space-x-1">🔥 <span>0 Days Streak</span></div>
+        </div>
+
+        <!-- Quick Topics -->
+        <div class="flex items-center space-x-2 text-xs overflow-x-auto pb-1">
+            <span class="text-slate-400 font-semibold">Quick Topics:</span>
+            <button onclick="setQuickTopic('Computer Science')" class="bg-slate-800 hover:bg-slate-700 text-indigo-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">💻 Computer Science</button>
+            <button onclick="setQuickTopic('Physics')" class="bg-slate-800 hover:bg-slate-700 text-emerald-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">❄️ Physics</button>
+            <button onclick="setQuickTopic('Math')" class="bg-slate-800 hover:bg-slate-700 text-amber-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">📐 Math</button>
+            <button onclick="setQuickTopic('Biology')" class="bg-slate-800 hover:bg-slate-700 text-green-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">🌱 Biology</button>
+        </div>
+
         <!-- 1. Focus Sprint Timer -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md text-center space-y-4">
-            <h2 class="text-sm font-bold text-indigo-500 uppercase tracking-wider">🎯 Focus Sprint & Goal Tracker</h2>
-            <div class="text-5xl font-extrabold text-slate-800 dark:text-slate-100" id="timer-display">25:00</div>
+            <div class="flex justify-between items-center text-xs text-slate-400 font-semibold">
+                <span class="uppercase tracking-wider text-indigo-400">🎯 FOCUS SPRINT & GOAL TRACKER</span>
+                <span>Sprints Today: <strong class="text-indigo-400">0/4</strong></span>
+            </div>
+            <div class="text-6xl font-extrabold text-slate-800 dark:text-slate-100 py-2" id="timer-display">25:00</div>
             <div class="flex justify-center space-x-3">
-                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-md transition">Start</button>
-                <button onclick="pauseTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">Pause</button>
-                <button onclick="resetTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">Reset</button>
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-md transition">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Reset</button>
             </div>
         </div>
 
         <!-- 2. Quiz Generator -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>🎯</span> <span>Class-Tailored Quiz & Flashcards</span>
             </h2>
+            <p class="text-xs text-slate-400">Type topic name, AI will generate questions suited to your grade:</p>
             <div class="flex gap-2">
-                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Enter topic name (e.g. Computer Science)...">
-                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Computer Science)...">
+                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
                     <span>Generate Quiz</span> <span>✨</span>
                 </button>
             </div>
@@ -115,10 +154,11 @@
 
         <!-- 3. Text Summarizer -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>📜</span> <span>1. Text & Chapter Summarizer</span>
             </h2>
-            <textarea id="summary-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Paste your notes or text here..."></textarea>
+            <p class="text-xs text-slate-400">Paste your notes or text here, AI will generate a concise summary:</p>
+            <textarea id="summary-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Paste text/notes here..."></textarea>
             <button onclick="summarizeText()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Summarize Notes</span> <span>✨</span>
             </button>
@@ -127,12 +167,13 @@
 
         <!-- 4. Visual Mind Map -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>🧠</span> <span>2. Visual Mind Map Generator</span>
             </h2>
+            <p class="text-xs text-slate-400">Create a visual flowchart for any study topic:</p>
             <div class="flex gap-2">
-                <input type="text" id="map-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="e.g. Photosynthesis, Operating System">
-                <button onclick="createMindMap()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                <input type="text" id="map-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="e.g., Photosynthesis, Operating System">
+                <button onclick="createMindMap()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
                     <span>Create Map</span> <span>🗺️</span>
                 </button>
             </div>
@@ -141,12 +182,13 @@
 
         <!-- 5. Study Planner -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>📅</span> <span>3. Class Study Planner</span>
             </h2>
+            <p class="text-xs text-slate-400">Enter subjects and days left to get a structured timetable:</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <input type="text" id="plan-subjects" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Subjects (e.g. Science, Maths)">
-                <input type="number" id="plan-days" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Days left (e.g. 7)">
+                <input type="text" id="plan-subjects" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Subjects (e.g. Science, Maths)">
+                <input type="number" id="plan-days" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Days left (e.g. 7)">
             </div>
             <button onclick="createPlanner()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Create Timetable</span> <span>📅</span>
@@ -156,12 +198,13 @@
 
         <!-- 6. Oral Exam / Viva Mode -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>🎙️</span> <span>4. Class Viva / Oral Exam Mode</span>
             </h2>
+            <p class="text-xs text-slate-400">AI will ask questions, answer via voice input:</p>
             <div class="flex gap-2">
-                <input type="text" id="viva-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Viva topic (e.g. Newton Laws, C++)">
-                <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                <input type="text" id="viva-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Viva topic (e.g. Newton Laws, C++)">
+                <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
                     <span>Start Viva</span> <span>🎙️</span>
                 </button>
             </div>
@@ -171,7 +214,7 @@
         <!-- 7. Instant AI Doubt Resolver with Voice Notes Reader -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
             <div class="flex justify-between items-center">
-                <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                     <span>💡</span> <span>Instant AI Doubt Resolver</span>
                 </h2>
                 <button onclick="startVoiceInput()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-lg transition border border-slate-300 dark:border-slate-600">
@@ -200,10 +243,10 @@
     </footer>
 
     <script>
-        // Modal & Theme
         function toggleHelpModal() {
             document.getElementById('help-modal').classList.toggle('hidden');
         }
+
         function toggleTheme() {
             const html = document.getElementById('html-root');
             const icon = document.getElementById('theme-icon');
@@ -214,6 +257,18 @@
                 html.classList.add('dark');
                 icon.innerText = "☀️ Light";
             }
+        }
+
+        function updateClassMode() {
+            const val = document.getElementById('class-select').value;
+            const modeText = document.getElementById('mode-text');
+            if(val === '9-10') modeText.innerText = "Class 9 and 10 Board";
+            else if(val === '11-12') modeText.innerText = "Class 11 and 12 Higher Secondary";
+            else modeText.innerText = "College / UG / PG Level";
+        }
+
+        function setQuickTopic(topic) {
+            document.getElementById('quiz-topic').value = topic;
         }
 
         // Timer
