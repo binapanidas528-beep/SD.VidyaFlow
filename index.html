@@ -79,17 +79,55 @@
                 <h3 class="text-sm font-semibold text-indigo-700 dark:text-indigo-300">🔑 OpenRouter API Setup</h3>
                 <span id="key-status" class="text-xs px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-600 dark:text-red-300 border border-red-500/30 font-medium">Key Not Saved</span>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">अपनी OpenRouter API Key (sk-or-v1-...) यहाँ एंटर करें:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Apni OpenRouter API Key (sk-or-v1-...) yahan enter karein:</p>
             <div class="flex flex-col sm:flex-row gap-2">
                 <input type="password" id="custom-api-key" placeholder="Paste your sk-or-v1-... API key" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <button onclick="saveApiKey()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition">Save Key</button>
             </div>
         </section>
 
-        <!-- FEATURE 1: Text & Document Summarizer (OCR/Notes) -->
+        <!-- Focus Sprint Timer -->
+        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">Focus Sprint & Goal Tracker</h2>
+                <div class="text-xs text-slate-500 dark:text-slate-400">
+                    Sprints Today: <span id="sprint-count" class="text-indigo-600 dark:text-indigo-300 font-bold">0</span>/4
+                </div>
+            </div>
+            <div class="text-5xl md:text-6xl font-bold my-2 text-center tracking-tight font-mono text-indigo-600 dark:text-indigo-300" id="timer-display">25:00</div>
+            <div class="flex justify-center space-x-3 mt-4">
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-medium shadow-md transition">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-5 py-2 rounded-lg font-medium transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-5 py-2 rounded-lg font-medium transition">Reset</button>
+            </div>
+        </section>
+
+        <!-- AI Flashcard & Quiz Generator -->
+        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🎯 AI Flashcard & Quiz Generator</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Topic ka naam likhein aur practice questions generate karein:</p>
+            
+            <div class="flex flex-col sm:flex-row gap-2 mb-4">
+                <input type="text" id="quiz-topic" placeholder="e.g., Computer Science, Photosynthesis, Physics" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition shadow-md">
+                    Generate Quiz ✨
+                </button>
+            </div>
+
+            <div id="quiz-box-container" class="hidden">
+                <div class="flex justify-end mb-2">
+                    <button onclick="printSection('quiz-box')" class="text-xs bg-emerald-100 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 px-2.5 py-1 rounded-lg transition">
+                        📄 Save Quiz as PDF
+                    </button>
+                </div>
+                <div id="quiz-box" class="space-y-3 p-4 bg-slate-50 dark:bg-slate-900/90 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm"></div>
+            </div>
+        </section>
+
+        <!-- FEATURE 1: Text & Document Summarizer -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">📄 1. Text & Document Summarizer</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">अपने लंबे नोट्स यहाँ पेस्ट करें, AI तुरंत उनकी समरी और मुख्य पॉइंट्स बना देगा:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Apne lambe notes yahan paste karein, AI instant summary bana dega:</p>
             <textarea id="doc-input" rows="4" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500" placeholder="Paste text/notes here..."></textarea>
             <button onclick="summarizeDoc()" class="w-full mt-3 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded-xl text-xs transition">Summarize Notes ✨</button>
             <div id="doc-output" class="hidden mt-3 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm"></div>
@@ -98,7 +136,7 @@
         <!-- FEATURE 2: Mind Map Generator -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🧠 2. Visual Mind Map Generator</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">किसी भी विषय का विजुअल फ़्लोचार्ट/माइंड-मैप बनाएँ:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Kisi bhi topic ka visual flowchart/mind-map banayein:</p>
             <div class="flex gap-2 mb-3">
                 <input type="text" id="mindmap-topic" placeholder="e.g., Photosynthesis, Operating System" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <button onclick="generateMindMap()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition">Create Map 🗺️</button>
@@ -111,7 +149,7 @@
         <!-- FEATURE 3: AI Study Planner -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">📅 3. AI Study Planner & Syllabus Tracker</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">विषय और बचे हुए दिन लिखें, AI शेड्यूल बना देगा:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Subject aur bache hue din likhein, AI schedule bana dega:</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
                 <input type="text" id="plan-subject" placeholder="Subjects (e.g. Science, Maths)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <input type="number" id="plan-days" placeholder="Days left (e.g. 7)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
@@ -123,7 +161,7 @@
         <!-- FEATURE 4: AI Audio Viva Mode -->
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1">🔊 4. AI Interactive Viva Mode</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">AI आपसे सवाल पूछेगा, आप बोलकर जवाब दें:</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">AI aap se question poochega, aap bol kar answer dein:</p>
             <div class="flex gap-2 mb-3">
                 <input type="text" id="viva-topic" placeholder="Viva topic (e.g. Newton Laws)" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
                 <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition">Start Viva 🎙️</button>
@@ -139,15 +177,15 @@
         <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
             <div class="flex justify-between items-center mb-1">
                 <h2 class="text-lg font-semibold text-slate-900 dark:text-white">💡 Instant AI Doubt Resolver</h2>
-                <button onclick="startVoiceInput()" id="mic-btn" class="bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg transition">🎙️ बोलकर पूछें</button>
+                <button onclick="startVoiceInput()" id="mic-btn" class="bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg transition">🎙️ Bolkar poochein</button>
             </div>
             <div class="space-y-3 mt-3">
                 <textarea id="ai-query" rows="3" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500" placeholder="Type your doubt..."></textarea>
-                <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl text-xs transition">उत्तर पाएँ ✨</button>
+                <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl text-xs transition">Uttaram Paayein ✨</button>
             </div>
             <div id="ai-response-container" class="hidden mt-4 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm">
                 <div class="flex justify-between items-center mb-2">
-                    <span id="response-lang-tag" class="font-bold text-indigo-600 dark:text-indigo-400">समाधान:</span>
+                    <span id="response-lang-tag" class="font-bold text-indigo-600 dark:text-indigo-400">Samadhan:</span>
                     <button onclick="printSection('ai-response-text')" class="text-xs bg-emerald-100 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 px-2.5 py-1 rounded-lg">📄 Save as PDF</button>
                 </div>
                 <div id="ai-response-text" class="p-2"></div>
@@ -172,6 +210,7 @@
                 document.getElementById('custom-api-key').value = savedKey;
                 updateKeyStatus(true);
             }
+            updateStreakUI();
         };
 
         function toggleTheme() {
@@ -187,8 +226,8 @@
         }
 
         function quickSetTopic(topicName) {
-            document.getElementById('ai-query').value = topicName;
-            askAI();
+            document.getElementById('quiz-topic').value = topicName;
+            generateQuiz();
         }
 
         function printSection(elementId) {
@@ -204,10 +243,10 @@
 
         function saveApiKey() {
             const keyVal = document.getElementById('custom-api-key').value.trim();
-            if(!keyVal) return alert('की डालें');
+            if(!keyVal) return alert('Key dalein');
             localStorage.setItem('sd_openrouter_key', keyVal);
             updateKeyStatus(true);
-            alert('API Key सुरक्षित सेव हो गई!');
+            alert('API Key secure save ho gayi!');
         }
 
         function updateKeyStatus(isSet) {
@@ -222,10 +261,78 @@
             document.getElementById('settings-card').classList.toggle('hidden');
         }
 
+        function updateStreakUI() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastActive = localStorage.getItem('sd_last_active');
+            let streak = parseInt(localStorage.getItem('sd_streak_count') || '0');
+            let sprints = parseInt(localStorage.getItem('sd_sprints_today') || '0');
+
+            if (lastActive !== today) {
+                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                if (lastActive !== yesterday && lastActive) streak = 0;
+                sprints = 0;
+                localStorage.setItem('sd_sprints_today', '0');
+            }
+
+            document.getElementById('streak-count').innerText = streak;
+            document.getElementById('sprint-count').innerText = sprints;
+        }
+
+        function registerCompletedSprint() {
+            const today = new Date().toISOString().split('T')[0];
+            let sprints = parseInt(localStorage.getItem('sd_sprints_today') || '0') + 1;
+            let streak = parseInt(localStorage.getItem('sd_streak_count') || '0');
+            const lastActive = localStorage.getItem('sd_last_active');
+
+            if (lastActive !== today) {
+                streak += 1;
+                localStorage.setItem('sd_last_active', today);
+                localStorage.setItem('sd_streak_count', streak.toString());
+            }
+
+            localStorage.setItem('sd_sprints_today', sprints.toString());
+            updateStreakUI();
+        }
+
+        let timeLeft = 25 * 60;
+        let timerId = null;
+
+        function updateDisplay() {
+            const min = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const sec = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${min}:${sec}`;
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerId);
+                    timerId = null;
+                    registerCompletedSprint();
+                    alert('🎉 Focus Sprint Complete!');
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = 25 * 60;
+            updateDisplay();
+        }
+
         async function fetchAI(promptText, systemInstruction) {
             const userKey = localStorage.getItem('sd_openrouter_key') || document.getElementById('custom-api-key').value.trim();
             if(!userKey) {
-                alert('कृपया API Key दर्ज करें।');
+                alert('Kripya API Key enter karein.');
                 return null;
             }
             const lang = document.getElementById('language-select').value;
@@ -246,7 +353,20 @@
             } catch(e) { return null; }
         }
 
-        // 1. Document Summarizer
+        async function generateQuiz() {
+            const topic = document.getElementById('quiz-topic').value.trim();
+            const container = document.getElementById('quiz-box-container');
+            const quizBox = document.getElementById('quiz-box');
+
+            if (!topic) return;
+
+            container.classList.remove('hidden');
+            quizBox.innerHTML = `<span class="text-indigo-500 font-medium">Quiz tayyar ho raha hai... ⏳</span>`;
+
+            const res = await fetchAI(`Topic: ${topic}`, "Create 3 practice MCQs with options and correct answers bolded.");
+            quizBox.innerHTML = res ? res.replace(/\n/g, '<br>') : `<span class="text-red-500">Error generating quiz.</span>`;
+        }
+
         async function summarizeDoc() {
             const text = document.getElementById('doc-input').value;
             const out = document.getElementById('doc-output');
@@ -257,7 +377,6 @@
             out.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error generating summary.";
         }
 
-        // 2. Mind Map Generator
         async function generateMindMap() {
             const topic = document.getElementById('mindmap-topic').value;
             const container = document.getElementById('mindmap-container');
@@ -277,7 +396,6 @@
             }
         }
 
-        // 3. AI Planner
         async function generatePlanner() {
             const sub = document.getElementById('plan-subject').value;
             const days = document.getElementById('plan-days').value;
@@ -289,7 +407,6 @@
             out.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error generating plan.";
         }
 
-        // 4. Viva Mode
         let currentVivaQuestion = "";
         async function startViva() {
             const topic = document.getElementById('viva-topic').value;
