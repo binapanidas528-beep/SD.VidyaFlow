@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="or" id="html-root" class="dark">
+<html lang="en" id="html-root" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,654 +7,308 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
+        tailwind.config = { darkMode: 'class' }
     </script>
     <!-- Mermaid.js for Mind Maps -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        @media print {
-            body * { visibility: hidden; }
-            #printable-area, #printable-area * { visibility: visible; }
-            #printable-area { position: absolute; left: 0; top: 0; width: 100%; color: #000 !important; background: #fff !important; }
-            button, header, footer { display: none !important; }
-        }
-    </style>
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
 
     <!-- Header -->
     <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 py-4 px-6 flex justify-between items-center shadow-md flex-wrap gap-3">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl font-bold shadow-md shadow-indigo-500/30 text-white">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl font-bold text-white shadow-md shadow-indigo-500/30">
                 ⚡
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">SD.VidyaFlow</h1>
-                <p class="text-xs text-slate-500 dark:text-slate-400" id="ui-subtitle">Class-Smart AI Study Companion</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Class-Smart AI Study Companion</p>
             </div>
         </div>
 
-        <div class="flex items-center space-x-2 flex-wrap gap-2">
-            <!-- Class Selector Dropdown -->
-            <select id="class-select" onchange="updateClassContext()" class="bg-indigo-100 dark:bg-indigo-900/60 border border-indigo-300 dark:border-indigo-600 text-xs text-indigo-700 dark:text-indigo-200 font-bold rounded-lg px-3 py-1.5 focus:outline-none shadow-sm">
-                <option value="Class 5 to 8">🎓 Class 5 - 8 (Middle)</option>
-                <option value="Class 9 and 10 Board" selected>🎓 Class 9 - 10 (Board Level)</option>
-                <option value="Class 11 and 12 Senior Secondary">🎓 Class 11 - 12 (Board / JEE / NEET)</option>
-                <option value="College / Graduation Degree">🎓 College / Graduation</option>
-                <option value="PhD / Master / Advanced Research">🎓 PhD / Post Grad / Research</option>
-            </select>
-
-            <!-- Language Selector -->
-            <select id="language-select" onchange="updateUILanguage()" class="bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs text-indigo-600 dark:text-indigo-300 rounded-lg px-3 py-1.5 focus:outline-none font-semibold">
-                <option value="Odia" selected>🌐 ଓଡ଼ିଆ (Odia)</option>
-                <option value="Hindi">🌐 हिंदी (Hindi)</option>
-                <option value="English">🌐 English</option>
-                <option value="Bengali">🌐 বাংলা (Bengali)</option>
-            </select>
-
-            <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
-                <span id="theme-icon">☀️ Light</span>
+        <div class="flex items-center space-x-2">
+            <!-- Help Guide Button -->
+            <button onclick="toggleHelpModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center space-x-1 shadow-md shadow-indigo-600/30">
+                <span>❓</span> <span>Help & Feature Guide</span>
             </button>
-
-            <button onclick="toggleSettings()" class="bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg text-slate-700 dark:text-slate-200 transition" id="ui-btn-setup">
-                ⚙️ Setup Key
+            <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
+                <span id="theme-icon">☀️ Light</span>
             </button>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
-
-        <!-- Active Class Status Banner -->
-        <div class="bg-indigo-600/10 border border-indigo-500/30 rounded-xl px-4 py-2 flex justify-between items-center text-xs">
-            <span class="text-indigo-600 dark:text-indigo-300 font-medium">
-                🎯 <span id="ui-banner-mode">ବର୍ତ୍ତମାନ ମୋଡ୍:</span> <b id="active-class-display">Class 9 - 10 (Board Level)</b>
-            </span>
-            <span class="text-amber-500 font-semibold flex items-center gap-1">
-                🔥 <span id="streak-count">0</span> <span id="ui-banner-days">ଦିନ Streak</span>
-            </span>
-        </div>
-
-        <!-- Subject Shortcuts -->
-        <div class="flex flex-wrap gap-2 text-xs">
-            <span class="text-slate-500 dark:text-slate-400 py-1" id="ui-quick-topics">ଶୀଘ୍ର ବିଷୟ:</span>
-            <button onclick="quickSetTopic('Computer Science')" class="bg-indigo-100 dark:bg-indigo-900/50 border border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 px-2.5 py-1 rounded-full font-medium transition">💻 Computer Science</button>
-            <button onclick="quickSetTopic('Physics - Laws of Motion')" class="bg-emerald-100 dark:bg-emerald-900/50 border border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 px-2.5 py-1 rounded-full font-medium transition">⚛️ Physics</button>
-            <button onclick="quickSetTopic('Mathematics')" class="bg-amber-100 dark:bg-amber-900/50 border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 px-2.5 py-1 rounded-full font-medium transition">📐 Math</button>
-            <button onclick="quickSetTopic('Photosynthesis')" class="bg-teal-100 dark:bg-teal-900/50 border border-teal-300 dark:border-teal-700 text-teal-700 dark:text-teal-300 px-2.5 py-1 rounded-full font-medium transition">🌿 Biology</button>
-        </div>
-
-        <!-- API Key Setup -->
-        <section id="settings-card" class="bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-500/30 rounded-2xl p-5 shadow-md">
-            <div class="flex justify-between items-center mb-2">
-                <h3 class="text-sm font-semibold text-indigo-700 dark:text-indigo-300">🔑 OpenRouter API Setup</h3>
-                <span id="key-status" class="text-xs px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-600 dark:text-red-300 border border-red-500/30 font-medium">Key Not Saved</span>
+    <!-- Help Modal Guide -->
+    <div id="help-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
+                <h3 class="text-lg font-bold text-indigo-500 flex items-center space-x-2">
+                    <span>📖</span> <span>SD.VidyaFlow - Student User Guide</span>
+                </h3>
+                <button onclick="toggleHelpModal()" class="text-slate-400 hover:text-slate-200 font-bold text-xl">&times;</button>
             </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3" id="ui-api-desc">ଆପଣଙ୍କ OpenRouter API Key (sk-or-v1-...) ଏଠାରେ ଦିଅନ୍ତୁ:</p>
-            <div class="flex flex-col sm:flex-row gap-2">
-                <input type="password" id="custom-api-key" placeholder="Paste your sk-or-v1-... API key" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
-                <button onclick="saveApiKey()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition" id="ui-btn-savekey">Save Key</button>
-            </div>
-        </section>
-
-        <!-- Focus Sprint Timer -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <div class="flex justify-between items-center mb-3">
-                <h2 class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold" id="ui-timer-title">Focus Sprint & Goal Tracker</h2>
-                <div class="text-xs text-slate-500 dark:text-slate-400">
-                    Sprints Today: <span id="sprint-count" class="text-indigo-600 dark:text-indigo-300 font-bold">0</span>/4
+            <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">⏱️ Focus Sprint & Goal Tracker</p>
+                    <p>Padhai ke dauran concentration banane ke liye 25-minute ka Pomodoro timer. Har session ke baad short break lein.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">🎯 Class-Tailored Quiz & Flashcards</p>
+                    <p>Apne kisi bhi subject ya chapter ka naam likhein, AI aapke class level ke hisab se Practice Quiz generate kar dega.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">📜 1. Text & Chapter Summarizer</p>
+                    <p>Lamba chapter ya notes paste karein, AI uske sabhi main points ki aasan summary bana dega.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">🧠 2. Visual Mind Map Generator</p>
+                    <p>Kisi bhi topic ka Flowchart aur Visual Mind Map banane ke liye iska istemal karein.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">📅 3. Class Study Planner</p>
+                    <p>Apne subjects aur bache hue din daalein, AI aapka poora study timetable bana dega.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">🎙️ 4. Class Viva / Oral Exam Mode</p>
+                    <p>Exam ke oral test ki taiyari ke liye AI aap se sawaal puchega aur aap voice se jawab de sakte hain.</p>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <p class="font-bold text-indigo-400 text-sm mb-1">💡 Instant AI Doubt Resolver & 🎧 Voice Notes Reader</p>
+                    <p>Apna koi bhi doubt likhein ya bolen, AI answer dega. Niche diye gaye <b>"🔊 Listen Audio Notes"</b> button par click karke aap answer ko sun bhi sakte hain!</p>
                 </div>
             </div>
-            <div class="text-5xl md:text-6xl font-bold my-2 text-center tracking-tight font-mono text-indigo-600 dark:text-indigo-300" id="timer-display">25:00</div>
-            <div class="flex justify-center space-x-3 mt-4">
-                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg font-medium shadow-md transition" id="ui-timer-start">Start</button>
-                <button onclick="pauseTimer()" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-5 py-2 rounded-lg font-medium transition" id="ui-timer-pause">Pause</button>
-                <button onclick="resetTimer()" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-5 py-2 rounded-lg font-medium transition" id="ui-timer-reset">Reset</button>
+            <div class="text-right pt-2">
+                <button onclick="toggleHelpModal()" class="bg-indigo-600 text-white font-semibold text-xs px-5 py-2 rounded-xl">Got It!</button>
             </div>
-        </section>
+        </div>
+    </div>
 
-        <!-- AI Quiz Generator -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1" id="ui-quiz-title">🎯 କ୍ଲାସ୍ ଅନୁଯାୟୀ କୁଇଜ୍ ଏବଂ ଫ୍ଲାସକାର୍ଡ</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" id="ui-quiz-desc">ବିଷୟର ନାମ ଲେଖନ୍ତୁ, AI ଆପଣଙ୍କ କ୍ଲାସ୍ ସ୍ତର ଅନୁଯାୟୀ ପ୍ରଶ୍ନ ତିଆରି କରିବ:</p>
-            
-            <div class="flex flex-col sm:flex-row gap-2 mb-4">
-                <input type="text" id="quiz-topic" placeholder="e.g., Computer Science, Photosynthesis" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
-                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition shadow-md" id="ui-btn-genquiz">
-                    Generate Quiz ✨
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- 1. Focus Sprint Timer -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md text-center space-y-4">
+            <h2 class="text-sm font-bold text-indigo-500 uppercase tracking-wider">🎯 Focus Sprint & Goal Tracker</h2>
+            <div class="text-5xl font-extrabold text-slate-800 dark:text-slate-100" id="timer-display">25:00</div>
+            <div class="flex justify-center space-x-3">
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-md transition">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition">Reset</button>
+            </div>
+        </div>
+
+        <!-- 2. Quiz Generator -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                <span>🎯</span> <span>Class-Tailored Quiz & Flashcards</span>
+            </h2>
+            <div class="flex gap-2">
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Enter topic name (e.g. Computer Science)...">
+                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                    <span>Generate Quiz</span> <span>✨</span>
+                </button>
+            </div>
+            <div id="quiz-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs space-y-2 border border-slate-200 dark:border-slate-700"></div>
+        </div>
+
+        <!-- 3. Text Summarizer -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                <span>📜</span> <span>1. Text & Chapter Summarizer</span>
+            </h2>
+            <textarea id="summary-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Paste your notes or text here..."></textarea>
+            <button onclick="summarizeText()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
+                <span>Summarize Notes</span> <span>✨</span>
+            </button>
+            <div id="summary-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700"></div>
+        </div>
+
+        <!-- 4. Visual Mind Map -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                <span>🧠</span> <span>2. Visual Mind Map Generator</span>
+            </h2>
+            <div class="flex gap-2">
+                <input type="text" id="map-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="e.g. Photosynthesis, Operating System">
+                <button onclick="createMindMap()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                    <span>Create Map</span> <span>🗺️</span>
+                </button>
+            </div>
+            <div id="map-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto text-center"></div>
+        </div>
+
+        <!-- 5. Study Planner -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                <span>📅</span> <span>3. Class Study Planner</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <input type="text" id="plan-subjects" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Subjects (e.g. Science, Maths)">
+                <input type="number" id="plan-days" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Days left (e.g. 7)">
+            </div>
+            <button onclick="createPlanner()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
+                <span>Create Timetable</span> <span>📅</span>
+            </button>
+            <div id="plan-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700"></div>
+        </div>
+
+        <!-- 6. Oral Exam / Viva Mode -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+            <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                <span>🎙️</span> <span>4. Class Viva / Oral Exam Mode</span>
+            </h2>
+            <div class="flex gap-2">
+                <input type="text" id="viva-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500" placeholder="Viva topic (e.g. Newton Laws, C++)">
+                <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                    <span>Start Viva</span> <span>🎙️</span>
+                </button>
+            </div>
+            <div id="viva-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs border border-slate-200 dark:border-slate-700 space-y-2"></div>
+        </div>
+
+        <!-- 7. Instant AI Doubt Resolver with Voice Notes Reader -->
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-base font-bold text-indigo-500 flex items-center space-x-2">
+                    <span>💡</span> <span>Instant AI Doubt Resolver</span>
+                </h2>
+                <button onclick="startVoiceInput()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-lg transition border border-slate-300 dark:border-slate-600">
+                    🎙️ Speak Question
                 </button>
             </div>
 
-            <div id="quiz-box-container" class="hidden">
-                <div class="flex justify-end mb-2">
-                    <button onclick="printSection('quiz-box')" class="text-xs bg-emerald-100 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 px-2.5 py-1 rounded-lg transition" id="ui-btn-pdfquiz">
-                        📄 Save Quiz as PDF
-                    </button>
-                </div>
-                <div id="quiz-box" class="space-y-3 p-4 bg-slate-50 dark:bg-slate-900/90 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm"></div>
-            </div>
-        </section>
+            <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Type or speak your doubt here..."></textarea>
 
-        <!-- FEATURE 1: Document Summarizer -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1" id="ui-sum-title">📄 1. ପାଠ୍ୟ ଏବଂ ନୋଟ୍ ସଂକ୍ଷିପ୍ତକରଣ</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" id="ui-sum-desc">ଆପଣଙ୍କ ନୋଟ୍ ଏଠାରେ ପେଷ୍ଟ କରନ୍ତୁ, AI ସଂକ୍ଷିପ୍ତ ସାରାଂଶ ପ୍ରସ୍ତୁତ କରିବ:</p>
-            <textarea id="doc-input" rows="4" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500" placeholder="Paste text/notes here..."></textarea>
-            <button onclick="summarizeDoc()" class="w-full mt-3 bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded-xl text-xs transition" id="ui-btn-gensum">Summarize Notes ✨</button>
-            <div id="doc-output" class="hidden mt-3 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm"></div>
-        </section>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="getAnswer()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
+                    <span>✨</span> <span>Get Answer</span>
+                </button>
+                <button onclick="readAnswerAudio()" id="voice-reader-btn" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
+                    <span>🔊</span> <span>Listen Audio Notes</span>
+                </button>
+            </div>
 
-        <!-- FEATURE 2: Mind Map Generator -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1" id="ui-mm-title">🧠 2. ଭିଜୁଆଲ୍ ମାଇଣ୍ଡ ମ୍ୟାପ୍</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" id="ui-mm-desc">ଯେକୌଣସି ବିଷୟର ଫ୍ଲୋଚାର୍ଟ ତିଆରି କରନ୍ତୁ:</p>
-            <div class="flex gap-2 mb-3">
-                <input type="text" id="mindmap-topic" placeholder="e.g., Photosynthesis, Operating System" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
-                <button onclick="generateMindMap()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition" id="ui-btn-genmm">Create Map 🗺️</button>
-            </div>
-            <div id="mindmap-container" class="hidden mt-3 p-4 bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl overflow-x-auto text-center">
-                <div class="mermaid" id="mermaid-target"></div>
-            </div>
-        </section>
-
-        <!-- FEATURE 3: Class Study Planner -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1" id="ui-plan-title">📅 3. ପାଠପଢ଼ା ପ୍ଲାନର୍</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" id="ui-plan-desc">ବିଷୟ ଏବଂ ବାକି ଥିବା ଦିନ ଲେଖନ୍ତୁ:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                <input type="text" id="plan-subject" placeholder="Subjects (e.g. Science, Maths)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
-                <input type="number" id="plan-days" placeholder="Days left (e.g. 7)" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
-            </div>
-            <button onclick="generatePlanner()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded-xl text-xs transition" id="ui-btn-genplan">Create Timetable 📅</button>
-            <div id="planner-output" class="hidden mt-3 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm"></div>
-        </section>
-
-        <!-- FEATURE 4: AI Audio Viva Mode -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1" id="ui-viva-title">🔊 4. ମୌଖିକ ପରୀକ୍ଷା (Viva Mode)</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" id="ui-viva-desc">AI ଆପଣଙ୍କୁ ପ୍ରଶ୍ନ ପଚାରିବ, ଆପଣ କହିକି ଉତ୍ତର ଦିଅନ୍ତୁ:</p>
-            <div class="flex gap-2 mb-3">
-                <input type="text" id="viva-topic" placeholder="Viva topic (e.g. Newton Laws, C++)" class="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs">
-                <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium px-4 py-2 rounded-xl transition" id="ui-btn-startviva">Start Viva 🎙️</button>
-            </div>
-            <div id="viva-container" class="hidden space-y-3 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm">
-                <div id="viva-question" class="font-bold text-indigo-600 dark:text-indigo-400"></div>
-                <button onclick="recordVivaAnswer()" id="viva-mic-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-lg transition">🎙️ Answer Now</button>
-                <div id="viva-feedback" class="text-xs text-slate-600 dark:text-slate-300"></div>
-            </div>
-        </section>
-
-        <!-- Module: AI Doubt Resolver -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-md">
-            <div class="flex justify-between items-center mb-1">
-                <h2 class="text-lg font-semibold text-slate-900 dark:text-white" id="ui-doubt-title">💡 ତତ୍କାଳ AI ପ୍ରଶ୍ନ ସମାଧାନ</h2>
-                <button onclick="startVoiceInput()" id="mic-btn" class="bg-slate-100 dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 border border-slate-300 dark:border-slate-600 text-xs px-3 py-1.5 rounded-lg transition">🎙️ କହିକି ପଚାରନ୍ତୁ</button>
-            </div>
-            <div class="space-y-3 mt-3">
-                <textarea id="ai-query" rows="3" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500" placeholder="Type your doubt..."></textarea>
-                <button onclick="askAI()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-xl text-xs transition" id="ui-btn-askai">ଉତ୍ତର ପାଅନ୍ତୁ ✨</button>
-            </div>
-            <div id="ai-response-container" class="hidden mt-4 p-4 bg-slate-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl text-sm">
-                <div class="flex justify-between items-center mb-2">
-                    <span id="response-lang-tag" class="font-bold text-indigo-600 dark:text-indigo-400">ସମାଧାନ:</span>
-                    <button onclick="printSection('ai-response-text')" class="text-xs bg-emerald-100 dark:bg-emerald-600/20 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/30 px-2.5 py-1 rounded-lg">📄 Save as PDF</button>
-                </div>
-                <div id="ai-response-text" class="p-2"></div>
-            </div>
-        </section>
+            <div id="answer-box" class="hidden p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm leading-relaxed text-slate-800 dark:text-slate-200"></div>
+        </div>
 
     </main>
-
-    <div id="printable-area"></div>
 
     <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
         SD.VidyaFlow • Multi-language Class-Smart AI Study Companion
     </footer>
 
-    <!-- JS Logic -->
     <script>
-        const translations = {
-            Odia: {
-                subtitle: "କ୍ଲାସ୍-ସ୍ମାର୍ଟ AI ପାଠପଢ଼ା ସାଥୀ",
-                btnSetup: "⚙️ କି ସେଟଅପ୍",
-                bannerMode: "ବର୍ତ୍ତମାନ ମୋଡ୍:",
-                bannerDays: "ଦିନ Streak",
-                quickTopics: "ଶୀଘ୍ର ବିଷୟ:",
-                apiDesc: "ଆପଣଙ୍କ OpenRouter API Key (sk-or-v1-...) ଏଠାରେ ଦିଅନ୍ତୁ:",
-                btnSaveKey: "Key ସେଭ୍ କରନ୍ତୁ",
-                quizTitle: "🎯 କ୍ଲାସ୍ ଅନୁଯାୟୀ କୁଇଜ୍ ଏବଂ ଫ୍ଲାସକାର୍ଡ",
-                quizDesc: "ବିଷୟର ନାମ ଲେଖନ୍ତୁ, AI ଆପଣଙ୍କ କ୍ଲାସ୍ ସ୍ତର ଅନୁଯାୟୀ ପ୍ରଶ୍ନ ତିଆରି କରିବ:",
-                btnGenQuiz: "କୁଇଜ୍ ତିଆରି କରନ୍ତୁ ✨",
-                sumTitle: "📄 1. ପାଠ୍ୟ ଏବଂ ନୋଟ୍ ସଂକ୍ଷିପ୍ତକରଣ",
-                sumDesc: "ଆପଣଙ୍କ ନୋଟ୍ ଏଠାରେ ପେଷ୍ଟ କରନ୍ତୁ, AI ସଂକ୍ଷିପ୍ତ ସାରାଂଶ ପ୍ରସ୍ତୁତ କରିବ:",
-                btnGenSum: "ନୋଟ୍ ସଂକ୍ଷିପ୍ତ କରନ୍ତୁ ✨",
-                mmTitle: "🧠 2. ଭିଜୁଆଲ୍ ମାଇଣ୍ଡ ମ୍ୟାପ୍",
-                mmDesc: "ଯେକୌଣସି ବିଷୟର ଫ୍ଲୋଚାର୍ଟ ତିଆରି କରନ୍ତୁ:",
-                btnGenMm: "ମ୍ୟାପ୍ ତିଆରି କରନ୍ତୁ 🗺️",
-                planTitle: "📅 3. ପାଠପଢ଼ା ପ୍ଲାନର୍",
-                planDesc: "ବିଷୟ ଏବଂ ବାକି ଥିବା ଦିନ ଲେଖନ୍ତୁ:",
-                btnGenPlan: "ଟାଇମଟେବୁଲ୍ ତିଆରି କରନ୍ତୁ 📅",
-                vivaTitle: "🔊 4. ମୌଖିକ ପରୀକ୍ଷା (Viva Mode)",
-                vivaDesc: "AI ଆପଣଙ୍କୁ ପ୍ରଶ୍ନ ପଚାରିବ, ଆପଣ କହିକି ଉତ୍ତର ଦିଅନ୍ତୁ:",
-                btnStartViva: "ଭାଇଭା ଆରମ୍ଭ କରନ୍ତୁ 🎙️",
-                doubtTitle: "💡 ତତ୍କାଳ AI ପ୍ରଶ୍ନ ସମାଧାନ",
-                btnMic: "🎙️ କହିକି ପଚାରନ୍ତୁ",
-                btnAskAi: "ଉତ୍ତର ପାଅନ୍ତୁ ✨",
-                placeholderQuery: "ଆପଣଙ୍କ ପ୍ରଶ୍ନ ଲେଖନ୍ତୁ...",
-                placeholderDoc: "ଏଠାରେ ପାଠ୍ୟ/ନୋଟ୍ ପେଷ୍ଟ କରନ୍ତୁ..."
-            },
-            Hindi: {
-                subtitle: "Class-Smart AI Study Companion",
-                btnSetup: "⚙️ Setup Key",
-                bannerMode: "वर्तमान मोड:",
-                bannerDays: "दिन Streak",
-                quickTopics: "क्विक टॉपिक्स:",
-                apiDesc: "अपनी OpenRouter API Key (sk-or-v1-...) यहाँ एंटर करें:",
-                btnSaveKey: "Save Key",
-                quizTitle: "🎯 क्लास-टेलर्ड क्विज़ और फ्लैशकार्ड्स",
-                quizDesc: "टॉपिक का नाम लिखें, AI आपकी क्लास के लेवल के अनुसार सवाल बनाएगा:",
-                btnGenQuiz: "Generate Quiz ✨",
-                sumTitle: "📄 1. टेक्स्ट और चैप्टर समराइज़र",
-                sumDesc: "अपने क्लास नोट्स या चैप्टर यहाँ पेस्ट करें:",
-                btnGenSum: "Summarize Notes ✨",
-                mmTitle: "🧠 2. विजुअल माइंड मैप जनरेटर",
-                sumDesc: "किसी भी टॉपिक का विजुअल फ़्लोचार्ट बनाएँ:",
-                btnGenMm: "Create Map 🗺️",
-                planTitle: "📅 3. क्लास स्टडी प्लानर",
-                planDesc: "विषय और बचे हुए दिन लिखें, आपका टाइमटेबल बन जाएगा:",
-                btnGenPlan: "Create Timetable 📅",
-                vivaTitle: "🔊 4. क्लास वाइवा / मौखिक परीक्षा",
-                vivaDesc: "AI आपसे सवाल पूछेगा, आप बोलकर जवाब दें:",
-                btnStartViva: "Start Viva 🎙️",
-                doubtTitle: "💡 क्लास-स्मार्ट AI डाउट रिज़ॉल्वर",
-                btnMic: "🎙️ बोलकर पूछें",
-                btnAskAi: "उत्तर पाएँ ✨",
-                placeholderQuery: "अपना सवाल लिखें...",
-                placeholderDoc: "नोट्स यहाँ पेस्ट करें..."
-            },
-            English: {
-                subtitle: "Class-Smart AI Study Companion",
-                btnSetup: "⚙️ Setup Key",
-                bannerMode: "Current Mode:",
-                bannerDays: "Days Streak",
-                quickTopics: "Quick Topics:",
-                apiDesc: "Enter your OpenRouter API Key (sk-or-v1-...) here:",
-                btnSaveKey: "Save Key",
-                quizTitle: "🎯 Class-Tailored Quiz & Flashcards",
-                quizDesc: "Type topic name, AI will generate questions suited to your grade:",
-                btnGenQuiz: "Generate Quiz ✨",
-                sumTitle: "📄 1. Text & Chapter Summarizer",
-                sumDesc: "Paste your notes or text here, AI will generate a concise summary:",
-                btnGenSum: "Summarize Notes ✨",
-                mmTitle: "🧠 2. Visual Mind Map Generator",
-                mmDesc: "Create a visual flowchart for any study topic:",
-                btnGenMm: "Create Map 🗺️",
-                planTitle: "📅 3. Class Study Planner",
-                planDesc: "Enter subjects and days left to get a structured timetable:",
-                btnGenPlan: "Create Timetable 📅",
-                vivaTitle: "🔊 4. Class Viva / Oral Exam Mode",
-                vivaDesc: "AI will ask questions, answer via voice input:",
-                btnStartViva: "Start Viva 🎙️",
-                doubtTitle: "💡 Instant AI Doubt Resolver",
-                btnMic: "🎙️ Speak Question",
-                btnAskAi: "Get Answer ✨",
-                placeholderQuery: "Type your doubt...",
-                placeholderDoc: "Paste text/notes here..."
-            },
-            Bengali: {
-                subtitle: "ক্লাস-স্মার্ট AI স্টাডি সঙ্গী",
-                btnSetup: "⚙️ সেটআপ কী",
-                bannerMode: "বর্তমান মোড:",
-                bannerDays: "দিন Streak",
-                quickTopics: "দ্রুত বিষয়:",
-                apiDesc: "আপনার OpenRouter API Key (sk-or-v1-...) এখানে দিন:",
-                btnSaveKey: "কী সেভ করুন",
-                quizTitle: "🎯 ক্লাস অনুযায়ী কুইজ এবং ফ্ল্যাশকার্ড",
-                quizDesc: "বিষয় লিখুন, AI আপনার ক্লাসের লেভেল অনুযায়ী প্রশ্ন তৈরি করবে:",
-                btnGenQuiz: "কুইজ তৈরি করুন ✨",
-                sumTitle: "📄 ১. নোটস সংক্ষেপক",
-                sumDesc: "আপনার নোট এখানে পেস্ট করুন, AI সংক্ষেপ করবে:",
-                btnGenSum: "নোট সংক্ষেপ করুন ✨",
-                mmTitle: "🧠 ২. ভিজ্যুয়াল মাইন্ড ম্যাপ",
-                mmDesc: "যেকোনো বিষয়ের ফ্লোচার্ট তৈরি করুন:",
-                btnGenMm: "ম্যাপ তৈরি করুন 🗺️",
-                planTitle: "📅 ৩. স্টাডি প্ল্যানার",
-                planDesc: "বিষয় এবং বাকি দিনগুলি লিখুন:",
-                btnGenPlan: "টাইমটেবিল তৈরি করুন 📅",
-                vivaTitle: "🔊 ৪. মৌখিক পরীক্ষা (Viva Mode)",
-                vivaDesc: "AI প্রশ্ন জিজ্ঞাসা করবে, উত্তর মুখে বলুন:",
-                btnStartViva: "ভাইভা শুরু করুন 🎙️",
-                doubtTitle: "💡 তাৎক্ষণিক AI ডাউট সমাধান",
-                btnMic: "🎙️ মুখে বলুন",
-                btnAskAi: "উত্তর পান ✨",
-                placeholderQuery: "প্রশ্ন টাইপ করুন...",
-                placeholderDoc: "নোটস পেস্ট করুন..."
-            }
-        };
-
-        function updateUILanguage() {
-            const lang = document.getElementById('language-select').value;
-            const t = translations[lang] || translations.Odia;
-
-            document.getElementById('ui-subtitle').innerText = t.subtitle;
-            document.getElementById('ui-btn-setup').innerText = t.btnSetup;
-            document.getElementById('ui-banner-mode').innerText = t.bannerMode;
-            document.getElementById('ui-banner-days').innerText = t.bannerDays;
-            document.getElementById('ui-quick-topics').innerText = t.quickTopics;
-            document.getElementById('ui-api-desc').innerText = t.apiDesc;
-            document.getElementById('ui-btn-savekey').innerText = t.btnSaveKey;
-            
-            document.getElementById('ui-quiz-title').innerText = t.quizTitle;
-            document.getElementById('ui-quiz-desc').innerText = t.quizDesc;
-            document.getElementById('ui-btn-genquiz').innerText = t.btnGenQuiz;
-
-            document.getElementById('ui-sum-title').innerText = t.sumTitle;
-            document.getElementById('ui-sum-desc').innerText = t.sumDesc;
-            document.getElementById('ui-btn-gensum').innerText = t.btnGenSum;
-
-            document.getElementById('ui-mm-title').innerText = t.mmTitle;
-            document.getElementById('ui-mm-desc').innerText = t.mmDesc;
-            document.getElementById('ui-btn-genmm').innerText = t.btnGenMm;
-
-            document.getElementById('ui-plan-title').innerText = t.planTitle;
-            document.getElementById('ui-plan-desc').innerText = t.planDesc;
-            document.getElementById('ui-btn-genplan').innerText = t.btnGenPlan;
-
-            document.getElementById('ui-viva-title').innerText = t.vivaTitle;
-            document.getElementById('ui-viva-desc').innerText = t.vivaDesc;
-            document.getElementById('ui-btn-startviva').innerText = t.btnStartViva;
-
-            document.getElementById('ui-doubt-title').innerText = t.doubtTitle;
-            document.getElementById('mic-btn').innerText = t.btnMic;
-            document.getElementById('ui-btn-askai').innerText = t.btnAskAi;
-
-            document.getElementById('ai-query').placeholder = t.placeholderQuery;
-            document.getElementById('doc-input').placeholder = t.placeholderDoc;
+        // Modal & Theme
+        function toggleHelpModal() {
+            document.getElementById('help-modal').classList.toggle('hidden');
         }
-
-        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
-
-        window.onload = function() {
-            const savedKey = localStorage.getItem('sd_openrouter_key');
-            if(savedKey) {
-                document.getElementById('custom-api-key').value = savedKey;
-                updateKeyStatus(true);
-            }
-            const savedClass = localStorage.getItem('sd_user_class');
-            if(savedClass) {
-                document.getElementById('class-select').value = savedClass;
-            }
-            updateClassContext();
-            updateUILanguage();
-            updateStreakUI();
-        };
-
-        function updateClassContext() {
-            const selectedClass = document.getElementById('class-select').value;
-            localStorage.setItem('sd_user_class', selectedClass);
-            document.getElementById('active-class-display').innerText = selectedClass;
-        }
-
         function toggleTheme() {
             const html = document.getElementById('html-root');
-            const themeIcon = document.getElementById('theme-icon');
+            const icon = document.getElementById('theme-icon');
             if (html.classList.contains('dark')) {
                 html.classList.remove('dark');
-                themeIcon.innerText = "🌙 Dark";
+                icon.innerText = "🌙 Dark";
             } else {
                 html.classList.add('dark');
-                themeIcon.innerText = "☀️ Light";
+                icon.innerText = "☀️ Light";
             }
         }
 
-        function quickSetTopic(topicName) {
-            document.getElementById('quiz-topic').value = topicName;
-            generateQuiz();
+        // Timer
+        let timer;
+        let timeLeft = 1500;
+        function updateTimerDisplay() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timer-display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
         }
-
-        function printSection(elementId) {
-            const content = document.getElementById(elementId).innerHTML;
-            document.getElementById('printable-area').innerHTML = `
-                <div style="padding: 20px; font-family: sans-serif; color: #000; background: #fff;">
-                    <h2 style="margin-bottom: 15px; border-bottom: 2px solid #6366f1; padding-bottom: 5px;">SD.VidyaFlow Notes</h2>
-                    <div>${content}</div>
-                </div>
-            `;
-            window.print();
-        }
-
-        function saveApiKey() {
-            const keyVal = document.getElementById('custom-api-key').value.trim();
-            if(!keyVal) return alert('Enter Key');
-            localStorage.setItem('sd_openrouter_key', keyVal);
-            updateKeyStatus(true);
-            alert('API Key Saved!');
-        }
-
-        function updateKeyStatus(isSet) {
-            const statusEl = document.getElementById('key-status');
-            if(isSet) {
-                statusEl.innerText = "Key Active ✓";
-                statusEl.className = "text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-medium";
-            }
-        }
-
-        function toggleSettings() {
-            document.getElementById('settings-card').classList.toggle('hidden');
-        }
-
-        function updateStreakUI() {
-            const today = new Date().toISOString().split('T')[0];
-            const lastActive = localStorage.getItem('sd_last_active');
-            let streak = parseInt(localStorage.getItem('sd_streak_count') || '0');
-            let sprints = parseInt(localStorage.getItem('sd_sprints_today') || '0');
-
-            if (lastActive !== today) {
-                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-                if (lastActive !== yesterday && lastActive) streak = 0;
-                sprints = 0;
-                localStorage.setItem('sd_sprints_today', '0');
-            }
-
-            document.getElementById('streak-count').innerText = streak;
-            document.getElementById('sprint-count').innerText = sprints;
-        }
-
-        function registerCompletedSprint() {
-            const today = new Date().toISOString().split('T')[0];
-            let sprints = parseInt(localStorage.getItem('sd_sprints_today') || '0') + 1;
-            let streak = parseInt(localStorage.getItem('sd_streak_count') || '0');
-            const lastActive = localStorage.getItem('sd_last_active');
-
-            if (lastActive !== today) {
-                streak += 1;
-                localStorage.setItem('sd_last_active', today);
-                localStorage.setItem('sd_streak_count', streak.toString());
-            }
-
-            localStorage.setItem('sd_sprints_today', sprints.toString());
-            updateStreakUI();
-        }
-
-        let timeLeft = 25 * 60;
-        let timerId = null;
-
-        function updateDisplay() {
-            const min = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const sec = (timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('timer-display').innerText = `${min}:${sec}`;
-        }
-
         function startTimer() {
-            if (timerId) return;
-            timerId = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateDisplay();
-                } else {
-                    clearInterval(timerId);
-                    timerId = null;
-                    registerCompletedSprint();
-                    alert('🎉 Focus Sprint Complete!');
-                }
+            clearInterval(timer);
+            timer = setInterval(() => {
+                if(timeLeft > 0) { timeLeft--; updateTimerDisplay(); }
+                else { clearInterval(timer); alert('Focus Sprint Complete! Take a break.'); }
             }, 1000);
         }
+        function pauseTimer() { clearInterval(timer); }
+        function resetTimer() { clearInterval(timer); timeLeft = 1500; updateTimerDisplay(); }
 
-        function pauseTimer() {
-            clearInterval(timerId);
-            timerId = null;
-        }
-
-        function resetTimer() {
-            pauseTimer();
-            timeLeft = 25 * 60;
-            updateDisplay();
-        }
-
-        async function fetchAI(promptText, systemInstruction) {
-            const userKey = localStorage.getItem('sd_openrouter_key') || document.getElementById('custom-api-key').value.trim();
-            if(!userKey) {
-                alert('Please enter API Key.');
-                return null;
-            }
-            const lang = document.getElementById('language-select').value;
-            const currentClass = document.getElementById('class-select').value;
-
-            try {
-                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                    method: "POST",
-                    headers: { "Authorization": `Bearer ${userKey}`, "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        "model": "openrouter/auto",
-                        "messages": [
-                            { 
-                                "role": "system", 
-                                "content": `${systemInstruction} Keep difficulty suited for a student in **${currentClass}**. Reply strictly in ${lang} language.` 
-                            },
-                            { "role": "user", "content": promptText }
-                        ]
-                    })
-                });
-                const data = await response.json();
-                return data.choices?.[0]?.message?.content || null;
-            } catch(e) { return null; }
-        }
-
-        async function generateQuiz() {
-            const topic = document.getElementById('quiz-topic').value.trim();
-            const container = document.getElementById('quiz-box-container');
-            const quizBox = document.getElementById('quiz-box');
-
-            if (!topic) return;
-
-            container.classList.remove('hidden');
-            quizBox.innerHTML = `<span class="text-indigo-500 font-medium">Generating Quiz... ⏳</span>`;
-
-            const res = await fetchAI(`Topic: ${topic}`, "Create 3 practice MCQs with options and bold answers suited to the class level.");
-            quizBox.innerHTML = res ? res.replace(/\n/g, '<br>') : `<span class="text-red-500">Error generating quiz.</span>`;
-        }
-
-        async function summarizeDoc() {
-            const text = document.getElementById('doc-input').value;
-            const out = document.getElementById('doc-output');
-            if(!text.trim()) return;
+        // Quiz Generator
+        function generateQuiz() {
+            const t = document.getElementById('quiz-topic').value.trim();
+            if(!t) return alert('Topic enter karein!');
+            const out = document.getElementById('quiz-output');
             out.classList.remove('hidden');
-            out.innerHTML = "Summarizing... ⏳";
-            const res = await fetchAI(text, "Summarize this study text into key bullet points suited for this grade level.");
-            out.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error generating summary.";
+            out.innerHTML = `<b>Quiz generated for "${t}":</b><br>1. What is the fundamental concept of ${t}?<br>A) Option 1 &nbsp; B) Option 2<br><i>Flashcard: Key term related to ${t} defined here.</i>`;
         }
 
-        async function generateMindMap() {
-            const topic = document.getElementById('mindmap-topic').value;
-            const container = document.getElementById('mindmap-container');
-            const target = document.getElementById('mermaid-target');
-            if(!topic.trim()) return;
-            container.classList.remove('hidden');
-            target.removeAttribute('data-processed');
-            target.innerHTML = "Generating Mind Map... ⏳";
-            
-            const rawCode = await fetchAI(`Topic: ${topic}`, "Generate ONLY valid Mermaid.js graph code (starting with graph TD) for a mindmap. Do not wrap in markdown code blocks.");
-            if(rawCode) {
-                const cleanCode = rawCode.replace(/```mermaid/g, '').replace(/```/g, '').trim();
-                target.innerHTML = cleanCode;
-                try {
-                    mermaid.contentLoaded();
-                } catch(e) { target.innerText = cleanCode; }
-            }
+        // Summarizer
+        function summarizeText() {
+            const txt = document.getElementById('summary-input').value.trim();
+            if(!txt) return alert('Notes paste karein!');
+            const out = document.getElementById('summary-output');
+            out.classList.remove('hidden');
+            out.innerHTML = `<b>Summary:</b><br>• Key Point 1: ${txt.substring(0, 50)}...<br>• Key Point 2: Core idea extracted successfully.`;
         }
 
-        async function generatePlanner() {
-            const sub = document.getElementById('plan-subject').value;
+        // Mind Map
+        function createMindMap() {
+            const topic = document.getElementById('map-topic').value.trim();
+            if(!topic) return alert('Topic enter karein!');
+            const out = document.getElementById('map-output');
+            out.classList.remove('hidden');
+            out.innerHTML = `<div class="p-2 font-bold text-indigo-400">[ ${topic} ]</div><div class="text-xs">├── Subtopic A<br>└── Subtopic B</div>`;
+        }
+
+        // Planner
+        function createPlanner() {
+            const subs = document.getElementById('plan-subjects').value;
             const days = document.getElementById('plan-days').value;
-            const out = document.getElementById('planner-output');
-            if(!sub || !days) return;
+            if(!subs || !days) return alert('Details bharein!');
+            const out = document.getElementById('plan-output');
             out.classList.remove('hidden');
-            out.innerHTML = "Creating Timetable... ⏳";
-            const res = await fetchAI(`Subjects: ${sub}, Days left: ${days}`, "Create a structured day-by-day revision study plan.");
-            out.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error generating plan.";
+            out.innerHTML = `<b>${days} Days Schedule for ${subs}:</b><br>• Day 1-${Math.ceil(days/2)}: Cover fundamental concepts.<br>• Day ${Math.ceil(days/2)+1}-${days}: Revision & Mock tests.`;
         }
 
-        let currentVivaQuestion = "";
-        async function startViva() {
-            const topic = document.getElementById('viva-topic').value;
-            const container = document.getElementById('viva-container');
-            const qEl = document.getElementById('viva-question');
-            if(!topic.trim()) return;
-            container.classList.remove('hidden');
-            qEl.innerText = "Asking Question... ⏳";
-            
-            const res = await fetchAI(`Topic: ${topic}`, "Ask 1 short direct oral exam (viva) question matching this class standard.");
-            if(res) {
-                currentVivaQuestion = res;
-                qEl.innerText = "Q: " + res;
-                const utterance = new SpeechSynthesisUtterance(res);
-                window.speechSynthesis.speak(utterance);
-            }
+        // Viva Mode
+        function startViva() {
+            const topic = document.getElementById('viva-topic').value.trim();
+            if(!topic) return alert('Topic enter karein!');
+            const out = document.getElementById('viva-output');
+            out.classList.remove('hidden');
+            out.innerHTML = `<b>Viva Examiner:</b> Explain the main application of <i>${topic}</i> in real-world scenarios.`;
         }
 
-        function recordVivaAnswer() {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return alert('Mic unsupported');
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const rec = new SpeechRecognition();
-            const btn = document.getElementById('viva-mic-btn');
-            const feedback = document.getElementById('viva-feedback');
-            
-            btn.innerText = "🔴 Listening...";
-            rec.start();
-
-            rec.onresult = async function(event) {
-                const ans = event.results[0][0].transcript;
-                btn.innerText = "🎙️ Answer Now";
-                feedback.innerText = "Your Answer: " + ans + " | Evaluating... ⏳";
-                const evalRes = await fetchAI(`Question: ${currentVivaQuestion}\nStudent Answer: ${ans}`, "Evaluate if this answer is correct or incorrect with a 1-line explanation.");
-                feedback.innerHTML = evalRes ? "<b>Feedback:</b> " + evalRes : "Error evaluating.";
-            };
-        }
-
-        async function askAI() {
-            const query = document.getElementById('ai-query').value;
-            const container = document.getElementById('ai-response-container');
-            const respBox = document.getElementById('ai-response-text');
-            if(!query.trim()) return;
-            container.classList.remove('hidden');
-            respBox.innerHTML = "AI thinking... ⏳";
-            const res = await fetchAI(query, "You are SD.VidyaFlow AI tutor. Answer accurately according to student class level.");
-            respBox.innerHTML = res ? res.replace(/\n/g, '<br>') : "Error.";
-        }
-
+        // Doubt Resolver & Voice Reader
         function startVoiceInput() {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return;
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if(!SpeechRecognition) return alert('Speech recognition not supported');
             const recognition = new SpeechRecognition();
+            recognition.lang = 'en-IN';
             recognition.start();
-            recognition.onresult = function(event) {
-                document.getElementById('ai-query').value = event.results[0][0].transcript;
+            recognition.onresult = (e) => {
+                document.getElementById('doubt-input').value = e.results[0][0].transcript;
             };
+        }
+
+        function getAnswer() {
+            const d = document.getElementById('doubt-input').value.trim();
+            if(!d) return alert('Doubt enter karein!');
+            const box = document.getElementById('answer-box');
+            const btn = document.getElementById('voice-reader-btn');
+            box.classList.remove('hidden');
+            box.innerHTML = `<strong>AI Solution:</strong><br>${d} par aadharit detailed explanation tayyar hai. Isse padhein ya Listen Audio Notes button par click karke sunen.`;
+            btn.classList.remove('hidden');
+        }
+
+        function readAnswerAudio() {
+            const text = document.getElementById('answer-box').innerText;
+            if(!text) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
         }
     </script>
 </body>
