@@ -331,7 +331,24 @@
             const lang = document.getElementById('lang-select').value;
             const cleanQuery = userPrompt.toLowerCase().trim();
 
-            // Intelligent Knowledge Base for Instant Detailed Answers
+            // Intelligent Quiz Generator Response (Returns MCQs with Options)
+            if (cleanQuery.includes('quiz') || cleanQuery.includes('mcq') || cleanQuery.includes('generate 3 practice mcqs')) {
+                if (lang === "Odia") {
+                    return `<strong># ${cls} - ଅଭ୍ୟାସ ପ୍ରଶ୍ନୋତ୍ତର (Quiz & MCQs)</strong><br><br>` +
+                           `<strong>1. ଭୌତିକ ବିଜ୍ଞାନରେ ବଳ (Force) ର SI ଏକକ କ’ଣ?</strong><br>A) ଜୁଲ୍ (Joule)<br>B) ନିଉଟନ୍ (Newton)<br>C) ୱାଟ୍ (Watt)<br>D) ପାସ୍କାଲ୍ (Pascal)<br>👉 <strong>ସଠିକ୍ ଉତ୍ତର: B) ନିଉଟନ୍</strong><br><br>` +
+                           `<strong>2. ଆଲୋକର ବେଗ ସର୍ବାଧିକ କେଉଁଠାରେ ହୋଇଥାଏ?</strong><br>A) ଜଳ<br>B) କାଚ<br>C) ଶୂନ୍ୟସ୍ଥାନ (Vacuum)<br>D) ବାୟୁ<br>👉 <strong>ସଠିକ୍ ଉତ୍ତର: C) ଶୂନ୍ୟସ୍ଥାନ (Vacuum)</strong>`;
+                } else if (lang === "Hindi") {
+                    return `<strong># ${cls} - अभ्यास प्रश्न (Quiz & MCQs)</strong><br><br>` +
+                           `<strong>1. बल (Force) का SI मात्रक क्या है?</strong><br>A) जूल (Joule)<br>B) न्यूटन (Newton)<br>C) वाट (Watt)<br>D) पास्कल (Pascal)<br>👉 <strong>सही उत्तर: B) न्यूटन</strong><br><br>` +
+                           `<strong>2. प्रकाश की चाल निर्वात (Vacuum) में कितनी होती है?</strong><br>A) 3 × 10⁸ m/s<br>B) 3 × 10⁶ m/s<br>C) 3 × 10⁵ m/s<br>D) इनमें से कोई नहीं<br>👉 <strong>सही उत्तर: A) 3 × 10⁸ m/s</strong>`;
+                } else {
+                    return `<strong># ${cls} - Practice Quiz & MCQs</strong><br><br>` +
+                           `<strong>1. What is the SI unit of Force?</strong><br>A) Joule<br>B) Newton<br>C) Watt<br>D) Pascal<br>👉 <strong>Correct Answer: B) Newton</strong><br><br>` +
+                           `<strong>2. What is the speed of light in vacuum?</strong><br>A) 3 × 10⁸ m/s<br>B) 3 × 10⁶ m/s<br>C) 3 × 10⁵ m/s<br>D) 2 × 10⁸ m/s<br>👉 <strong>Correct Answer: A) 3 × 10⁸ m/s</strong>`;
+                }
+            }
+
+            // Intelligent Knowledge Base for Instant Detailed Answers (RAM etc.)
             if (cleanQuery.includes('ram') || cleanQuery.includes('memory')) {
                 if (lang === "Odia") {
                     return `<strong># RAM (Random Access Memory) - ବିଶଦ ସ୍ପଷ୍ଟୀକରଣ (${cls})</strong><br><br>• <strong>RAM କ’ଣ?</strong> RAM ର ପୂର୍ଣ୍ଣ ନାମ ହେଉଛି Random Access Memory। ଏହା କମ୍ପ୍ୟୁଟରର ମୁଖ୍ୟ Volatile Memory (ଅସ୍ଥାୟୀ ମେମୋରୀ) ଅଟେ।<br>• <strong>କାର୍ଯ୍ୟ:</strong> କମ୍ପ୍ୟୁଟର ଚାଲୁଥିବା ସମୟରେ ବର୍ତ୍ତମାନ ବ୍ୟବହୃତ ହେଉଥିବା ଡାଟା ଏବଂ ପ୍ରୋଗ୍ରାମକୁ RAM ନିଜ ପାଖରେ ରଖିଥାଏ।<br>• <strong>ପ୍ରକାର:</strong> SRAM (Static RAM) ଏବଂ DRAM (Dynamic RAM)।`;
