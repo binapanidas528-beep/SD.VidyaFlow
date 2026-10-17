@@ -19,8 +19,8 @@
         <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
             <h2 class="text-lg font-bold text-indigo-300">🎯 AI Quiz Generator</h2>
             <div class="flex gap-2">
-                <input type="text" id="quiz-topic" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white" placeholder="Topic enter karein (e.g. Computer Science)...">
-                <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-5 py-3 rounded-xl font-semibold">Generate Quiz ✨</button>
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500" placeholder="Topic enter karein (e.g. Computer Science)...">
+                <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-5 py-3 rounded-xl font-semibold transition">Generate Quiz ✨</button>
             </div>
             <div id="quiz-output" class="hidden p-4 bg-slate-900 rounded-xl text-xs space-y-2 border border-slate-700 text-slate-200"></div>
         </div>
@@ -28,8 +28,8 @@
         <!-- Doubt Resolver Section -->
         <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
             <h2 class="text-lg font-bold text-indigo-300">💡 Instant AI Doubt Resolver</h2>
-            <textarea id="doubt-input" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white" placeholder="Apna sawal yahan likhein..."></textarea>
-            <button onclick="getAnswer()" id="doubt-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs py-3 rounded-xl font-semibold">Ask AI ✨</button>
+            <textarea id="doubt-input" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500" placeholder="Apna sawal yahan likhein..."></textarea>
+            <button onclick="getAnswer()" id="doubt-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs py-3 rounded-xl font-semibold transition">Ask AI ✨</button>
             <div id="answer-box" class="hidden p-4 bg-slate-900 rounded-xl text-xs space-y-2 border border-slate-700 text-slate-200"></div>
         </div>
     </div>
@@ -50,7 +50,7 @@
                 if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                     return data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
                 }
-                return `<strong>AI Error:</strong> Response not generated.`;
+                return `<strong>AI Response:</strong> Answer retrieve nahi ho saka.`;
             } catch (err) {
                 return `<strong>Connection Error:</strong> ${err.message}`;
             }
@@ -65,7 +65,7 @@
             btn.innerText = "Generating... ⏳";
             btn.disabled = true;
 
-            const res = await fetchAIResponse(`Generate 3 MCQs with answers on topic: ${topic}`);
+            const res = await fetchAIResponse(`Generate 3 MCQs with options and correct answers on topic: ${topic}`);
             out.classList.remove('hidden');
             out.innerHTML = res;
 
@@ -84,7 +84,7 @@
 
             const res = await fetchAIResponse(doubt);
             box.classList.remove('hidden');
-            box.innerHTML = `<strong>Answer:</strong><br>${res}`;
+            box.innerHTML = `<strong>SD.VidyaFlow Answer:</strong><br><br>${res}`;
 
             btn.innerText = "Ask AI ✨";
             btn.disabled = false;
