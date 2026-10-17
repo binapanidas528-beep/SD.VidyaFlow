@@ -74,7 +74,7 @@
             </div>
             <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">⚡ Direct Live AI Engine Active</p>
+                    <p class="font-bold text-indigo-400 text-sm mb-1">⚡ Cloudflare Proxy AI Engine Active</p>
                     <p>Ask anything in Odia, Hindi, Bengali, or English and get instant answers!</p>
                 </div>
             </div>
@@ -90,7 +90,7 @@
         <!-- Banner Info -->
         <div class="flex justify-between items-center bg-indigo-950/60 border border-indigo-800/50 rounded-2xl p-3 px-5 text-xs text-indigo-200">
             <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">TGT / B.Ed / Teaching Aspirants</strong></div>
-            <div class="flex items-center space-x-1">🔥 <span>100% Direct Real AI Active</span></div>
+            <div class="flex items-center space-x-1">🔥 <span>100% Cloudflare Proxy AI Active</span></div>
         </div>
 
         <!-- Quick Topics -->
@@ -208,44 +208,8 @@
     </footer>
 
     <script>
-        // Yahan apni AI Studio wali sahi AIzaSy... key paste karein
         // Cloudflare Worker Live Proxy Endpoint
-const WORKER_PROXY_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
-
-async function fetchAIResponse(userPrompt) {
-    const cls = document.getElementById('class-select').value;
-    const lang = document.getElementById('lang-select').value;
-
-    const structuredPrompt = `You are SD.VidyaFlow, an elite AI study companion for students in India.
-Target Student Level: ${cls}.
-Language Requirement: Please respond accurately and comprehensively in ${lang} language.
-User Request: ${userPrompt}
-
-Provide a well-structured, clear, exam-oriented response. If the request is for a Quiz/MCQs, format it with clear questions, options (A, B, C, D), and correct answers. If it is a topic explanation, provide key takeaways and bullet points. Use simple HTML formatting like <strong>, <br>, <ul>, <li> where necessary.`;
-
-    try {
-        const res = await fetch(WORKER_PROXY_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: structuredPrompt })
-        });
-
-        const data = await res.json();
-        
-        if (data.error) {
-            return `<strong>Error:</strong> ${data.error}`;
-        }
-
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            let aiText = data.candidates[0].content.parts[0].text;
-            return aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-        } else {
-            return `<strong>AI Response:</strong> Could not retrieve a proper answer. Please try again.`;
-        }
-    } catch (err) {
-        return `<strong>Connection Error:</strong> ${err.message}.`;
-    }
-}
+        const WORKER_PROXY_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
 
         function toggleHelpModal() {
             document.getElementById('help-modal').classList.toggle('hidden');
@@ -328,7 +292,7 @@ Provide a well-structured, clear, exam-oriented response. If the request is for 
             updateTimerDisplay(); 
         }
 
-        // Direct Fetch Engine with valid AIzaSy key
+        // Cloudflare Worker Fetch Engine
         async function fetchAIResponse(userPrompt) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
@@ -341,19 +305,16 @@ User Request: ${userPrompt}
 Provide a well-structured, clear, exam-oriented response. If the request is for a Quiz/MCQs, format it with clear questions, options (A, B, C, D), and correct answers. If it is a topic explanation, provide key takeaways and bullet points. Use simple HTML formatting like <strong>, <br>, <ul>, <li> where necessary.`;
 
             try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_DIRECT_KEY}`;
-                const res = await fetch(url, {
+                const res = await fetch(WORKER_PROXY_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: structuredPrompt }] }]
-                    })
+                    body: JSON.stringify({ prompt: structuredPrompt })
                 });
 
                 const data = await res.json();
                 
                 if (data.error) {
-                    return `<strong>Error:</strong> ${data.error.message || 'API Error'}`;
+                    return `<strong>Error:</strong> ${data.error}`;
                 }
 
                 if (data.candidates && data.candidates[0] && data.candidates[0].content) {
