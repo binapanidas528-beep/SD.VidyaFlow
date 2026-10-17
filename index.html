@@ -4,38 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SD.VidyaFlow - India's #1 AI Study Companion</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
     </script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style> 
         body { font-family: 'Inter', sans-serif; } 
-        @media print {
-            body * { visibility: hidden; }
-            #print-area, #print-area * { visibility: visible; }
-            #print-area { position: absolute; left: 0; top: 0; width: 100%; color: #000 !important; background: #fff !important; }
-        }
     </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 py-4 px-6 flex justify-between items-center shadow-md flex-wrap gap-3">
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-md flex-wrap gap-3">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl font-bold text-white shadow-md shadow-indigo-500/30">
+            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-xl font-bold text-white shadow-md">
                 ⚡
             </div>
             <div>
-                <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">SD.VidyaFlow</h1>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Class 5 to PhD / TGT Multi-Language Real-AI Companion</p>
+                <h1 class="text-xl font-bold tracking-wide text-white">SD.VidyaFlow</h1>
+                <p class="text-xs text-slate-400">Class 5 to PhD / TGT Multi-Language Real-AI Companion</p>
             </div>
         </div>
 
         <div class="flex items-center space-x-2 flex-wrap gap-2">
-            <!-- Class Dropdown -->
             <select id="class-select" onchange="updateClassMode()" class="bg-indigo-950 border border-indigo-700 text-indigo-200 text-xs rounded-xl px-3 py-2 font-semibold focus:outline-none">
                 <option value="Class 5 - 8 (Middle School)">🎓 Class 5 - 8 (Middle School)</option>
                 <option value="Class 9 - 10 (Board Level)">🎓 Class 9 - 10 (Board Level)</option>
@@ -45,28 +37,18 @@
                 <option value="PhD / Research Scholar Level">🎓 PhD / Research Scholar Level</option>
             </select>
 
-            <!-- Language Selector -->
             <select id="lang-select" class="bg-slate-800 border border-slate-700 text-amber-300 text-xs rounded-xl px-3 py-2 font-bold focus:outline-none">
                 <option value="Odia" selected>🌐 ଓଡ଼ିଆ (Odia)</option>
                 <option value="Hindi">🌐 हिंदी (Hindi)</option>
                 <option value="Bengali">🌐 বাংলা (Bengali)</option>
                 <option value="English">🌐 English</option>
             </select>
-
-            <button onclick="toggleHelpModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-3 py-2 rounded-xl transition flex items-center space-x-1 shadow-md shadow-indigo-600/30">
-                <span>❓</span> <span>Help Guide</span>
-            </button>
-
-            <button onclick="toggleTheme()" class="bg-slate-200 dark:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
-                <span id="theme-icon">☀️ Light</span>
-            </button>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
 
-        <!-- Banner Info -->
         <div class="flex justify-between items-center bg-indigo-950/60 border border-indigo-800/50 rounded-2xl p-3 px-5 text-xs text-indigo-200">
             <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">TGT / B.Ed / Teaching Aspirants</strong></div>
             <div class="flex items-center space-x-1">🔥 <span>100% Real Live AI Active</span></div>
@@ -81,67 +63,63 @@
             <button onclick="setQuickTopic('Pedagogy')" class="bg-slate-800 hover:bg-slate-700 text-green-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">🧠 Pedagogy</button>
         </div>
 
-        <!-- 1. Focus Sprint Timer -->
-        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md text-center space-y-4">
+        <!-- Focus Sprint Timer -->
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-md text-center space-y-4">
             <div class="flex justify-between items-center text-xs text-slate-400 font-semibold">
                 <span class="uppercase tracking-wider text-indigo-400">🎯 FOCUS SPRINT & GOAL TRACKER</span>
                 <span>Sprints Today: <strong class="text-indigo-400">0/4</strong></span>
             </div>
-            <div class="text-6xl font-extrabold text-slate-800 dark:text-slate-100 py-2" id="timer-display">25:00</div>
+            <div class="text-6xl font-extrabold text-slate-100 py-2" id="timer-display">25:00</div>
             <div class="flex justify-center space-x-3">
                 <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-md transition">Start</button>
-                <button onclick="pauseTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Pause</button>
-                <button onclick="resetTimer()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Reset</button>
+                <button onclick="pauseTimer()" class="bg-slate-700 text-slate-200 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-700 text-slate-200 text-xs font-semibold px-5 py-2.5 rounded-xl transition">Reset</button>
             </div>
         </div>
 
-        <!-- 2. Quiz Generator -->
-        <div id="quiz-section" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
+        <!-- Quiz Generator -->
+        <div id="quiz-section" class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>🎯</span> <span>Real AI Quiz & Flashcards</span>
             </h2>
-            <p class="text-xs text-slate-400">Type any topic name, AI will generate fresh dynamic questions in your language:</p>
             <div class="flex gap-2">
-                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Physics, Pedagogy, WHO, Operating System)...">
-                <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Computer Science, Pedagogy)...">
+                <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition">
                     <span>Generate Quiz</span> <span>✨</span>
                 </button>
             </div>
             
             <div id="quiz-box" class="hidden space-y-3 pt-2">
-                <div id="quiz-output" class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs space-y-3 border border-slate-200 dark:border-slate-700 text-slate-100"></div>
+                <div id="quiz-output" class="p-4 bg-slate-900 rounded-xl text-xs space-y-3 border border-slate-700 text-slate-100"></div>
             </div>
         </div>
 
-        <!-- 3. Instant AI Doubt Resolver -->
-        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
-                    <span>💡</span> <span>Instant Real AI Doubt Resolver</span>
-                </h2>
-            </div>
+        <!-- Instant AI Doubt Resolver -->
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
+            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
+                <span>💡</span> <span>Instant Real AI Doubt Resolver</span>
+            </h2>
 
-            <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Apna doubt ya sawal (jaise WHO full form, Physics, Odia pedagogy) type karein..."></textarea>
+            <textarea id="doubt-input" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Apna doubt ya sawal yahan type karein..."></textarea>
 
-            <button onclick="getAnswer()" id="doubt-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
+            <button onclick="getAnswer()" id="doubt-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30">
                 <span>✨</span> <span>Get Answer</span>
             </button>
 
-            <div id="answer-box" class="hidden p-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm leading-relaxed text-slate-800 dark:text-slate-200 space-y-2"></div>
+            <div id="answer-box" class="hidden p-4 bg-slate-900 border border-slate-700 rounded-xl text-sm leading-relaxed text-slate-200 space-y-2"></div>
         </div>
 
     </main>
 
-    <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
+    <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-800">
         SD.VidyaFlow • Multi-language Class-Smart Real-AI Companion
     </footer>
 
     <script>
-        const GEMINI_KEY = "AIzaSyAQ.Ab8RN6K_GCSWFG2QK_FctT2O1wvTS1cuOH5sSzPCVOqkAYgevw
+        const WORKER_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
 
         function updateClassMode() {
-            const val = document.getElementById('class-select').value;
-            document.getElementById('mode-text').innerText = val;
+            document.getElementById('mode-text').innerText = document.getElementById('class-select').value;
         }
 
         function setQuickTopic(topic) {
@@ -149,7 +127,6 @@
             generateQuiz();
         }
 
-        // Timer Logic
         let timer = null;
         let timeLeft = 1500;
 
@@ -162,75 +139,32 @@
         function startTimer() {
             if (timer !== null) return;
             timer = setInterval(() => {
-                if(timeLeft > 0) { 
-                    timeLeft--; 
-                    updateTimerDisplay(); 
-                } else { 
-                    clearInterval(timer); 
-                    timer = null;
-                    alert('Focus Sprint Complete!'); 
-                }
+                if(timeLeft > 0) { timeLeft--; updateTimerDisplay(); } 
+                else { clearInterval(timer); timer = null; alert('Focus Sprint Complete!'); }
             }, 1000);
         }
 
-        function pauseTimer() { 
-            if (timer !== null) { clearInterval(timer); timer = null; }
-        }
-
-        function resetTimer() { 
-            pauseTimer(); timeLeft = 1500; updateTimerDisplay(); 
-        }
-
-        async const WORKER_PROXY_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
+        function pauseTimer() { if (timer !== null) { clearInterval(timer); timer = null; } }
+        function resetTimer() { pauseTimer(); timeLeft = 1500; updateTimerDisplay(); }
 
         async function fetchAIResponse(userPrompt) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
-
             const structuredPrompt = `You are SD.VidyaFlow AI study companion. Target Level: ${cls}. Respond in ${lang}. Request: ${userPrompt}`;
 
             try {
-                const res = await fetch(WORKER_PROXY_URL, {
+                const res = await fetch(WORKER_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: structuredPrompt })
                 });
 
                 const data = await res.json();
-                
-                if (data.error) {
-                    return `<strong>Error:</strong> ${data.error}`;
-                }
-
-                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                    let aiText = data.candidates[0].content.parts[0].text;
-                    return aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-                } else {
-                    return `<strong>AI Response:</strong> Could not retrieve a proper answer. Please try again.`;
-                }
-            } catch (err) {
-                return `<strong>Connection Error:</strong> ${err.message}.`;
-            }
-        }
-            const cls = document.getElementById('class-select').value;
-            const lang = document.getElementById('lang-select').value;
-
-            const structuredPrompt = `You are SD.VidyaFlow AI study companion. Target Level: ${cls}. Respond in ${lang}. Request: ${userPrompt}`;
-
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: structuredPrompt }] }] })
-                });
-
-                const data = await res.json();
-                if (data.error) return `<strong>Error:</strong> ${data.error.message || 'API Key Invalid'}`;
+                if (data.error) return `<strong>Error:</strong> ${data.error.message || data.error}`;
                 if (data.candidates && data.candidates[0] && data.candidates[0].content) {
                     return data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
                 }
-                return `<strong>AI Response:</strong> Could not get answer.`;
+                return `<strong>AI Response:</strong> Could not retrieve a proper answer.`;
             } catch (err) {
                 return `<strong>Connection Error:</strong> ${err.message}`;
             }
@@ -239,6 +173,7 @@
         async function generateQuiz() {
             const topic = document.getElementById('quiz-topic').value.trim();
             if(!topic) return alert('Topic enter karein!');
+
             const box = document.getElementById('quiz-box');
             const out = document.getElementById('quiz-output');
             const btn = document.getElementById('quiz-btn');
@@ -256,6 +191,7 @@
         async function getAnswer() {
             const doubt = document.getElementById('doubt-input').value.trim();
             if(!doubt) return alert('Doubt enter karein!');
+
             const box = document.getElementById('answer-box');
             const btn = document.getElementById('doubt-btn');
 
