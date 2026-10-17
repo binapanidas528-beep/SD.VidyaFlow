@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VidyaFlow - Smart Multi-Language AI Study Companion</title>
+    <title>SD.VidyaFlow - India's #1 AI Study Companion</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,7 +30,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">SD.VidyaFlow</h1>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Class 5 to PhD / TGT Multi-Language Companion</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Class 5 to PhD / TGT Multi-Language Real-AI Companion</p>
             </div>
         </div>
 
@@ -68,14 +68,14 @@
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 w-full max-w-2xl rounded-2xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
                 <h3 class="text-lg font-bold text-indigo-500 flex items-center space-x-2">
-                    <span>📖</span> <span>SD.VidyaFlow - Student User Guide</span>
+                    <span>📖</span> <span>SD.VidyaFlow - Real AI Student Guide</span>
                 </h3>
                 <button onclick="toggleHelpModal()" class="text-slate-400 hover:text-slate-200 font-bold text-xl">&times;</button>
             </div>
             <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
                 <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
-                    <p class="font-bold text-indigo-400 text-sm mb-1">⚡ Direct AI Study Suite</p>
-                    <p>Pomodoro Timer, Quiz, Summarizer, Mind Map, Study Planner, Viva, and AI Doubt Resolver active.</p>
+                    <p class="font-bold text-indigo-400 text-sm mb-1">⚡ Live Real-AI Powered Engine Active</p>
+                    <p>Powered by Live Gemini Backend Proxy. Ask anything in Odia, Hindi, Bengali, or English!</p>
                 </div>
             </div>
             <div class="text-right pt-2">
@@ -90,7 +90,7 @@
         <!-- Banner Info -->
         <div class="flex justify-between items-center bg-indigo-950/60 border border-indigo-800/50 rounded-2xl p-3 px-5 text-xs text-indigo-200">
             <div>🎯 Current Mode: <strong id="mode-text" class="text-indigo-300">TGT / B.Ed / Teaching Aspirants</strong></div>
-            <div class="flex items-center space-x-1">🔥 <span>0 Days Streak</span></div>
+            <div class="flex items-center space-x-1">🔥 <span>100% Real Live AI Active</span></div>
         </div>
 
         <!-- Quick Topics -->
@@ -119,11 +119,11 @@
         <!-- 2. Quiz Generator -->
         <div id="quiz-section" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
-                <span>🎯</span> <span>Class-Tailored Quiz & Flashcards</span>
+                <span>🎯</span> <span>Real AI Quiz & Flashcards</span>
             </h2>
-            <p class="text-xs text-slate-400">Type topic name, AI will generate questions in your chosen language:</p>
+            <p class="text-xs text-slate-400">Type any topic name, AI will generate fresh dynamic questions in your language:</p>
             <div class="flex gap-2">
-                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Physics, Pedagogy)...">
+                <input type="text" id="quiz-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Enter topic name (e.g. Physics, Pedagogy, WHO, Operating System)...">
                 <button onclick="generateQuiz()" id="quiz-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
                     <span>Generate Quiz</span> <span>✨</span>
                 </button>
@@ -142,7 +142,7 @@
             <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
                 <span>📜</span> <span>1. Text & Chapter Summarizer</span>
             </h2>
-            <p class="text-xs text-slate-400">Paste your notes or text here, AI will generate a concise summary:</p>
+            <p class="text-xs text-slate-400">Paste your notes or text here, Real AI will summarize it cleanly:</p>
             <textarea id="summary-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Paste text/notes here..."></textarea>
             <button onclick="summarizeText()" id="summary-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
                 <span>Summarize Notes</span> <span>✨</span>
@@ -170,54 +170,18 @@
             <div id="map-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto text-center text-slate-100"></div>
         </div>
 
-        <!-- 5. Study Planner -->
-        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
-                <span>📅</span> <span>3. Class Study Planner</span>
-            </h2>
-            <p class="text-xs text-slate-400">Enter subjects and days left to get a structured timetable:</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <input type="text" id="plan-subjects" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Subjects (e.g. Pedagogy, Odia, History)">
-                <input type="number" id="plan-days" class="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Days left (e.g. 3)">
-            </div>
-            <button onclick="createPlanner()" id="plan-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-3 rounded-xl shadow-md transition flex items-center justify-center space-x-1">
-                <span>Create Timetable</span> <span>📅</span>
-            </button>
-            <div id="plan-box" class="hidden space-y-2">
-                <div id="plan-output" class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs leading-relaxed border border-slate-200 dark:border-slate-700 text-slate-100"></div>
-                <button onclick="printCleanPDF('plan-output', 'SD.VidyaFlow Study Timetable')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center space-x-1">
-                    <span>📄 Save Timetable as PDF</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- 6. Oral Exam / Viva Mode -->
-        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-3">
-            <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
-                <span>🎙️</span> <span>4. Class Viva / Oral Exam Mode</span>
-            </h2>
-            <p class="text-xs text-slate-400">AI will ask questions, answer via voice input:</p>
-            <div class="flex gap-2">
-                <input type="text" id="viva-topic" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-indigo-500 text-slate-100" placeholder="Viva topic (e.g. Newton Laws, Pedagogy)">
-                <button onclick="startViva()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-5 py-3 rounded-xl shadow-md transition flex items-center space-x-1">
-                    <span>Start Viva</span> <span>🎙️</span>
-                </button>
-            </div>
-            <div id="viva-output" class="hidden p-4 bg-slate-50 dark:bg-slate-900 rounded-xl text-xs border border-slate-200 dark:border-slate-700 space-y-2 text-slate-100"></div>
-        </div>
-
-        <!-- 7. Instant AI Doubt Resolver -->
+        <!-- 5. Instant AI Doubt Resolver -->
         <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-md space-y-4">
             <div class="flex justify-between items-center">
                 <h2 class="text-base font-bold text-indigo-400 flex items-center space-x-2">
-                    <span>💡</span> <span>Instant AI Doubt Resolver</span>
+                    <span>💡</span> <span>Instant Real AI Doubt Resolver</span>
                 </h2>
                 <button onclick="startVoiceInput()" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-lg transition border border-slate-300 dark:border-slate-600">
                     🎙️ Speak Question
                 </button>
             </div>
 
-            <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Apna doubt ya sawal type ya bol kar puchein..."></textarea>
+            <textarea id="doubt-input" rows="4" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-4 text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500 transition" placeholder="Apna doubt ya sawal (jaise WHO full form, Physics, Odia pedagogy) type ya bol kar puchein..."></textarea>
 
             <div class="flex flex-wrap gap-3">
                 <button onclick="getAnswer()" id="doubt-btn" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
@@ -240,10 +204,13 @@
     <div id="print-area"></div>
 
     <footer class="py-4 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
-        SD.VidyaFlow • Multi-language Class-Smart AI Study Companion
+        SD.VidyaFlow • Multi-language Class-Smart Real-AI Companion
     </footer>
 
     <script>
+        // Cloudflare Worker Live Proxy Endpoint
+        const WORKER_PROXY_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
+
         function toggleHelpModal() {
             document.getElementById('help-modal').classList.toggle('hidden');
         }
@@ -325,72 +292,40 @@
             updateTimerDisplay(); 
         }
 
-        // Direct AI Knowledge Base & High-Resolution Answer Generator
+        // Live Real-AI Gemini Proxy Fetch Engine
         async function fetchAIResponse(userPrompt) {
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
-            const cleanQuery = userPrompt.toLowerCase().trim();
 
-            // Intelligent Quiz Generator Response (Returns MCQs with Options)
-            if (cleanQuery.includes('quiz') || cleanQuery.includes('mcq') || cleanQuery.includes('generate 3 practice mcqs')) {
-                if (lang === "Odia") {
-                    return `<strong># ${cls} - ଅଭ୍ୟାସ ପ୍ରଶ୍ନୋତ୍ତର (Quiz & MCQs)</strong><br><br>` +
-                           `<strong>1. ଭୌତିକ ବିଜ୍ଞାନରେ ବଳ (Force) ର SI ଏକକ କ’ଣ?</strong><br>A) ଜୁଲ୍ (Joule)<br>B) ନିଉଟନ୍ (Newton)<br>C) ୱାଟ୍ (Watt)<br>D) ପାସ୍କାଲ୍ (Pascal)<br>👉 <strong>ସଠିକ୍ ଉତ୍ତର: B) ନିଉଟନ୍</strong><br><br>` +
-                           `<strong>2. ଆଲୋକର ବେଗ ସର୍ବାଧିକ କେଉଁଠାରେ ହୋଇଥାଏ?</strong><br>A) ଜଳ<br>B) କାଚ<br>C) ଶୂନ୍ୟସ୍ଥାନ (Vacuum)<br>D) ବାୟୁ<br>👉 <strong>ସଠିକ୍ ଉତ୍ତର: C) ଶୂନ୍ୟସ୍ଥାନ (Vacuum)</strong>`;
-                } else if (lang === "Hindi") {
-                    return `<strong># ${cls} - अभ्यास प्रश्न (Quiz & MCQs)</strong><br><br>` +
-                           `<strong>1. बल (Force) का SI मात्रक क्या है?</strong><br>A) जूल (Joule)<br>B) न्यूटन (Newton)<br>C) वाट (Watt)<br>D) पास्कल (Pascal)<br>👉 <strong>सही उत्तर: B) न्यूटन</strong><br><br>` +
-                           `<strong>2. प्रकाश की चाल निर्वात (Vacuum) में कितनी होती है?</strong><br>A) 3 × 10⁸ m/s<br>B) 3 × 10⁶ m/s<br>C) 3 × 10⁵ m/s<br>D) इनमें से कोई नहीं<br>👉 <strong>सही उत्तर: A) 3 × 10⁸ m/s</strong>`;
-                } else {
-                    return `<strong># ${cls} - Practice Quiz & MCQs</strong><br><br>` +
-                           `<strong>1. What is the SI unit of Force?</strong><br>A) Joule<br>B) Newton<br>C) Watt<br>D) Pascal<br>👉 <strong>Correct Answer: B) Newton</strong><br><br>` +
-                           `<strong>2. What is the speed of light in vacuum?</strong><br>A) 3 × 10⁸ m/s<br>B) 3 × 10⁶ m/s<br>C) 3 × 10⁵ m/s<br>D) 2 × 10⁸ m/s<br>👉 <strong>Correct Answer: A) 3 × 10⁸ m/s</strong>`;
+            const structuredPrompt = `You are SD.VidyaFlow, an elite AI study companion for students in India.
+Target Student Level: ${cls}.
+Language Requirement: Please respond accurately and comprehensively in ${lang} language.
+User Request: ${userPrompt}
+
+Provide a well-structured, clear, exam-oriented response. If the request is for a Quiz/MCQs, format it with clear questions, options (A, B, C, D), and correct answers. If it is a topic explanation, provide key takeaways and bullet points. Use simple HTML formatting like <strong>, <br>, <ul>, <li> where necessary.`;
+
+            try {
+                const res = await fetch(WORKER_PROXY_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: structuredPrompt })
+                });
+
+                const data = await res.json();
+                
+                if (data.error) {
+                    return `<strong>Error:</strong> ${data.error}`;
                 }
-            }
 
-            // Intelligent Knowledge Base for Instant Detailed Answers (RAM etc.)
-            if (cleanQuery.includes('ram') || cleanQuery.includes('memory')) {
-                if (lang === "Odia") {
-                    return `<strong># RAM (Random Access Memory) - ବିଶଦ ସ୍ପଷ୍ଟୀକରଣ (${cls})</strong><br><br>• <strong>RAM କ’ଣ?</strong> RAM ର ପୂର୍ଣ୍ଣ ନାମ ହେଉଛି Random Access Memory। ଏହା କମ୍ପ୍ୟୁଟରର ମୁଖ୍ୟ Volatile Memory (ଅସ୍ଥାୟୀ ମେମୋରୀ) ଅଟେ।<br>• <strong>କାର୍ଯ୍ୟ:</strong> କମ୍ପ୍ୟୁଟର ଚାଲୁଥିବା ସମୟରେ ବର୍ତ୍ତମାନ ବ୍ୟବହୃତ ହେଉଥିବା ଡାଟା ଏବଂ ପ୍ରୋଗ୍ରାମକୁ RAM ନିଜ ପାଖରେ ରଖିଥାଏ।<br>• <strong>ପ୍ରକାର:</strong> SRAM (Static RAM) ଏବଂ DRAM (Dynamic RAM)।`;
-                } else if (lang === "Hindi") {
-                    return `<strong># RAM (Random Access Memory) - पूर्ण विवरण (${cls})</strong><br><br>• <strong>RAM क्या है?</strong> RAM का पूरा नाम Random Access Memory है। यह कंप्यूटर की मुख्य अस्थाई (Volatile) मेमोरी होती है।<br>• <strong>मुख्य कार्य:</strong> जब कंप्यूटर चल रहा होता है, तो वर्तमान में चल रहे ऐप्स और प्रोसेस का डेटा RAM में स्टोर होता है। कंप्यूटर बंद होने पर RAM का डेटा मिट जाता है।<br>• <strong>प्रकार:</strong> SRAM (Static RAM) और DRAM (Dynamic RAM)।`;
-                } else if (lang === "Bengali") {
-                    return `<strong># RAM (Random Access Memory) - বিস্তারিত উত্তর (${cls})</strong><br><br>• <strong>RAM কী?</strong> RAM এর পুরো নাম Random Access Memory। এটি কম্পিউটারের প্রাথমিক অস্থায়ী (Volatile) মেমোরি।`;
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    let aiText = data.candidates[0].content.parts[0].text;
+                    return aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
                 } else {
-                    return `<strong># RAM (Random Access Memory) - Full Explanation (${cls})</strong><br><br>• <strong>Definition:</strong> RAM stands for Random Access Memory. It is the primary volatile memory of a computer system.<br>• <strong>Function:</strong> It holds data, programs, and instructions currently being processed by the CPU.<br>• <strong>Types:</strong> SRAM (Static RAM) & DRAM (Dynamic RAM).`;
+                    return `<strong>AI Response:</strong> Could not retrieve a proper answer. Please try again.`;
                 }
+            } catch (err) {
+                return `<strong>Connection Error:</strong> ${err.message}. Please check Cloudflare Worker setup.`;
             }
-
-            // General High-Quality AI Response Generator for all other topics
-            if (lang === "Odia") {
-                return `<strong># ${cls} - ଓଡ଼ିଆ ସମାଧାନ</strong><br><br>• <strong>ବିଷୟ:</strong> ${userPrompt}<br>• <strong>ମୁଖ୍ୟ ବିଶ୍ଳେଷଣ:</strong> ${userPrompt} ବିଷୟରେ ସମ୍ପୂର୍ଣ୍ଣ ସଠିକ ଏବଂ ପରୀକ୍ଷା ଉପଯୋଗୀ ସୂଚନା। ଏହା ${cls} ର ପାଠ୍ୟକ୍ରମ ଅନୁସାରେ ପ୍ରସ୍ତୁତ କରାଯାଇଛି।`;
-            } else if (lang === "Hindi") {
-                return `<strong># ${cls} - हिंदी समाधान</strong><br><br>• <strong>विषय:</strong> ${userPrompt}<br>• <strong>मुख्य विश्लेषण:</strong> ${userPrompt} के बारे में सटीक और परीक्षा के लिए उपयोगी संपूर्ण विवरण। यह ${cls} के पाठ्यक्रम के अनुसार तैयार किया गया है।`;
-            } else if (lang === "Bengali") {
-                return `<strong># ${cls} - বাংলা উত্তর</strong><br><br>• <strong>বিষয়:</strong> ${userPrompt}<br>• <strong>বিশ্লেষণ:</strong> ${userPrompt} সম্পর্কিত বিস্তারিত তথ্য।`;
-            } else {
-                return `<strong># ${cls} - Detailed Solution</strong><br><br>• <strong>Topic:</strong> ${userPrompt}<br>• <strong>Comprehensive Note:</strong> Detailed explanation and structured answer for ${userPrompt} specifically tailored for ${cls} students.`;
-            }
-        }
-
-        // Study Planner
-        async function createPlanner() {
-            const subs = document.getElementById('plan-subjects').value.trim();
-            const days = document.getElementById('plan-days').value.trim();
-            if(!subs || !days) return alert('Kripya Subjects aur Days Left dono enter karein!');
-
-            const box = document.getElementById('plan-box');
-            const out = document.getElementById('plan-output');
-            const btn = document.getElementById('plan-btn');
-
-            btn.innerText = "Generating Timetable... ⏳";
-            btn.disabled = true;
-
-            const res = await fetchAIResponse(`Timetable for ${subs} in ${days} days`);
-            box.classList.remove('hidden');
-            out.innerHTML = res.replace(/\n/g, '<br>');
-            btn.innerText = "Create Timetable 📅";
-            btn.disabled = false;
         }
 
         // Quiz Generator
@@ -402,12 +337,12 @@
             const out = document.getElementById('quiz-output');
             const btn = document.getElementById('quiz-btn');
 
-            btn.innerText = "Generating Quiz... ⏳";
+            btn.innerText = "Generating Live Real-AI Quiz... ⏳";
             btn.disabled = true;
 
-            const res = await fetchAIResponse(`Quiz MCQs for ${topic}`);
+            const res = await fetchAIResponse(`Generate 3 high-quality practice MCQs with options (A, B, C, D) and correct answers on topic: ${topic}`);
             box.classList.remove('hidden');
-            out.innerHTML = res.replace(/\n/g, '<br>');
+            out.innerHTML = res;
             btn.innerText = "Generate Quiz ✨";
             btn.disabled = false;
         }
@@ -420,12 +355,12 @@
             const out = document.getElementById('summary-output');
             const btn = document.getElementById('summary-btn');
 
-            btn.innerText = "Summarizing... ⏳";
+            btn.innerText = "Summarizing with Real AI... ⏳";
             btn.disabled = true;
 
-            const res = await fetchAIResponse(`Summary for: ${txt}`);
+            const res = await fetchAIResponse(`Summarize the following study text into bullet points: ${txt}`);
             box.classList.remove('hidden');
-            out.innerHTML = res.replace(/\n/g, '<br>');
+            out.innerHTML = res;
             btn.innerText = "Summarize Notes ✨";
             btn.disabled = false;
         }
@@ -439,18 +374,6 @@
             out.innerHTML = `<div class="p-2 font-bold text-indigo-400">[ ${topic} ]</div><div class="text-xs">├── Core Concept<br>├── Key Sub-topics<br>└── Practical Application</div>`;
         }
 
-        // Viva Mode
-        async function startViva() {
-            const topic = document.getElementById('viva-topic').value.trim();
-            if(!topic) return alert('Topic enter karein!');
-            const out = document.getElementById('viva-output');
-            out.classList.remove('hidden');
-            out.innerText = "Asking Viva Question... ⏳";
-            
-            const res = await fetchAIResponse(`Viva question on ${topic}`);
-            out.innerHTML = `<b>Viva Examiner:</b> ${res}`;
-        }
-
         // Doubt Resolver
         async function getAnswer() {
             const doubt = document.getElementById('doubt-input').value.trim();
@@ -461,12 +384,12 @@
             const voiceBtn = document.getElementById('voice-reader-btn');
             const pdfBtn = document.getElementById('pdf-download-btn');
 
-            btn.innerText = "Finding Solution... ⏳";
+            btn.innerText = "Asking Real Gemini AI... ⏳";
             btn.disabled = true;
 
             const res = await fetchAIResponse(doubt);
             box.classList.remove('hidden');
-            box.innerHTML = `<strong class="text-indigo-400 text-base">AI Answer:</strong><div class="mt-2 text-slate-100 leading-relaxed">${res.replace(/\n/g, '<br>')}</div>`;
+            box.innerHTML = `<strong class="text-indigo-400 text-base">SD.VidyaFlow AI Answer:</strong><div class="mt-2 text-slate-100 leading-relaxed">${res}</div>`;
             
             voiceBtn.classList.remove('hidden');
             pdfBtn.classList.remove('hidden');
