@@ -181,7 +181,37 @@
             pauseTimer(); timeLeft = 1500; updateTimerDisplay(); 
         }
 
+        async const WORKER_PROXY_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
+
         async function fetchAIResponse(userPrompt) {
+            const cls = document.getElementById('class-select').value;
+            const lang = document.getElementById('lang-select').value;
+
+            const structuredPrompt = `You are SD.VidyaFlow AI study companion. Target Level: ${cls}. Respond in ${lang}. Request: ${userPrompt}`;
+
+            try {
+                const res = await fetch(WORKER_PROXY_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: structuredPrompt })
+                });
+
+                const data = await res.json();
+                
+                if (data.error) {
+                    return `<strong>Error:</strong> ${data.error}`;
+                }
+
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    let aiText = data.candidates[0].content.parts[0].text;
+                    return aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                } else {
+                    return `<strong>AI Response:</strong> Could not retrieve a proper answer. Please try again.`;
+                }
+            } catch (err) {
+                return `<strong>Connection Error:</strong> ${err.message}.`;
+            }
+        }
             const cls = document.getElementById('class-select').value;
             const lang = document.getElementById('lang-select').value;
 
