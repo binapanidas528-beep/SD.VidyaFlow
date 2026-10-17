@@ -35,14 +35,10 @@
     </div>
 
     <script>
-        // Yahan apni AIzaSy... wali key paste karein
-        const GEMINI_API_KEY = "AIzaSy_YOUR_API_KEY_HERE";
+        // Aapki new API Key yahan integrated hai
+        const GEMINI_API_KEY = "AQ.Ab8RN6K4YzSpx9zhhpncZjWPOSntiNALnRz_aTsDsysnQZfCvg";
 
         async function fetchAIResponse(userPrompt) {
-            if (GEMINI_API_KEY.includes("YOUR_API_KEY")) {
-                return "<strong>Configuration Alert:</strong> Kripya Step 2 se Google AI Studio ki AIzaSy key daalein.";
-            }
-
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
                 
