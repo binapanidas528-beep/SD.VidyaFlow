@@ -209,7 +209,43 @@
 
     <script>
         // Yahan apni AI Studio wali sahi AIzaSy... key paste karein
-        const GEMINI_DIRECT_KEY = "AIzaSyAbc123YourActualKey...";
+        // Cloudflare Worker Live Proxy Endpoint
+const WORKER_PROXY_URL = "https://vidyaflow-api.binapanidas528.workers.dev";
+
+async function fetchAIResponse(userPrompt) {
+    const cls = document.getElementById('class-select').value;
+    const lang = document.getElementById('lang-select').value;
+
+    const structuredPrompt = `You are SD.VidyaFlow, an elite AI study companion for students in India.
+Target Student Level: ${cls}.
+Language Requirement: Please respond accurately and comprehensively in ${lang} language.
+User Request: ${userPrompt}
+
+Provide a well-structured, clear, exam-oriented response. If the request is for a Quiz/MCQs, format it with clear questions, options (A, B, C, D), and correct answers. If it is a topic explanation, provide key takeaways and bullet points. Use simple HTML formatting like <strong>, <br>, <ul>, <li> where necessary.`;
+
+    try {
+        const res = await fetch(WORKER_PROXY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: structuredPrompt })
+        });
+
+        const data = await res.json();
+        
+        if (data.error) {
+            return `<strong>Error:</strong> ${data.error}`;
+        }
+
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            let aiText = data.candidates[0].content.parts[0].text;
+            return aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+        } else {
+            return `<strong>AI Response:</strong> Could not retrieve a proper answer. Please try again.`;
+        }
+    } catch (err) {
+        return `<strong>Connection Error:</strong> ${err.message}.`;
+    }
+}
 
         function toggleHelpModal() {
             document.getElementById('help-modal').classList.toggle('hidden');
