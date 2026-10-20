@@ -1,265 +1,167 @@
 <!DOCTYPE html>
-<html lang="or" class="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VoiceStudio - AI Voice & Audio Companion</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4f46e5">
-
-    <!-- Google Analytics Tag -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HT9DDR3Y98"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-HT9DDR3Y98');
-    </script>
-
+    <title>SD.VidyaFlow - Smart AI Study & Research Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class' }</script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-                <i class="fa-solid fa-microphone-lines text-xl"></i>
+    <!-- Header Navigation -->
+    <header class="glass-panel sticky top-0 z-50 p-4 border-b border-slate-700">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-indigo-400">SD.VidyaFlow</h1>
+                    <p class="text-xs text-slate-400">Class 10 to PhD • Smart Study & Research Companion</p>
+                </div>
             </div>
-            <div>
-                <h1 class="font-bold text-lg leading-none tracking-tight">SD.VoiceStudio</h1>
-                <p class="text-xs text-slate-400 mt-1">Class 5 to PhD • AI Voice & Audio Companion</p>
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+                    AI Active
+                </span>
             </div>
-        </div>
-        <div class="flex items-center gap-3">
-            <span id="api-status" class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
-                <i class="fa-solid fa-circle text-[8px] mr-1"></i> Active Proxy
-            </span>
         </div>
     </header>
 
-    <!-- Main Grid -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Main Content Area -->
+    <main class="max-w-6xl mx-auto w-full p-4 md:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 flex-grow">
+        
+        <!-- Controls Panel -->
+        <section class="md:col-span-5 glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-4">
+            <div class="space-y-4">
+                <h2 class="text-lg font-semibold text-slate-200 border-b border-slate-700 pb-2">
+                    <i class="fa-solid fa-sliders text-indigo-400 mr-2"></i>Study Assistant Setup
+                </h2>
 
-        <!-- Controls Section -->
-        <section class="lg:col-span-6 space-y-5">
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-                
-                <div class="flex items-center justify-between">
-                    <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-language text-indigo-400"></i> Select Language
-                    </label>
-                    <div class="flex gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                        <button onclick="setLang('or')" id="lang-or" class="lang-btn text-xs px-3 py-1 rounded-lg font-medium transition bg-indigo-600 text-white">Odia</button>
-                        <button onclick="setLang('hi')" id="lang-hi" class="lang-btn text-xs px-3 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white">Hindi</button>
-                        <button onclick="setLang('en')" id="lang-en" class="lang-btn text-xs px-3 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white">English</button>
-                        <button onclick="setLang('bn')" id="lang-bn" class="lang-btn text-xs px-3 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white">Bengali</button>
-                    </div>
-                </div>
-
-                <div class="space-y-2">
-                    <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center justify-between">
-                        <span><i class="fa-solid fa-pen-nib text-indigo-400 mr-1"></i> Input Script / Prompt</span>
-                        <span id="char-count" class="text-[10px] text-slate-500">0 chars</span>
-                    </label>
-                    <div class="relative">
-                        <textarea id="voice-script" rows="5" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-indigo-500 transition resize-none" placeholder="Apna content ya question yahan likhein..."></textarea>
-                        <button onclick="toggleRecording()" id="mic-btn" class="absolute right-3 bottom-3 w-9 h-9 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition border border-slate-700" title="Voice Input">
-                            <i class="fa-solid fa-microphone"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Gender & Voice Persona Selection -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-semibold text-slate-300">Voice Gender</label>
-                        <div class="flex gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                            <button onclick="setGender('female')" id="gender-female" class="gender-btn flex-1 text-xs py-2 rounded-lg font-medium transition bg-indigo-600 text-white flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-venus"></i> Female
-                            </button>
-                            <button onclick="setGender('male')" id="gender-male" class="gender-btn flex-1 text-xs py-2 rounded-lg font-medium transition text-slate-400 hover:text-white flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-mars"></i> Male
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-semibold text-slate-300">Voice Tone / Persona</label>
-                        <select id="voice-persona" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
-                            <option value="Puck">Puck (Upbeat & Energetic)</option>
-                            <option value="Charon">Charon (Deep & Professional)</option>
-                            <option value="Kore">Kore (Calm & Gentle)</option>
-                            <option value="Fenrir">Fenrir (Authoritative)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-300">Action Mode</label>
-                    <select id="action-mode" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
-                        <option value="tts">🔊 Direct Text-to-Speech</option>
-                        <option value="explain">🤖 AI Audio Explanation</option>
+                <!-- Level Selector -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">EDUCATION LEVEL</label>
+                    <select id="eduLevel" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="School (Class 10-12)">School (Class 10 - 12)</option>
+                        <option value="Undergraduate (B.Sc/B.Tech/BA)">Undergraduate (College)</option>
+                        <option value="Postgraduate (M.Sc/M.Tech/MA)">Postgraduate (Master's)</option>
+                        <option value="PhD / Advanced Research">PhD / Advanced Research</option>
                     </select>
                 </div>
 
-                <button onclick="processAudio()" id="generate-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] text-white font-semibold text-sm py-3 px-4 rounded-xl transition shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <span>Generate & Play Audio</span>
-                </button>
+                <!-- Mode Selector -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">ASSISTANT MODE</label>
+                    <select id="assistMode" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <option value="Detailed Topic Explainer">Detailed Topic Explainer</option>
+                        <option value="Quick Revision Notes Generator">Quick Revision Notes Generator</option>
+                        <option value="Research Paper & Literature Review">Research Paper Summary</option>
+                        <option value="Important Exam Questions & Answers">Important Q&A Generator</option>
+                    </select>
+                </div>
+
+                <!-- Query / Topic Input -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">ENTER TOPIC / RESEARCH QUESTION</label>
+                    <textarea id="topicInput" rows="5" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none placeholder-slate-500" placeholder="Apna subject topic, chapter name, ya research question yahan likhein..."></textarea>
+                </div>
             </div>
+
+            <!-- Submit Button -->
+            <button id="generateBtn" onclick="generateStudyNotes()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Generate Smart Explanation</span>
+            </button>
         </section>
 
-        <!-- Output Section -->
-        <section class="lg:col-span-6 space-y-5">
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl min-h-[380px] flex flex-col justify-between">
-                
-                <div>
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-                        <h2 class="text-sm font-bold text-indigo-400 flex items-center gap-2">
-                            <i class="fa-solid fa-robot"></i> AI Studio Output
-                        </h2>
-                        <span id="output-badge" class="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Ready</span>
-                    </div>
-
-                    <div id="text-output" class="text-xs text-slate-300 leading-relaxed bg-slate-950 p-4 rounded-xl border border-slate-800 max-h-[180px] overflow-y-auto mb-4">
-                        "Generate & Play Audio" button par click karte hi audio bolna shuru ho jayega!
-                    </div>
+        <!-- Response Output Panel -->
+        <section class="md:col-span-7 glass-panel p-5 rounded-2xl flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-center border-b border-slate-700 pb-2 mb-4">
+                    <h2 class="text-lg font-semibold text-slate-200">
+                        <i class="fa-solid fa-book-open text-indigo-400 mr-2"></i>VidyaFlow Output
+                    </h2>
+                    <span id="outputStatus" class="text-xs text-slate-400">Ready</span>
                 </div>
 
-                <!-- Direct Audio Control Panel -->
-                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex gap-3">
-                    <button onclick="stopAudio()" class="flex-1 bg-rose-600/20 border border-rose-500/30 hover:bg-rose-600/30 text-rose-400 font-bold text-xs py-3 px-4 rounded-xl transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-square"></i> Stop Audio
-                    </button>
-                    <button onclick="replayAudio()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20">
-                        <i class="fa-solid fa-rotate-right"></i> Replay
-                    </button>
+                <div id="notesOutput" class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 min-h-[320px] whitespace-pre-wrap leading-relaxed overflow-y-auto">
+                    Aapka generated study material, research notes, aur explanatory content yahan display hoga. Topic enter karke 'Generate Smart Explanation' par click karein.
                 </div>
+            </div>
 
+            <!-- Copy Action -->
+            <div class="mt-4 flex justify-end">
+                <button onclick="copyOutput()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 px-4 rounded-lg border border-slate-700 transition-all flex items-center space-x-1">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copy Notes</span>
+                </button>
             </div>
         </section>
 
     </main>
 
+    <!-- Footer -->
+    <footer class="text-center p-4 text-xs text-slate-500 border-t border-slate-800/80">
+        SD.VidyaFlow &copy; 2026 • AI Powered Education & Research Companion
+    </footer>
+
+    <!-- Script Handling Gemini API Direct Communication -->
     <script>
-        const WORKER_PROXY = "https://sd-voicestudio.binapanidas528.workers.dev";
-        let currentLang = 'hi';
-        let currentGender = 'female';
-        let lastTextToSpeak = '';
+        async function generateStudyNotes() {
+            const level = document.getElementById('eduLevel').value;
+            const mode = document.getElementById('assistMode').value;
+            const topic = document.getElementById('topicInput').value.trim();
+            const output = document.getElementById('notesOutput');
+            const status = document.getElementById('outputStatus');
+            const btn = document.getElementById('generateBtn');
 
-        document.getElementById('voice-script').addEventListener('input', (e) => {
-            document.getElementById('char-count').innerText = `${e.target.value.length} chars`;
-        });
-
-        function setLang(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.className = "lang-btn text-xs px-3 py-1 rounded-lg font-medium transition text-slate-400 hover:text-white";
-            });
-            document.getElementById(`lang-${lang}`).className = "lang-btn text-xs px-3 py-1 rounded-lg font-medium transition bg-indigo-600 text-white";
-        }
-
-        function setGender(gender) {
-            currentGender = gender;
-            document.querySelectorAll('.gender-btn').forEach(btn => {
-                btn.className = "gender-btn flex-1 text-xs py-2 rounded-lg font-medium transition text-slate-400 hover:text-white flex items-center justify-center gap-1";
-            });
-            document.getElementById(`gender-${gender}`).className = "gender-btn flex-1 text-xs py-2 rounded-lg font-medium transition bg-indigo-600 text-white flex items-center justify-center gap-1";
-        }
-
-        function speakText(text) {
-            window.speechSynthesis.cancel(); // Reset any playing audio
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'or' ? 'or-IN' : currentLang === 'bn' ? 'bn-IN' : 'en-US';
-
-            // Voice settings
-            if (currentGender === 'female') {
-                utterance.pitch = 1.2;
-                utterance.rate = 1.0;
-            } else {
-                utterance.pitch = 0.8;
-                utterance.rate = 0.9;
+            if (!topic) {
+                alert("Kripya pehle koi Topic ya Question enter karein!");
+                return;
             }
 
-            window.speechSynthesis.speak(utterance);
-        }
-
-        async function processAudio() {
-            const script = document.getElementById('voice-script').value.trim();
-            if (!script) return alert("Kripya script ya text enter karein!");
-
-            const mode = document.getElementById('action-mode').value;
-            const btn = document.getElementById('generate-btn');
-            const outputBox = document.getElementById('text-output');
-            
+            output.innerText = "Generating notes and explanation... Please wait...";
+            status.innerText = "Processing...";
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+            btn.classList.add("opacity-50");
+
+            const promptText = `Act as an expert Academic Assistant for level: ${level}. Mode: ${mode}. Provide a well-structured, easy-to-understand, and accurate explanation for the following topic: "${topic}". Use headings, bullet points, and key formulas or terms where applicable.`;
 
             try {
-                if (mode === 'explain') {
-                    const prompt = `Language: ${currentLang}. Explain this topic clearly in simple terms: ${script}`;
-                    const res = await fetch(WORKER_PROXY, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ prompt: prompt })
-                    });
-                    const data = await res.json();
-                    lastTextToSpeak = data.candidates[0].content.parts[0].text;
-                    outputBox.innerHTML = lastTextToSpeak.replace(/\n/g, '<br>');
-                } else {
-                    lastTextToSpeak = script;
-                    outputBox.innerHTML = `<strong>Generating Text-to-Speech (${currentGender.toUpperCase()}):</strong><br>${script}`;
+                // Call Cloudflare worker backend / Gemini API integration route
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: promptText })
+                });
+
+                if (!response.ok) {
+                    throw new Error("API Connection failed or Server limit reached.");
                 }
 
-                speakText(lastTextToSpeak);
-
+                const data = await response.json();
+                output.innerText = data.result || data.response || "No response received.";
+                status.innerText = "Completed";
             } catch (err) {
-                outputBox.innerHTML = `<span class="text-rose-400">Error: ${err.message}</span>`;
-            }
-
-            btn.disabled = false;
-            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> <span>Generate & Play Audio</span>`;
-        }
-
-        function stopAudio() {
-            window.speechSynthesis.cancel();
-        }
-
-        function replayAudio() {
-            if (lastTextToSpeak) {
-                speakText(lastTextToSpeak);
-            } else {
-                alert("Pehle audio generate karein!");
+                // Fallback direct mock explanation display if worker route is purely static
+                output.innerText = `[Study Assistant Note - ${level}]\n\nTopic: ${topic}\nMode: ${mode}\n\nKey Concepts:\n1. Core Fundamentals of ${topic}.\n2. Critical Analysis & Academic Significance.\n3. Summary & Quick Review points.\n\n(Note: Connect your backend Gemini API Key in Worker bindings for live continuous responses).`;
+                status.innerText = "Sample Generated";
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove("opacity-50");
             }
         }
 
-        function toggleRecording() {
-            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                return alert("Aapka browser Speech Recognition support nahi karta. Google Chrome use karein.");
-            }
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'or' ? 'or-IN' : currentLang === 'bn' ? 'bn-IN' : 'en-US';
-
-            const micBtn = document.getElementById('mic-btn');
-            micBtn.classList.add('text-rose-500', 'animate-pulse');
-
-            recognition.start();
-
-            recognition.onresult = (event) => {
-                const text = event.results[0][0].transcript;
-                document.getElementById('voice-script').value += " " + text;
-                micBtn.classList.remove('text-rose-500', 'animate-pulse');
-            };
-
-            recognition.onerror = () => {
-                micBtn.classList.remove('text-rose-500', 'animate-pulse');
-            };
+        function copyOutput() {
+            const text = document.getElementById('notesOutput').innerText;
+            navigator.clipboard.writeText(text);
+            alert("Notes copied to clipboard!");
         }
     </script>
 </body>
