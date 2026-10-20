@@ -3,165 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SD.VidyaFlow - Smart AI Study & Research Companion</title>
+    <title>SD.VidyaFlow AI Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .glass-card { background: #131b2e; border: 1px solid #1e293b; border-radius: 1rem; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between py-6 px-4">
 
-    <!-- Header Navigation -->
-    <header class="glass-panel sticky top-0 z-50 p-4 border-b border-slate-700">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-lg">
-                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold text-indigo-400">SD.VidyaFlow</h1>
-                    <p class="text-xs text-slate-400">Class 10 to PhD • Smart Study & Research Companion</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
-                    AI Active
-                </span>
-            </div>
+    <!-- Header Section -->
+    <header class="text-center mb-6">
+        <div class="flex items-center justify-center space-x-3 mb-1">
+            <i class="fa-solid fa-bolt text-yellow-400 text-2xl"></i>
+            <h1 class="text-3xl font-extrabold tracking-wide text-indigo-400">SD.VidyaFlow AI Companion</h1>
         </div>
+        <p class="text-xs text-slate-400">Class 5 to PhD / TGT Multi-Language AI</p>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="max-w-6xl mx-auto w-full p-4 md:p-6 grid grid-cols-1 md:grid-cols-12 gap-6 flex-grow">
-        
-        <!-- Controls Panel -->
-        <section class="md:col-span-5 glass-panel p-5 rounded-2xl flex flex-col justify-between space-y-4">
-            <div class="space-y-4">
-                <h2 class="text-lg font-semibold text-slate-200 border-b border-slate-700 pb-2">
-                    <i class="fa-solid fa-sliders text-indigo-400 mr-2"></i>Study Assistant Setup
-                </h2>
+    <main class="max-w-4xl mx-auto w-full space-y-6 flex-grow">
 
-                <!-- Level Selector -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">EDUCATION LEVEL</label>
-                    <select id="eduLevel" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                        <option value="School (Class 10-12)">School (Class 10 - 12)</option>
-                        <option value="Undergraduate (B.Sc/B.Tech/BA)">Undergraduate (College)</option>
-                        <option value="Postgraduate (M.Sc/M.Tech/MA)">Postgraduate (Master's)</option>
-                        <option value="PhD / Advanced Research">PhD / Advanced Research</option>
-                    </select>
-                </div>
-
-                <!-- Mode Selector -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">ASSISTANT MODE</label>
-                    <select id="assistMode" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
-                        <option value="Detailed Topic Explainer">Detailed Topic Explainer</option>
-                        <option value="Quick Revision Notes Generator">Quick Revision Notes Generator</option>
-                        <option value="Research Paper & Literature Review">Research Paper Summary</option>
-                        <option value="Important Exam Questions & Answers">Important Q&A Generator</option>
-                    </select>
-                </div>
-
-                <!-- Query / Topic Input -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1">ENTER TOPIC / RESEARCH QUESTION</label>
-                    <textarea id="topicInput" rows="5" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none placeholder-slate-500" placeholder="Apna subject topic, chapter name, ya research question yahan likhein..."></textarea>
-                </div>
+        <!-- Mode & Quick Topics Bar -->
+        <div class="glass-card p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-2 text-xs font-semibold text-slate-300">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
+                <span>Current Mode: <span class="text-indigo-400">TGT / B.Ed / Teaching Aspirants</span></span>
             </div>
+            <div class="flex items-center space-x-2 text-xs text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                <i class="fa-solid fa-fire"></i>
+                <span>100% Real Live AI Active</span>
+            </div>
+        </div>
 
-            <!-- Submit Button -->
-            <button id="generateBtn" onclick="generateStudyNotes()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span>Generate Smart Explanation</span>
+        <!-- Quick Topics selection -->
+        <div class="flex flex-wrap items-center gap-3 text-xs">
+            <span class="text-slate-400 font-medium">Quick Topics:</span>
+            <button onclick="setTopic('Computer Science')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
+                <i class="fa-solid fa-desktop text-indigo-400"></i>
+                <span>Computer Science</span>
             </button>
+            <button onclick="setTopic('Physics')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
+                <i class="fa-solid fa-snowflake text-cyan-400"></i>
+                <span>Physics</span>
+            </button>
+            <button onclick="setTopic('Math')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
+                <i class="fa-solid fa-calculator text-amber-400"></i>
+                <span>Math</span>
+            </button>
+            <button onclick="setTopic('Pedagogy')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
+                <i class="fa-solid fa-brain text-pink-400"></i>
+                <span>Pedagogy</span>
+            </button>
+        </div>
+
+        <!-- FOCUS SPRINT & GOAL TRACKER -->
+        <section class="glass-card p-6 text-center space-y-4">
+            <div class="flex justify-between items-center text-xs text-slate-400">
+                <span class="font-bold tracking-wider uppercase text-slate-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-bullseye text-red-400"></i> FOCUS SPRINT & GOAL TRACKER
+                </span>
+                <span>Sprints Today: <span class="text-indigo-400 font-bold">0/4</span></span>
+            </div>
+            
+            <div id="timerDisplay" class="text-6xl font-extrabold text-white tracking-widest my-2">25:00</div>
+
+            <div class="flex justify-center space-x-3">
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-6 py-2 rounded-lg transition">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-6 py-2 rounded-lg border border-slate-700 transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-6 py-2 rounded-lg border border-slate-700 transition">Reset</button>
+            </div>
         </section>
 
-        <!-- Response Output Panel -->
-        <section class="md:col-span-7 glass-panel p-5 rounded-2xl flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-center border-b border-slate-700 pb-2 mb-4">
-                    <h2 class="text-lg font-semibold text-slate-200">
-                        <i class="fa-solid fa-book-open text-indigo-400 mr-2"></i>VidyaFlow Output
-                    </h2>
-                    <span id="outputStatus" class="text-xs text-slate-400">Ready</span>
-                </div>
+        <!-- AI QUIZ GENERATOR -->
+        <section class="glass-card p-6 space-y-4">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-bullseye text-orange-400"></i> AI Quiz Generator
+            </h2>
 
-                <div id="notesOutput" class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 min-h-[320px] whitespace-pre-wrap leading-relaxed overflow-y-auto">
-                    Aapka generated study material, research notes, aur explanatory content yahan display hoga. Topic enter karke 'Generate Smart Explanation' par click karein.
-                </div>
+            <div class="flex flex-col md:flex-row gap-3">
+                <input id="quizTopic" type="text" class="flex-grow bg-slate-900 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-indigo-500" placeholder="Topic enter karein (e.g. Computer Science, Math)...">
+                <button id="quizBtn" onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-6 py-2.5 rounded-lg transition flex items-center justify-center space-x-1.5">
+                    <span>Generate Quiz</span>
+                    <i class="fa-solid fa-sparkles text-amber-300"></i>
+                </button>
             </div>
 
-            <!-- Copy Action -->
-            <div class="mt-4 flex justify-end">
-                <button onclick="copyOutput()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-2 px-4 rounded-lg border border-slate-700 transition-all flex items-center space-x-1">
-                    <i class="fa-regular fa-copy"></i>
-                    <span>Copy Notes</span>
-                </button>
+            <div id="quizResultBox" class="hidden bg-slate-900/80 border border-slate-800 rounded-lg p-4 text-xs text-slate-300 whitespace-pre-wrap leading-relaxed"></div>
+        </section>
+
+        <!-- INSTANT AI DOUBT RESOLVER -->
+        <section class="glass-card p-6 space-y-4">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-amber-400"></i> Instant AI Doubt Resolver
+            </h2>
+
+            <textarea id="doubtInput" rows="3" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-sm text-slate-200 outline-none focus:border-indigo-500 resize-none" placeholder="Apna question ya doubt yahan likhein (e.g. What is ROM?)..."></textarea>
+
+            <button id="doubtBtn" onclick="askDoubt()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs py-3 rounded-lg transition flex items-center justify-center space-x-2">
+                <span>Ask AI</span>
+                <i class="fa-solid fa-sparkles text-amber-300"></i>
+            </button>
+
+            <div id="doubtResultBox" class="hidden bg-slate-900/80 border border-slate-800 rounded-lg p-4 text-xs text-slate-300 whitespace-pre-wrap leading-relaxed">
+                <div class="font-semibold text-indigo-400 mb-1">SD.VidyaFlow Answer:</div>
+                <div id="doubtContent"></div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center p-4 text-xs text-slate-500 border-t border-slate-800/80">
-        SD.VidyaFlow &copy; 2026 • AI Powered Education & Research Companion
+    <footer class="text-center text-xs text-slate-600 mt-6">
+        SD.VidyaFlow &copy; 2026 • Class 5 to PhD / TGT Multi-Language AI
     </footer>
 
-    <!-- Script Handling Gemini API Direct Communication -->
+    <!-- Logic Script -->
     <script>
-        async function generateStudyNotes() {
-            const level = document.getElementById('eduLevel').value;
-            const mode = document.getElementById('assistMode').value;
-            const topic = document.getElementById('topicInput').value.trim();
-            const output = document.getElementById('notesOutput');
-            const status = document.getElementById('outputStatus');
-            const btn = document.getElementById('generateBtn');
+        // Set Quick Topic
+        function setTopic(topic) {
+            document.getElementById('quizTopic').value = topic;
+            document.getElementById('doubtInput').value = `Explain core concepts of ${topic}`;
+        }
 
-            if (!topic) {
-                alert("Kripya pehle koi Topic ya Question enter karein!");
-                return;
+        // Focus Sprint Timer Logic
+        let timerSeconds = 1500;
+        let timerInterval = null;
+
+        function updateDisplay() {
+            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+            const s = (timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerInterval = setInterval(() => {
+                if (timerSeconds > 0) {
+                    timerSeconds--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    alert("Focus Sprint Completed!");
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 1500;
+            updateDisplay();
+        }
+
+        // Safe Fetch Wrapper for Gemini API Call
+        async function fetchAIResponse(promptText) {
+            const res = await fetch('https://vidyaflow-api.binapanidas528.workers.dev', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: promptText })
+            });
+
+            if (!res.ok) {
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.error || `Server Status ${res.status}`);
             }
 
-            output.innerText = "Generating notes and explanation... Please wait...";
-            status.innerText = "Processing...";
-            btn.disabled = true;
-            btn.classList.add("opacity-50");
+            const data = await res.json();
+            return data.answer || data.text || data.quiz || JSON.stringify(data);
+        }
 
-            const promptText = `Act as an expert Academic Assistant for level: ${level}. Mode: ${mode}. Provide a well-structured, easy-to-understand, and accurate explanation for the following topic: "${topic}". Use headings, bullet points, and key formulas or terms where applicable.`;
+        // Quiz Generator Action
+        async function generateQuiz() {
+            const topic = document.getElementById('quizTopic').value.trim();
+            const box = document.getElementById('quizResultBox');
+            if (!topic) { alert("Please enter a topic first!"); return; }
+
+            box.classList.remove('hidden');
+            box.innerText = "Generating Quiz questions... Please wait...";
 
             try {
-                // Call Cloudflare worker backend / Gemini API integration route
-                const response = await fetch('/api/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: promptText })
-                });
-
-                if (!response.ok) {
-                    throw new Error("API Connection failed or Server limit reached.");
-                }
-
-                const data = await response.json();
-                output.innerText = data.result || data.response || "No response received.";
-                status.innerText = "Completed";
+                const prompt = `Generate 3 multiple choice quiz questions (MCQs) with answers on the topic: ${topic}.`;
+                const ans = await fetchAIResponse(prompt);
+                box.innerText = ans;
             } catch (err) {
-                // Fallback direct mock explanation display if worker route is purely static
-                output.innerText = `[Study Assistant Note - ${level}]\n\nTopic: ${topic}\nMode: ${mode}\n\nKey Concepts:\n1. Core Fundamentals of ${topic}.\n2. Critical Analysis & Academic Significance.\n3. Summary & Quick Review points.\n\n(Note: Connect your backend Gemini API Key in Worker bindings for live continuous responses).`;
-                status.innerText = "Sample Generated";
-            } finally {
-                btn.disabled = false;
-                btn.classList.remove("opacity-50");
+                box.innerText = `Connection Error: ${err.message}`;
             }
         }
 
-        function copyOutput() {
-            const text = document.getElementById('notesOutput').innerText;
-            navigator.clipboard.writeText(text);
-            alert("Notes copied to clipboard!");
+        // Doubt Resolver Action
+        async function askDoubt() {
+            const question = document.getElementById('doubtInput').value.trim();
+            const box = document.getElementById('doubtResultBox');
+            const content = document.getElementById('doubtContent');
+            if (!question) { alert("Please enter your question!"); return; }
+
+            box.classList.remove('hidden');
+            content.innerText = "Thinking & resolving doubt...";
+
+            try {
+                const prompt = `Explain in detail with simple terms: ${question}`;
+                const ans = await fetchAIResponse(prompt);
+                content.innerText = ans;
+            } catch (err) {
+                content.innerText = `Connection Error: ${err.message}`;
+            }
         }
     </script>
 </body>
