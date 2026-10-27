@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SD.VidyaFlow AI Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -15,182 +15,150 @@
 <body class="min-h-screen flex flex-col justify-between py-6 px-4">
 
     <!-- Header Section -->
-    <header class="text-center mb-6">
-        <div class="flex items-center justify-center space-x-3 mb-1">
-            <i class="fa-solid fa-bolt text-yellow-400 text-2xl"></i>
-            <h1 class="text-3xl font-extrabold tracking-wide text-indigo-400">SD.VidyaFlow AI Companion</h1>
-        </div>
-        <p class="text-xs text-slate-400">Class 5 to PhD / TGT Multi-Language AI Companion</p>
+    <header class="max-w-4xl mx-auto w-full text-center mb-6">
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">SD.VidyaFlow Smart Study & Research Companion</h1>
+        <p class="text-sm text-slate-400 mt-1">Class 10 to PhD Level AI-Powered Assistant</p>
     </header>
 
-    <main class="max-w-4xl mx-auto w-full space-y-6 flex-grow">
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto w-full space-y-6">
 
-        <!-- Mode & Selectors -->
-        <div class="glass-card p-4 space-y-3">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-                <div class="flex items-center space-x-2 text-xs font-semibold text-slate-300">
-                    <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
-                    <span>Current Mode: <span class="text-indigo-400">TGT / B.Ed / Teaching Aspirants</span></span>
-                </div>
-                <div class="flex items-center space-x-2 text-xs text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                    <i class="fa-solid fa-fire"></i>
-                    <span>100% Real Live AI Active</span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-slate-800">
-                <div>
-                    <label class="block text-[11px] text-slate-400 font-semibold mb-1">SELECT CLASS / LEVEL</label>
-                    <select id="classSelect" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg p-2.5 outline-none focus:border-indigo-500">
-                        <option value="TGT / B.Ed / Teaching Aspirants" selected>TGT / B.Ed / Teaching Aspirants</option>
-                        <option value="Class 5 to 8">Class 5 - 8 (School Level)</option>
-                        <option value="Class 9 & 10">Class 9 & 10 (Board)</option>
-                        <option value="Class 11 & 12">Class 11 & 12</option>
-                        <option value="Undergraduate (UG)">Undergraduate (UG)</option>
-                        <option value="Postgraduate (PG)">Postgraduate (PG)</option>
-                        <option value="PhD / Research">PhD / Research</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-[11px] text-slate-400 font-semibold mb-1">SELECT MEDIUM / LANGUAGE</label>
-                    <select id="langSelect" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg p-2.5 outline-none focus:border-indigo-500">
-                        <option value="Hindi" selected>Hindi (हिंदी)</option>
-                        <option value="Odia">Odia (ଓଡ଼ିଆ)</option>
-                        <option value="Bengali">Bengali (বাংলা)</option>
-                        <option value="English">English</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Topics -->
-        <div class="flex flex-wrap items-center gap-3 text-xs">
-            <span class="text-slate-400 font-medium">Quick Topics:</span>
-            <button onclick="setTopic('Computer Science')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
-                <i class="fa-solid fa-desktop text-indigo-400"></i>
-                <span>Computer Science</span>
-            </button>
-            <button onclick="setTopic('Physics')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
-                <i class="fa-solid fa-snowflake text-cyan-400"></i>
-                <span>Physics</span>
-            </button>
-            <button onclick="setTopic('Math')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
-                <i class="fa-solid fa-calculator text-amber-400"></i>
-                <span>Math</span>
-            </button>
-            <button onclick="setTopic('Pedagogy')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5 transition">
-                <i class="fa-solid fa-brain text-pink-400"></i>
-                <span>Pedagogy</span>
-            </button>
-        </div>
-
-        <!-- FOCUS SPRINT TIMER -->
-        <section class="glass-card p-6 text-center space-y-4">
-            <div class="flex justify-between items-center text-xs text-slate-400">
-                <span class="font-bold tracking-wider uppercase text-slate-300 flex items-center gap-1.5">
-                    <i class="fa-solid fa-bullseye text-red-400"></i> FOCUS SPRINT & GOAL TRACKER
-                </span>
-                <span>Sprints Today: <span class="text-indigo-400 font-bold" id="sprintCount">0/4</span></span>
-            </div>
-            
-            <div id="timerDisplay" class="text-6xl font-extrabold text-white tracking-widest my-2">25:00</div>
-
-            <div class="flex justify-center space-x-3">
-                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-6 py-2 rounded-lg transition">Start</button>
-                <button onclick="pauseTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-6 py-2 rounded-lg border border-slate-700 transition">Pause</button>
-                <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold px-6 py-2 rounded-lg border border-slate-700 transition">Reset</button>
+        <!-- Focus Sprint & Goal Tracker -->
+        <section class="glass-card p-6 text-center shadow-lg">
+            <h2 class="text-lg font-semibold text-orange-400 mb-2"><i class="fas fa-bullseye mr-2"></i>FOCUS SPRINT & GOAL TRACKER</h2>
+            <div class="text-5xl font-extrabold tracking-wider my-4" id="timer-display">25:00</div>
+            <div class="space-x-2">
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg font-medium transition">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-lg font-medium transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-lg font-medium transition">Reset</button>
             </div>
         </section>
 
-        <!-- REAL AI QUIZ -->
-        <section class="glass-card p-6 space-y-4">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
-                <i class="fa-solid fa-bullseye text-orange-400"></i> REAL AI QUIZ & FLASHCARDS
-            </h2>
-
-            <div class="flex flex-col md:flex-row gap-3">
-                <input id="quizTopic" type="text" class="flex-grow bg-slate-900 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-indigo-500" placeholder="Topic enter karein (e.g. Computer Science, Math)...">
-                <button id="quizBtn" onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-6 py-2.5 rounded-lg transition flex items-center justify-center space-x-1.5">
-                    <span>Generate Quiz</span>
-                </button>
+        <!-- Real AI Quiz & Flashcards -->
+        <section class="glass-card p-6 shadow-lg">
+            <h2 class="text-lg font-semibold text-orange-400 mb-4"><i class="fas fa-brain mr-2"></i>REAL AI QUIZ & FLASHCARDS</h2>
+            <div class="flex gap-3 mb-4">
+                <input type="text" id="quiz-topic" placeholder="Enter topic (e.g. Computer Science)" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg font-medium text-sm transition">Generate Quiz</button>
             </div>
-
-            <div id="quizResultBox" class="hidden bg-slate-900/80 border border-slate-800 rounded-lg p-4 text-xs text-slate-300 whitespace-pre-wrap leading-relaxed"></div>
+            <div id="quiz-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[80px]">
+                Enter a topic above to generate an AI quiz.
+            </div>
         </section>
 
-        <!-- INSTANT AI DOUBT RESOLVER -->
-        <section class="glass-card p-6 space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
-                    <i class="fa-solid fa-lightbulb text-amber-400"></i> INSTANT REAL AI DOUBT RESOLVER
-                </h2>
-                <button onclick="downloadPDF()" class="bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 px-3 py-1 rounded-lg text-xs font-semibold flex items-center space-x-1 transition">
-                    <i class="fa-solid fa-file-pdf"></i>
-                    <span>Download PDF</span>
-                </button>
+        <!-- Instant Real AI Doubt Resolver -->
+        <section class="glass-card p-6 shadow-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-yellow-400"><i class="fas fa-lightbulb mr-2"></i>INSTANT REAL AI DOUBT RESOLVER</h2>
+                <button onclick="downloadPDF()" class="bg-rose-900/40 hover:bg-rose-900/60 border border-rose-700 text-rose-300 px-3 py-1.5 rounded-lg text-xs font-medium transition"><i class="fas fa-file-pdf mr-1"></i>Download PDF</button>
             </div>
-
-            <textarea id="doubtInput" rows="3" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-sm text-slate-200 outline-none focus:border-indigo-500 resize-none" placeholder="Explain detailed concepts & exam questions of Computer Science"></textarea>
-
-            <button id="doubtBtn" onclick="askDoubt(false)" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs py-3 rounded-lg transition flex items-center justify-center space-x-2">
-                <span>Ask AI</span>
-                <i class="fa-solid fa-sparkles text-amber-300"></i>
-            </button>
-
-            <!-- Answer Box -->
-            <div id="doubtResultBox" class="hidden bg-slate-900/80 border border-slate-800 rounded-lg p-4 text-xs text-slate-300 leading-relaxed space-y-3">
-                <div class="font-semibold text-indigo-400 border-b border-slate-800 pb-1">SD.VidyaFlow Answer:</div>
-                <div id="doubtContent" class="whitespace-pre-wrap"></div>
-
-                <div class="pt-3 border-t border-slate-800/80 flex justify-center">
-                    <button id="loadMoreBtn" onclick="askDoubt(true)" class="bg-slate-800 hover:bg-slate-700 text-indigo-300 hover:text-white border border-indigo-500/30 px-4 py-2 rounded-lg text-xs font-semibold flex items-center space-x-2 transition">
-                        <i class="fa-solid fa-circle-plus text-indigo-400"></i>
-                        <span>Aur Bhi Exam Main Aane Wale Questions Do (Load More)</span>
-                    </button>
-                </div>
+            <textarea id="doubt-input" rows="3" placeholder="Ask your detailed academic doubts here..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 text-sm focus:outline-none focus:border-indigo-500 mb-4"></textarea>
+            <button onclick="resolveDoubt()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-lg font-medium text-sm transition mb-4">Ask AI</button>
+            <div id="doubt-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[100px]">
+                AI response will appear here...
             </div>
         </section>
 
     </main>
 
-    <footer class="text-center text-xs text-slate-600 mt-6">
-        SD.VidyaFlow &copy; 2026 • Class 5 to PhD / TGT Multi-Language AI Companion
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-500 mt-8">
+        &copy; 2026 SD.VidyaFlow. All rights reserved.
     </footer>
 
-    <!-- Logic Script -->
+    <!-- JavaScript Logic -->
     <script>
-        const GEMINI_API_KEY = "AQ.Ab8RN6J9FQr402QPMr4JB25F5Bwh6_oioE2cT29tkMqZy8SOng";
-        let accumulatedText = "";
+        const GEMINI_API_KEY = "AQ.Ab8RN6Lt-LoUmHloXhGtCcGGY_TU12CkAKI1gyXQqjUseNdddg";
 
-        function setTopic(topic) {
-            document.getElementById('quizTopic').value = topic;
-            document.getElementById('doubtInput').value = `Explain detailed concepts & exam questions of ${topic}`;
+        async function fetchAIResponse(promptText) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+            
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GEMINI_API_KEY.trim()}`
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: promptText }]
+                    }]
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error?.message || `HTTP ${response.status}: Authorization failed.`);
+            }
+
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
         }
 
-        // Focus Sprint Timer
-        let timerSeconds = 1500;
-        let timerInterval = null;
-        let completedSprints = 0;
+        async function generateQuiz() {
+            const topic = document.getElementById('quiz-topic').value.trim();
+            const resultBox = document.getElementById('quiz-result');
+            if (!topic) {
+                resultBox.innerHTML = "Please enter a valid topic!";
+                return;
+            }
+            resultBox.innerHTML = "Generating quiz using Gemini AI...";
+            try {
+                const prompt = `Create a 3-question multiple choice quiz with answers on the topic: ${topic}`;
+                const answer = await fetchAIResponse(prompt);
+                resultBox.innerHTML = answer.replace(/\n/g, '<br>');
+            } catch (error) {
+                resultBox.innerHTML = "Connection Error: " + error.message;
+            }
+        }
 
-        function updateDisplay() {
-            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-            const s = (timerSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+        async function resolveDoubt() {
+            const doubt = document.getElementById('doubt-input').value.trim();
+            const resultBox = document.getElementById('doubt-result');
+            if (!doubt) {
+                resultBox.innerHTML = "Please enter a doubt to resolve!";
+                return;
+            }
+            resultBox.innerHTML = "Resolving doubt with Gemini AI...";
+            try {
+                const answer = await fetchAIResponse(doubt);
+                resultBox.innerHTML = answer.replace(/\n/g, '<br>');
+            } catch (error) {
+                resultBox.innerHTML = "Connection Error: " + error.message;
+            }
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('doubt-result');
+            html2pdf().from(element).save('SD-VidyaFlow-Doubt-Solution.pdf');
+        }
+
+        // Timer Logic
+        let timerMinutes = 25;
+        let timerSeconds = 0;
+        let timerInterval = null;
+
+        function updateTimerDisplay() {
+            const display = document.getElementById('timer-display');
+            display.textContent = `${String(timerMinutes).padStart(2, '0')}:${String(timerSeconds).padStart(2, '0')}`;
         }
 
         function startTimer() {
             if (timerInterval) return;
             timerInterval = setInterval(() => {
-                if (timerSeconds > 0) {
-                    timerSeconds--;
-                    updateDisplay();
+                if (timerSeconds === 0) {
+                    if (timerMinutes === 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        alert('Focus sprint completed!');
+                        return;
+                    }
+                    timerMinutes--;
+                    timerSeconds = 59;
                 } else {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                    completedSprints++;
-                    document.getElementById('sprintCount').innerText = `${completedSprints}/4`;
-                    alert("Focus Sprint Completed!");
+                    timerSeconds--;
                 }
+                updateTimerDisplay();
             }, 1000);
         }
 
@@ -201,116 +169,9 @@
 
         function resetTimer() {
             pauseTimer();
-            timerSeconds = 1500;
-            updateDisplay();
-        }
-
-        // Direct Google Gemini API Endpoint
-        async function fetchAIResponse(promptText) {
-            const response = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: promptText }] }]
-                    }),
-                }
-            );
-
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error?.message || "Gemini API Error");
-            }
-
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
-        }
-
-        // AI Quiz Generator
-        async function generateQuiz() {
-            const topic = document.getElementById('quizTopic').value.trim();
-            const lang = document.getElementById('langSelect').value;
-            const level = document.getElementById('classSelect').value;
-            const box = document.getElementById('quizResultBox');
-
-            if (!topic) { alert("Please enter a topic first!"); return; }
-
-            box.classList.remove('hidden');
-            box.innerText = "Generating Quiz questions... Please wait...";
-
-            try {
-                const prompt = `Generate 4 multiple choice quiz questions (MCQs) with answers for Level: ${level}, Topic: ${topic}. IMPORTANT: Respond in ${lang} language!`;
-                const ans = await fetchAIResponse(prompt);
-                box.innerText = ans;
-            } catch (err) {
-                box.innerText = `Connection Error: ${err.message}`;
-            }
-        }
-
-        // Doubt Resolver
-        async function askDoubt(isLoadMore) {
-            const question = document.getElementById('doubtInput').value.trim();
-            const lang = document.getElementById('langSelect').value;
-            const level = document.getElementById('classSelect').value;
-            const box = document.getElementById('doubtResultBox');
-            const content = document.getElementById('doubtContent');
-            const loadBtn = document.getElementById('loadMoreBtn');
-
-            if (!question) { alert("Please enter your question!"); return; }
-
-            box.classList.remove('hidden');
-
-            if (!isLoadMore) {
-                content.innerText = "Thinking & resolving doubt in detail...";
-                accumulatedText = "";
-            } else {
-                loadBtn.innerText = "Generating More Questions...";
-            }
-
-            let prompt = "";
-            if (isLoadMore) {
-                prompt = `Provide 10 MORE unique, highly probable exam questions with step-by-step answers for Level: ${level}, Topic: "${question}" in ${lang} language.`;
-            } else {
-                prompt = `Act as an expert Academic Master for Level: ${level}. Provide a detailed, highly accurate exam solution for: "${question}". Include key definitions, bullet points, and exam tips. IMPORTANT: Provide the full answer in ${lang} language!`;
-            }
-
-            try {
-                const ans = await fetchAIResponse(prompt);
-                if (isLoadMore) {
-                    accumulatedText += `\n\n========================================\nADDITIONAL EXAM QUESTIONS & ANSWERS\n========================================\n\n` + ans;
-                } else {
-                    accumulatedText = ans;
-                }
-                content.innerText = accumulatedText;
-            } catch (err) {
-                content.innerText = `Connection Error: ${err.message}`;
-            } finally {
-                loadBtn.innerText = "Aur Bhi Exam Main Aane Wale Questions Do (Load More)";
-            }
-        }
-
-        // PDF Download
-        function downloadPDF() {
-            const content = document.getElementById('doubtContent').innerText;
-            if (!content || content.length < 5) {
-                alert("Pehle koi Question ka answer generate hone dein!");
-                return;
-            }
-            const element = document.createElement('div');
-            element.style.padding = '20px';
-            element.style.color = '#000';
-            element.style.fontFamily = 'Arial, sans-serif';
-            element.style.lineHeight = '1.6';
-            element.innerText = content;
-
-            const opt = {
-                margin:       0.5,
-                filename:     'SD_VidyaFlow_Notes.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
+            timerMinutes = 25;
+            timerSeconds = 0;
+            updateTimerDisplay();
         }
     </script>
 </body>
