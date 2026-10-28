@@ -68,28 +68,35 @@
 
     <!-- JavaScript Logic -->
     <script>
-        const GEMINI_API_KEY = "AQ.Ab8RN6Lt-LoUmHloXhGtCcGGY_TU12CkAKI1gyXQqjUseNdddg";
+        const GEMINI_API_KEY = "AQ.Ab8RN6LPXsVMkE8jCOgokdsVEiQyD-VyBVJaGzI9i8lfuMKYMw";
 
         async function fetchAIResponse(promptText) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(GEMINI_API_KEY.trim())}`;
             
-            const response = await fetch(url, {
+            // Try standard key query param first, fallback to bearer header
+            let response = await fetch(endpoint, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${GEMINI_API_KEY.trim()}`
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: promptText }]
-                    }]
-                })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
             });
+
+            if (!response.ok) {
+                // Retry with Authorization header for AQ key format
+                const rawUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+                response = await fetch(rawUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${GEMINI_API_KEY.trim()}`
+                    },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+                });
+            }
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error?.message || `HTTP ${response.status}: Authorization failed.`);
+                throw new Error(data.error?.message || `HTTP ${response.status}: API Authorization Error`);
             }
 
             return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
