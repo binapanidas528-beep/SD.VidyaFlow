@@ -16,45 +16,92 @@
 
     <!-- Header Section -->
     <header class="max-w-4xl mx-auto w-full text-center mb-6">
-        <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">SD.VidyaFlow Smart Study & Research Companion</h1>
-        <p class="text-sm text-slate-400 mt-1">Class 10 to PhD Level AI-Powered Assistant</p>
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-blue-400 to-indigo-500 bg-clip-text text-transparent">
+            <i class="fas fa-bolt text-yellow-400 mr-2"></i>SD.VidyaFlow AI Companion
+        </h1>
+        <p class="text-sm text-slate-400 mt-1">Class 5 to PhD / TGT Multi-Language AI Assistant</p>
     </header>
 
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto w-full space-y-6">
 
+        <!-- Top Configuration Bar (Mode, Class, Language & Live Status) -->
+        <section class="glass-card p-4 shadow-lg space-y-4">
+            <div class="flex flex-col md:flex-row justify-between items-center bg-slate-900/60 p-3 rounded-lg border border-slate-800 gap-2">
+                <span class="text-xs text-indigo-300 font-medium">Current Mode: <span id="mode-display" class="text-white font-semibold">TGT / B.Ed / Teaching Aspirants</span></span>
+                <span class="bg-emerald-950/80 border border-emerald-600 text-emerald-400 text-xs px-3 py-1 rounded-full font-medium flex items-center shadow-inner">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse mr-1.5"></span> 100% Real Live AI Active
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">Select Class / Level</label>
+                    <select id="class-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option>TGT / B.Ed / Teaching Aspirants</option>
+                        <option>Class 10 - High School</option>
+                        <option>Class 12 - Senior Secondary</option>
+                        <option>UG / Graduate Level</option>
+                        <option>PG & PhD Research Level</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">Select Medium / Language</label>
+                    <select id="lang-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                        <option>Hindi (हिंदी)</option>
+                        <option>English</option>
+                        <option>Hinglish</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Quick Topics -->
+            <div>
+                <span class="text-xs text-slate-400 font-medium mr-2">Quick Topics:</span>
+                <div class="inline-flex flex-wrap gap-2 mt-2">
+                    <button onclick="setTopic('Computer Science')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-laptop-code text-blue-400 mr-1.5"></i>Computer Science</button>
+                    <button onclick="setTopic('Physics')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-atom text-cyan-400 mr-1.5"></i>Physics</button>
+                    <button onclick="setTopic('Math')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-calculator text-amber-400 mr-1.5"></i>Math</button>
+                    <button onclick="setTopic('Pedagogy')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-brain text-rose-400 mr-1.5"></i>Pedagogy</button>
+                </div>
+            </div>
+        </section>
+
         <!-- Focus Sprint & Goal Tracker -->
         <section class="glass-card p-6 text-center shadow-lg">
-            <h2 class="text-lg font-semibold text-orange-400 mb-2"><i class="fas fa-bullseye mr-2"></i>FOCUS SPRINT & GOAL TRACKER</h2>
-            <div class="text-5xl font-extrabold tracking-wider my-4" id="timer-display">25:00</div>
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-sm font-semibold text-orange-400 tracking-wider"><i class="fas fa-bullseye mr-2"></i>FOCUS SPRINT & GOAL TRACKER</h2>
+                <span class="text-xs text-slate-400">Sprints Today: <span class="text-indigo-400 font-bold">0/4</span></span>
+            </div>
+            <div class="text-5xl font-extrabold tracking-wider my-4 text-white" id="timer-display">25:00</div>
             <div class="space-x-2">
-                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg font-medium transition">Start</button>
-                <button onclick="pauseTimer()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-lg font-medium transition">Pause</button>
-                <button onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 px-5 py-2 rounded-lg font-medium transition">Reset</button>
+                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg text-sm font-medium transition shadow-md">Start</button>
+                <button onclick="pauseTimer()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-5 py-2 rounded-lg text-sm font-medium transition">Pause</button>
+                <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-5 py-2 rounded-lg text-sm font-medium transition">Reset</button>
             </div>
         </section>
 
         <!-- Real AI Quiz & Flashcards -->
         <section class="glass-card p-6 shadow-lg">
-            <h2 class="text-lg font-semibold text-orange-400 mb-4"><i class="fas fa-brain mr-2"></i>REAL AI QUIZ & FLASHCARDS</h2>
+            <h2 class="text-sm font-semibold text-orange-400 tracking-wider mb-4"><i class="fas fa-brain mr-2"></i>REAL AI QUIZ & FLASHCARDS</h2>
             <div class="flex gap-3 mb-4">
-                <input type="text" id="quiz-topic" placeholder="Enter topic (e.g. Computer Science)" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
-                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg font-medium text-sm transition">Generate Quiz</button>
+                <input type="text" id="quiz-topic" placeholder="Enter topic (e.g. Computer Science)" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg font-medium text-sm transition shadow-md">Generate Quiz</button>
             </div>
-            <div id="quiz-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[80px]">
-                Enter a topic above to generate an AI quiz.
+            <div id="quiz-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[90px] leading-relaxed">
+                Enter a topic or select a quick topic above to generate an AI quiz.
             </div>
         </section>
 
         <!-- Instant Real AI Doubt Resolver -->
         <section class="glass-card p-6 shadow-lg">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold text-yellow-400"><i class="fas fa-lightbulb mr-2"></i>INSTANT REAL AI DOUBT RESOLVER</h2>
-                <button onclick="downloadPDF()" class="bg-rose-900/40 hover:bg-rose-900/60 border border-rose-700 text-rose-300 px-3 py-1.5 rounded-lg text-xs font-medium transition"><i class="fas fa-file-pdf mr-1"></i>Download PDF</button>
+                <h2 class="text-sm font-semibold text-yellow-400 tracking-wider"><i class="fas fa-lightbulb mr-2"></i>INSTANT REAL AI DOUBT RESOLVER</h2>
+                <button onclick="downloadPDF()" class="bg-rose-950/50 hover:bg-rose-900/60 border border-rose-700 text-rose-300 px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center shadow-sm"><i class="fas fa-file-pdf mr-1.5"></i>Download PDF</button>
             </div>
-            <textarea id="doubt-input" rows="3" placeholder="Ask your detailed academic doubts here..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 text-sm focus:outline-none focus:border-indigo-500 mb-4"></textarea>
-            <button onclick="resolveDoubt()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-lg font-medium text-sm transition mb-4">Ask AI</button>
-            <div id="doubt-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[100px]">
+            <textarea id="doubt-input" rows="3" placeholder="Ask your detailed academic doubts here..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 mb-4"></textarea>
+            <button onclick="resolveDoubt()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-lg font-medium text-sm transition shadow-md mb-4">Ask AI</button>
+            <div id="doubt-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[110px] leading-relaxed">
                 AI response will appear here...
             </div>
         </section>
@@ -63,40 +110,43 @@
 
     <!-- Footer -->
     <footer class="text-center text-xs text-slate-500 mt-8">
-        &copy; 2026 SD.VidyaFlow. All rights reserved.
+        &copy; 2026 SD.VidyaFlow. All rights reserved. Designed for India's Brightest Students.
     </footer>
 
     <!-- JavaScript Logic -->
     <script>
         const GEMINI_API_KEY = "AQ.Ab8RN6LPXsVMkE8jCOgokdsVEiQyD-VyBVJaGzI9i8lfuMKYMw";
 
-        async function fetchAIResponse(promptText) {
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(GEMINI_API_KEY.trim())}`;
-            
-            // Try standard key query param first, fallback to bearer header
-            let response = await fetch(endpoint, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-            });
+        function setTopic(topicName) {
+            document.getElementById('quiz-topic').value = topicName;
+            document.getElementById('doubt-input').value = "Explain detailed concepts & exam questions of " + topicName;
+        }
 
-            if (!response.ok) {
-                // Retry with Authorization header for AQ key format
-                const rawUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-                response = await fetch(rawUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${GEMINI_API_KEY.trim()}`
-                    },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-                });
-            }
+        async function fetchAIResponse(promptText) {
+            const selectedClass = document.getElementById('class-select').value;
+            const selectedLang = document.getElementById('lang-select').value;
+            
+            const enhancedPrompt = `Level/Class: ${selectedClass}. Preferred Language: ${selectedLang}. Request: ${promptText}`;
+            
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+            
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GEMINI_API_KEY.trim()}`
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: enhancedPrompt }]
+                    }]
+                })
+            });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error?.message || `HTTP ${response.status}: API Authorization Error`);
+                throw new Error(data.error?.message || `HTTP ${response.status}: Authorization failed.`);
             }
 
             return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
@@ -109,9 +159,9 @@
                 resultBox.innerHTML = "Please enter a valid topic!";
                 return;
             }
-            resultBox.innerHTML = "Generating quiz using Gemini AI...";
+            resultBox.innerHTML = "Generating AI Quiz with customized level and language...";
             try {
-                const prompt = `Create a 3-question multiple choice quiz with answers on the topic: ${topic}`;
+                const prompt = `Create a high-quality 3-question multiple choice quiz with answers on the topic: ${topic}`;
                 const answer = await fetchAIResponse(prompt);
                 resultBox.innerHTML = answer.replace(/\n/g, '<br>');
             } catch (error) {
@@ -126,7 +176,7 @@
                 resultBox.innerHTML = "Please enter a doubt to resolve!";
                 return;
             }
-            resultBox.innerHTML = "Resolving doubt with Gemini AI...";
+            resultBox.innerHTML = "Resolving academic doubt using Gemini AI...";
             try {
                 const answer = await fetchAIResponse(doubt);
                 resultBox.innerHTML = answer.replace(/\n/g, '<br>');
@@ -157,7 +207,7 @@
                     if (timerMinutes === 0) {
                         clearInterval(timerInterval);
                         timerInterval = null;
-                        alert('Focus sprint completed!');
+                        alert('Focus sprint completed successfully!');
                         return;
                     }
                     timerMinutes--;
