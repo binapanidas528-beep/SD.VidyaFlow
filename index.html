@@ -1,235 +1,133 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SD.VidyaFlow AI Companion</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .glass-card { background: #131b2e; border: 1px solid #1e293b; border-radius: 1rem; }
+        body { 
+            background-color: #0b0f19; 
+            color: #f8fafc; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .glass-card { 
+            background: #131b2e; 
+            border: 1px solid #1e293b; 
+            border-radius: 1rem; 
+            padding: 1.5rem; 
+            margin-bottom: 1.5rem; 
+        }
+        select, input, textarea { 
+            width: 100%; 
+            background: #0b0f19; 
+            color: #fff; 
+            border: 1px solid #1e293b; 
+            padding: 10px; 
+            border-radius: 8px; 
+            margin-top: 5px; 
+            margin-bottom: 15px; 
+            box-sizing: border-box;
+        }
+        button { 
+            background-color: #4f46e5; 
+            color: white; 
+            border-radius: 0.5rem; 
+            font-weight: 500; 
+            border: none; 
+            padding: 0.7rem 1rem; 
+            width: 100%; 
+            cursor: pointer; 
+        }
+        button:hover { background-color: #4338ca; }
+        .output { 
+            background: #1e293b; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 15px; 
+            white-space: pre-wrap; 
+            font-size: 14px;
+            line-height: 1.5;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between py-6 px-4">
+<body>
 
-    <!-- Header Section -->
-    <header class="max-w-4xl mx-auto w-full text-center mb-6">
-        <h1 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-blue-400 to-indigo-500 bg-clip-text text-transparent">
-            <i class="fas fa-bolt text-yellow-400 mr-2"></i>SD.VidyaFlow AI Companion
-        </h1>
-        <p class="text-sm text-slate-400 mt-1">Class 5 to PhD / TGT Multi-Language AI Assistant</p>
-    </header>
+<div class="container">
+    <h1 style="text-align: center; font-size: 26px;">⚡ SD.VidyaFlow AI Companion</h1>
+    <p style="text-align: center; color: #94a3b8; font-size: 13px;">Class 5 to PhD / TGT Multi-Language AI Assistant</p>
 
-    <!-- Main Container -->
-    <main class="max-w-4xl mx-auto w-full space-y-6">
+    <div class="glass-card">
+        <label style="font-size: 12px; color: #818cf8;">SELECT CLASS / LEVEL</label>
+        <select id="selectClass">
+            <option>TGT / B.Ed / Teaching Aspirants</option>
+            <option>Class 10 - High School</option>
+            <option>Class 12 - Senior Secondary</option>
+            <option>UG / Graduate Level</option>
+            <option>PG & PhD Research Level</option>
+        </select>
 
-        <!-- Top Configuration Bar (Mode, Class, Language & Live Status) -->
-        <section class="glass-card p-4 shadow-lg space-y-4">
-            <div class="flex flex-col md:flex-row justify-between items-center bg-slate-900/60 p-3 rounded-lg border border-slate-800 gap-2">
-                <span class="text-xs text-indigo-300 font-medium">Current Mode: <span id="mode-display" class="text-white font-semibold">TGT / B.Ed / Teaching Aspirants</span></span>
-                <span class="bg-emerald-950/80 border border-emerald-600 text-emerald-400 text-xs px-3 py-1 rounded-full font-medium flex items-center shadow-inner">
-                    <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse mr-1.5"></span> 100% Real Live AI Active
-                </span>
-            </div>
+        <label style="font-size: 12px; color: #818cf8;">SELECT MEDIUM / LANGUAGE</label>
+        <select id="selectLang">
+            <option>Hindi (हिंदी)</option>
+            <option>English</option>
+            <option>Hinglish</option>
+        </select>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">Select Class / Level</label>
-                    <select id="class-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                        <option>TGT / B.Ed / Teaching Aspirants</option>
-                        <option>Class 10 - High School</option>
-                        <option>Class 12 - Senior Secondary</option>
-                        <option>UG / Graduate Level</option>
-                        <option>PG & PhD Research Level</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">Select Medium / Language</label>
-                    <select id="lang-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                        <option>Hindi (हिंदी)</option>
-                        <option>English</option>
-                        <option>Hinglish</option>
-                    </select>
-                </div>
-            </div>
+        <label style="font-size: 12px; color: #fb923c;">ENTER TOPIC FOR QUIZ</label>
+        <input type="text" id="quizTopic" placeholder="e.g. Computer Science, Physics, Pedagogy">
+        
+        <button onclick="generateQuiz()">Generate AI Quiz</button>
+        <div id="quizOutput" class="output" style="display:none;"></div>
+    </div>
+</div>
 
-            <!-- Quick Topics -->
-            <div>
-                <span class="text-xs text-slate-400 font-medium mr-2">Quick Topics:</span>
-                <div class="inline-flex flex-wrap gap-2 mt-2">
-                    <button onclick="setTopic('Computer Science')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-laptop-code text-blue-400 mr-1.5"></i>Computer Science</button>
-                    <button onclick="setTopic('Physics')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-atom text-cyan-400 mr-1.5"></i>Physics</button>
-                    <button onclick="setTopic('Math')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-calculator text-amber-400 mr-1.5"></i>Math</button>
-                    <button onclick="setTopic('Pedagogy')" class="bg-slate-900 hover:bg-indigo-900/50 border border-slate-700 text-xs px-3 py-1.5 rounded-full transition flex items-center"><i class="fas fa-brain text-rose-400 mr-1.5"></i>Pedagogy</button>
-                </div>
-            </div>
-        </section>
+<script>
+    // Aapki AQ API Key yahan direct headers mein kaam karegi
+    const apiKey = "AQ.Ab8RN6LPXsVMkE8jCOgokdsVEiQyD-VyBVJaGzI9i8lfuMKYMw";
 
-        <!-- Focus Sprint & Goal Tracker -->
-        <section class="glass-card p-6 text-center shadow-lg">
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="text-sm font-semibold text-orange-400 tracking-wider"><i class="fas fa-bullseye mr-2"></i>FOCUS SPRINT & GOAL TRACKER</h2>
-                <span class="text-xs text-slate-400">Sprints Today: <span class="text-indigo-400 font-bold">0/4</span></span>
-            </div>
-            <div class="text-5xl font-extrabold tracking-wider my-4 text-white" id="timer-display">25:00</div>
-            <div class="space-x-2">
-                <button onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg text-sm font-medium transition shadow-md">Start</button>
-                <button onclick="pauseTimer()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-5 py-2 rounded-lg text-sm font-medium transition">Pause</button>
-                <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-5 py-2 rounded-lg text-sm font-medium transition">Reset</button>
-            </div>
-        </section>
-
-        <!-- Real AI Quiz & Flashcards -->
-        <section class="glass-card p-6 shadow-lg">
-            <h2 class="text-sm font-semibold text-orange-400 tracking-wider mb-4"><i class="fas fa-brain mr-2"></i>REAL AI QUIZ & FLASHCARDS</h2>
-            <div class="flex gap-3 mb-4">
-                <input type="text" id="quiz-topic" placeholder="Enter topic (e.g. Computer Science)" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                <button onclick="generateQuiz()" class="bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg font-medium text-sm transition shadow-md">Generate Quiz</button>
-            </div>
-            <div id="quiz-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[90px] leading-relaxed">
-                Enter a topic or select a quick topic above to generate an AI quiz.
-            </div>
-        </section>
-
-        <!-- Instant Real AI Doubt Resolver -->
-        <section class="glass-card p-6 shadow-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-sm font-semibold text-yellow-400 tracking-wider"><i class="fas fa-lightbulb mr-2"></i>INSTANT REAL AI DOUBT RESOLVER</h2>
-                <button onclick="downloadPDF()" class="bg-rose-950/50 hover:bg-rose-900/60 border border-rose-700 text-rose-300 px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center shadow-sm"><i class="fas fa-file-pdf mr-1.5"></i>Download PDF</button>
-            </div>
-            <textarea id="doubt-input" rows="3" placeholder="Ask your detailed academic doubts here..." class="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 mb-4"></textarea>
-            <button onclick="resolveDoubt()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-lg font-medium text-sm transition shadow-md mb-4">Ask AI</button>
-            <div id="doubt-result" class="bg-slate-900/50 border border-slate-800 p-4 rounded-lg text-sm text-slate-300 min-h-[110px] leading-relaxed">
-                AI response will appear here...
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center text-xs text-slate-500 mt-8">
-        &copy; 2026 SD.VidyaFlow. All rights reserved. Designed for India's Brightest Students.
-    </footer>
-
-    <!-- JavaScript Logic -->
-    <script>
-        const GEMINI_API_KEY = "AQ.Ab8RN6LPXsVMkE8jCOgokdsVEiQyD-VyBVJaGzI9i8lfuMKYMw";
-
-        function setTopic(topicName) {
-            document.getElementById('quiz-topic').value = topicName;
-            document.getElementById('doubt-input').value = "Explain detailed concepts & exam questions of " + topicName;
+    async function generateQuiz() {
+        const topic = document.getElementById('quizTopic').value;
+        const studentClass = document.getElementById('selectClass').value;
+        const lang = document.getElementById('selectLang').value;
+        const outputDiv = document.getElementById('quizOutput');
+        
+        if (!topic) {
+            alert("Please enter a topic first!");
+            return;
         }
 
-        async function fetchAIResponse(promptText) {
-            const selectedClass = document.getElementById('class-select').value;
-            const selectedLang = document.getElementById('lang-select').value;
-            
-            const enhancedPrompt = `Level/Class: ${selectedClass}. Preferred Language: ${selectedLang}. Request: ${promptText}`;
-            
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-            
+        outputDiv.style.display = "block";
+        outputDiv.innerText = "Generating AI Quiz using Gemini 1.5 Flash...";
+
+        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+        const prompt = `Level/Class: ${studentClass}. Language: ${lang}. Create a high-quality 3-question multiple choice quiz with answers on: ${topic}`;
+
+        try {
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${GEMINI_API_KEY.trim()}`
+                    "x-goog-api-key": apiKey  // Yeh header AQ key ko browser se direct authenticate karega
                 },
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: enhancedPrompt }]
-                    }]
+                    contents: [{ parts: [{ text: prompt }] }]
                 })
             });
 
             const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error?.message || `HTTP ${response.status}: Authorization failed.`);
+            if (data.candidates && data.candidates[0].content) {
+                outputDiv.innerText = data.candidates[0].content.parts[0].text;
+            } else {
+                outputDiv.innerText = "Error: " + JSON.stringify(data, null, 2);
             }
-
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+        } catch (error) {
+            outputDiv.innerText = "Connection Error: " + error.message;
         }
+    }
+</script>
 
-        async function generateQuiz() {
-            const topic = document.getElementById('quiz-topic').value.trim();
-            const resultBox = document.getElementById('quiz-result');
-            if (!topic) {
-                resultBox.innerHTML = "Please enter a valid topic!";
-                return;
-            }
-            resultBox.innerHTML = "Generating AI Quiz with customized level and language...";
-            try {
-                const prompt = `Create a high-quality 3-question multiple choice quiz with answers on the topic: ${topic}`;
-                const answer = await fetchAIResponse(prompt);
-                resultBox.innerHTML = answer.replace(/\n/g, '<br>');
-            } catch (error) {
-                resultBox.innerHTML = "Connection Error: " + error.message;
-            }
-        }
-
-        async function resolveDoubt() {
-            const doubt = document.getElementById('doubt-input').value.trim();
-            const resultBox = document.getElementById('doubt-result');
-            if (!doubt) {
-                resultBox.innerHTML = "Please enter a doubt to resolve!";
-                return;
-            }
-            resultBox.innerHTML = "Resolving academic doubt using Gemini AI...";
-            try {
-                const answer = await fetchAIResponse(doubt);
-                resultBox.innerHTML = answer.replace(/\n/g, '<br>');
-            } catch (error) {
-                resultBox.innerHTML = "Connection Error: " + error.message;
-            }
-        }
-
-        function downloadPDF() {
-            const element = document.getElementById('doubt-result');
-            html2pdf().from(element).save('SD-VidyaFlow-Doubt-Solution.pdf');
-        }
-
-        // Timer Logic
-        let timerMinutes = 25;
-        let timerSeconds = 0;
-        let timerInterval = null;
-
-        function updateTimerDisplay() {
-            const display = document.getElementById('timer-display');
-            display.textContent = `${String(timerMinutes).padStart(2, '0')}:${String(timerSeconds).padStart(2, '0')}`;
-        }
-
-        function startTimer() {
-            if (timerInterval) return;
-            timerInterval = setInterval(() => {
-                if (timerSeconds === 0) {
-                    if (timerMinutes === 0) {
-                        clearInterval(timerInterval);
-                        timerInterval = null;
-                        alert('Focus sprint completed successfully!');
-                        return;
-                    }
-                    timerMinutes--;
-                    timerSeconds = 59;
-                } else {
-                    timerSeconds--;
-                }
-                updateTimerDisplay();
-            }, 1000);
-        }
-
-        function pauseTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-        }
-
-        function resetTimer() {
-            pauseTimer();
-            timerMinutes = 25;
-            timerSeconds = 0;
-            updateTimerDisplay();
-        }
-    </script>
 </body>
 </html>
